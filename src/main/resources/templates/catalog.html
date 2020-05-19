@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <h2 align="center"><a href="/libs/">Libraries</a> | <a href="/books/">Books</a> | <a href="/users/">Users</a></h2>
+</head>
+<body>
+<!--/*@thymesVar id="bookList" type="java.util.List"*/-->
+<!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
+<div th:switch="${bookList}" align="center">
+    <h2 th:case="null">No books found!</h2>
+    <div th:case="*">
+        <table border="1" cellpadding="5">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>Edition</th>
+                <th>Edition num</th>
+                <th>Genre</th>
+                <th>Count</th>
+                <th>Where?</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${bookList}">
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.name}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.pubYear}"></td>
+                <td th:text="${book.edition}"></td>
+                <td th:text="${book.editionNum}"></td>
+                <td th:text="${book.genre}"></td>
+                <td th:text="${book.count}"></td>
+                <td th:text="${book.library.address + ', ' + book.library.name}"></td>
+                <td><a th:href="@{/books/edit-book(id=${book.id})}">Edit</a>
+                    <a th:href="@{/books/delete(id=${book.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/books/new">Add book</a></p>
+    <!--<p th:text="${debug}"></p>-->
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+    <h2 align="center"><a href="/libs/">Libraries</a> | <a href="/books/">Books</a> | <a href="/users/">Users</a></h2>
+</head>
+<body>
+<div th:switch="${libraries}" align="center">
+    <h2 th:case="null">No libs found!</h2>
+    <div th:case="*">
+        <table border="1" cellpadding="5">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="lib : ${libraries}">
+                <td th:text="${lib.id}"></td>
+                <td th:text="${lib.name}"></td>
+                <td th:text="${lib.address}"></td>
+                <td><a th:href="@{/libs/edit-lib(id=${lib.id})}">Edit</a>
+                    <a th:href="@{/libs/delete(id=${lib.id})}">Delete</a>
+                    <a th:href="@{/books/filter(id=${lib.id})}">View catalog</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/libs/new">Add library</a></p>
+</div>
+</body>
+</html>

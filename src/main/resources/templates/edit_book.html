@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<meta charset="UTF-8">
+<title>Edit book</title>
+<h2 align="center"><a href="/libs/">Libraries</a> | <a href="/books/">Books</a> | <a href="/users/">Users</a></h2>
+</head>
+<body>
+<form action="#" th:action="@{/books/save}" th:object="${book}" method="post" align="center">
+    <h3 align="center" >Fill data for book with <span th:text="*{id}"></span> id:</h3>
+    <table border="1" cellpadding="5" align="center">
+        <thead>
+        <tr>
+            <th><label for="bookType">Type</label></th>
+            <th><label for="name">Title</label></th>
+            <th><label for="author">Author</label></th>
+        </tr>
+        </thead>
+        <tbody>
+        <td><input type="text" th:field="*{bookType}" id="bookType" placeholder="Type"></td>
+        <td><input type="text" th:field="*{name}" id="name" placeholder="Title"></td>
+        <td><input type="text" th:field="*{author}" id="author" placeholder="Author"></td>
+        </tbody>
+    </table>
+    <br>
+    <table border="1" cellpadding="5" align="center">
+        <thead>
+        <tr>
+            <th><label for="edition">Edition</label></th>
+            <th><label for="editionNum">Edition num.</label></th>
+            <th><label for="pubYear">Year</label></th>
+        </tr>
+        </thead>
+        <tbody>
+        <td><input type="text" th:field="*{edition}" id="edition" placeholder="Edition"></td>
+        <td><input type="text" th:field="*{editionNum}" id="editionNum" placeholder="Edition num."></td>
+        <td><input type="text" th:field="*{pubYear}" id="pubYear" placeholder="Year (int)"></td>
+        </tbody>
+    </table>
+    <br>
+    <table border="1" cellpadding="5" align="center">
+        <thead>
+        <tr>
+            <th><label for="genre">Genre</label></th>
+            <th><label for="count">Count</label></th>
+            <th><label for="extra">Extra</label></th>
+        </tr>
+        </thead>
+        <tbody>
+        <td><input type="text" th:field="*{genre}" id="genre" placeholder="Genre"></td>
+        <td><input type="text" th:field="*{count}" id="count" placeholder="Count (int)"></td>
+        <td><input type="text" th:field="*{extra}" id="extra" placeholder="Extra"></td>
+        </tbody>
+    </table>
+    <br>
+    <table border="1" cellpadding="5" align="center">
+        <thead>
+        <tr>
+            <th><label for="libraryId">Library</label></th>
+        </tr>
+        </thead>
+        <tbody>
+        <td>
+            <select th:field="*{libraryId}" id="libraryId">
+                <option th:each="library : ${libraries}"
+                        th:value="${library.id}"
+                        th:utext="${library.name +', '+ library.address}"></option>
+            </select>
+        </td>
+        </tbody>
+    </table>
+    <br>
+    <input type="text" hidden readonly th:field="*{id}">
+    <input type="submit" value="Save Book">
+</form>
+</body>
+</html>

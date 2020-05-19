@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+    <h2 align="center"><a href="/libs/">Libraries</a> | <a href="/books/">Books</a> | <a href="/users/">Users</a></h2>
+</head>
+<body>
+<div th:switch="${rents}" align="center">
+    <h2 th:case="null">No libs found!</h2>
+    <div th:case="*">
+        <table border="1" cellpadding="5">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Fact End Date</th>
+                <th>Staff</th>
+                <th>Book</th>
+                <th>Card</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="rent : ${rents}">
+                <td th:text="${rent.id}"></td>
+                <td th:text="${rent.startDate}"></td>
+                <td th:text="${rent.endDate}"></td>
+                <td th:text="${rent.factEndDate}"></td>
+                <td th:text="${rent.staff.firstName} + ' ' + ${rent.staff.lastName}"></td>
+                <td th:text="${rent.book.name} + ' in ' + ${rent.book.library.name}"></td>
+                <td th:text="${rent.card.id}"></td>
+                <td><a th:href="@{/libs/close-rent(id=${rent.id})}">Close</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/rents/new">Add Rent</a></p>
+</div>
+</body>
+</html>

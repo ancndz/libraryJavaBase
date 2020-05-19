@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+    <h2 align="center"><a href="/libs/">Libraries</a> | <a href="/books/">Books</a> | <a href="/users/">Users</a></h2>
+</head>
+<body>
+<div th:switch="${clientList}" align="center">
+    <h2 th:case="null">No users found!</h2>
+    <div th:case="*">
+        <table border="1" cellpadding="5">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>e-mail</th>
+                <th>status</th>
+                <th>reg date</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="client : ${clientList}">
+                <td th:text="${client.id}"></td>
+                <td th:text="${client.firstName}"></td>
+                <td th:text="${client.lastName}"></td>
+                <td th:text="${client.email}"></td>
+                <td th:text="${client.status}"></td>
+                <td th:text="${client.dateReg}"></td>
+                <td><a th:href="@{/users/edit-user(id=${client.id})}">Edit</a>
+                <a th:href="@{/users/delete(id=${client.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/users/new">Create user</a></p>
+    <p th:text="${debugString}"></p>
+</div>
+</body>
+</html>
