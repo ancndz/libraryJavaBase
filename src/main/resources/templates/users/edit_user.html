@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Edit clientWithCard</title>
+<h2 align="center"><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> | <a th:href="@{/users/}">Users</a></h2>
+<h2 align="center">Fill data:</h2>
+</head>
+<body>
+
+<!--/*@thymesVar id="card" type="ru.ancndz.libraryBase.content.libraryEnvironment.Card"*/-->
+<form action="#" th:action="@{/users/save}" th:object="${card}" method="post" align="center">
+    <table align="center" border="1" cellpadding="5">
+        <thead>
+        <tr>
+            <th><label for="id">ID</label></th>
+            <th><label for="firstName">First name</label></th>
+            <th><label for="lastName">Last name</label></th>
+            <th><label for="email">email</label></th>
+            <th><label for="status">status</label></th>
+        </tr>
+        </thead>
+        <tbody>
+            <td><input readonly type="number" th:field="*{user.id}" id="id" placeholder="ID"></td>
+            <td><input type="text" th:field="*{user.firstName}" id="firstName" placeholder="First Name"></td>
+            <td><input type="text" th:field="*{user.lastName}" id="lastName" placeholder="Last Name"></td>
+            <td><input type="text" th:field="*{user.email}" id="email" placeholder="email"></td>
+            <td><input type="text" th:field="*{user.status}" id="status" placeholder="status"></td>
+        </tbody>
+    </table>
+    <input type="text" hidden th:field="*{user.dateReg}">
+    <input type="text" th:field="*{code}" placeholder="code">
+    <input type="text" hidden th:field="*{id}">
+    <input type="text" hidden th:field="*{activationDate}">
+    <input type="submit" value="Save User" align="center">
+</form>
+</body>
+</html>

@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "client")
-public class Client {
+public class User {
     /**
      * айди клиента
      */
@@ -44,11 +44,11 @@ public class Client {
     @Column(name = "status")
     private String status;
 
-    public Client(){
+    public User(){
         this.dateReg = LocalDateTime.now();
     }
 
-    public Client(int id, String firstName, String lastName, String email, String status) {
+    public User(int id, String firstName, String lastName, String email, String status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -109,11 +109,11 @@ public class Client {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Client client = (Client) o;
-        return getFirstName().equals(client.getFirstName()) &&
-                getLastName().equals(client.getLastName()) &&
-                Objects.equals(getEmail(), client.getEmail()) &&
-                getStatus().equals(client.getStatus());
+        User user = (User) o;
+        return getFirstName().equals(user.getFirstName()) &&
+                getLastName().equals(user.getLastName()) &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                getStatus().equals(user.getStatus());
     }
 
     @Override
@@ -123,7 +123,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" +
+        return "User{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

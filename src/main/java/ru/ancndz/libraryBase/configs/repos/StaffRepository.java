@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface StaffRepository extends JpaRepository<Staff, Integer> {
     List<Staff> findAllByLibrary_Id(int id);
+
+    Staff findByEmail(String email);
 }

@@ -18,6 +18,10 @@ public class Staff {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "password")
+    private String password;
     /**
      * имя работника
      */
@@ -70,8 +74,9 @@ public class Staff {
      * @param number тел. номер (без +)
      * @param job должность
      */
-    public Staff(int id, String firstName, String secondName, String address, int number, Job job) {
+    public Staff(int id, String password, String firstName, String secondName, String address, int number, Job job) {
         this.id = id;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = secondName;
         this.address = address;
@@ -85,6 +90,22 @@ public class Staff {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {

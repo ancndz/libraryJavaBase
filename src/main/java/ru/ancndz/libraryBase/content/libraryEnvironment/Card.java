@@ -1,16 +1,9 @@
 package ru.ancndz.libraryBase.content.libraryEnvironment;
 
-import org.springframework.data.annotation.Transient;
-import ru.ancndz.libraryBase.content.entity.Client;
-import ru.ancndz.libraryBase.content.operations.Penalty;
-import ru.ancndz.libraryBase.content.operations.Rent;
+import ru.ancndz.libraryBase.content.entity.User;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -39,9 +32,9 @@ public class Card {
     /**
      * клиент, владелец карты
      */
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Client.class, cascade = CascadeType.DETACH)
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = User.class, cascade = CascadeType.DETACH)
     @JoinColumn(name = "client_id", unique = true, nullable = false)
-    private Client client;
+    private User user;
 
     /**
      * non-arg constructor
@@ -55,13 +48,13 @@ public class Card {
      * @param id айди карты
      * //@param activationDate дата активации
      * @param code секретное слово
-     * @param client клиент (владелец карты)
+     * @param user клиент (владелец карты)
      */
-    public Card(int id, String code, Client client) {
+    public Card(int id, String code, User user) {
         this.id = id;
         this.activationDate = LocalDateTime.now();
         this.code = code;
-        this.client = client;
+        this.user = user;
     }
 
     public int getId() {
@@ -88,12 +81,12 @@ public class Card {
         this.code = code;
     }
 
-    public Client getClient() {
-        return client;
+    public User getUser() {
+        return user;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -101,12 +94,12 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return getClient().equals(card.getClient());
+        return getUser().equals(card.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getClient(), "_libraryCard");
+        return Objects.hash(getUser(), "_libraryCard");
     }
 
     @Override
@@ -115,7 +108,7 @@ public class Card {
                 "id=" + id +
                 ", activationDate=" + activationDate +
                 ", code='" + code + '\'' +
-                ", client=" + client +
+                ", user=" + user +
                 '}';
     }
 }

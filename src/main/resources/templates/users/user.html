@@ -6,7 +6,7 @@
     <h2 align="center"><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> | <a th:href="@{/users/}">Users</a></h2>
 </head>
 <body>
-<div th:switch="${clientList}" align="center">
+<div th:switch="${userList}" align="center">
     <h2 th:case="null">No users found!</h2>
     <div th:case="*">
         <table border="1" cellpadding="5">
@@ -22,20 +22,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="client : ${clientList}">
-                <td th:text="${client.id}"></td>
-                <td th:text="${client.firstName}"></td>
-                <td th:text="${client.lastName}"></td>
-                <td th:text="${client.email}"></td>
-                <td th:text="${client.status}"></td>
-                <td th:text="${client.dateReg}"></td>
-                <td><a th:href="@{/users/edit-user(id=${client.id})}">Edit</a>
-                <a th:href="@{/users/delete(id=${client.id})}">Delete</a></td>
+            <tr th:each="user : ${userList}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.status}"></td>
+                <td th:text="${user.dateReg}"></td>
+                <td><a th:href="@{/users/edit-clientWithCard(id=${user.id})}">Edit</a>
+                <a th:href="@{/users/delete(id=${user.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a th:href="@{/users/new}">Create user</a></p>
+    <p><a th:href="@{/users/new}">Create User</a></p>
     <p th:text="${debugString}"></p>
 </div>
 </body>

@@ -17,7 +17,10 @@ public class StaffService {
     }
 
     public void save(Staff staff) {
-        this.staffRepository.save(staff);
+        if (this.staffRepository.findByEmail(staff.getEmail()) != null ||
+                this.staffRepository.findByEmail(staff.getEmail()).getId() == staff.getId()) {
+            this.staffRepository.save(staff);
+        }
     }
 
     public Staff get(Integer id) {
