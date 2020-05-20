@@ -38,7 +38,7 @@ public class StaffController {
         if (!staffList.isEmpty()) {
             model.addAttribute("staffList", staffList);
         }
-        return "staff";
+        return "/staff/staff";
     }
 
     @GetMapping("/new")
@@ -47,18 +47,18 @@ public class StaffController {
         List<Job> jobList = this.jobService.jobList();
         model.addAttribute("libraries", libraryList);
         model.addAttribute("jobs", jobList);
-        return "add_staff";
+        return "/staff/add_staff";
     }
 
     @PostMapping("/save")
     public String saveStaff(@Valid Staff staff, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("error", result.toString());
-            return "add_staff";
+            return "/staff/add_staff";
         }
         staff.setJob(this.jobService.get(staff.getJob_id()));
         staff.setLibrary(this.libraryService.get(staff.getLibrary_id()));
         this.staffService.save(staff);
-        return "redirect:/staff";
+        return "redirect:/staff/";
     }
 }

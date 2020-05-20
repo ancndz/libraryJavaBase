@@ -34,14 +34,14 @@ public class ClientController {
             model.addAttribute("clientList", clientList);
         }
         //model.addAttribute("debugString", debugString);
-        return "clients";
+        return "/clients/clients";
     }
 
     @GetMapping("/new")
     public String newClientForm(Client client, Card card, User user) {
         client.setDateReg(LocalDateTime.now());
         card.setActivationDate(LocalDateTime.now());
-        return "new_client";
+        return "/clients/new_client";
     }
 
     @PostMapping("/save")
@@ -51,7 +51,7 @@ public class ClientController {
         }
         clientService.save(user.getClient(), user.getCard());
         model.addAttribute("clientList", clientService.clientList());
-        return "redirect:/users";
+        return "redirect:/users/";
     }
 
     @GetMapping("/edit-user")
@@ -60,16 +60,17 @@ public class ClientController {
         User user = new User(clientService.getClient(id), clientService.getCardByClientId(id));
         //mav.addObject("client", client);
         model.addAttribute("user", user);
-        return "edit_client";
+        return "/clients/edit_client";
     }
 
     @GetMapping("/delete")
     public String deleteClient(@RequestParam Integer id) {
         int result = clientService.deleteClient(id);
         if (result != 0) {
-            return "redirect:/penalties?id="+id;
+            //return "redirect:/penalties?id="+id;
+            return "redirect:/users/";
         } else {
-            return "redirect:/users";
+            return "redirect:/users/";
         }
     }
 

@@ -29,13 +29,10 @@ public class CatalogController {
     @GetMapping("")
     public String home(Model model) {
         List<Book> bookList = this.bookService.booksList();
-        //String debugString = " ";
         if (!bookList.isEmpty()) {
-            //debugString += bookList.toString();
             model.addAttribute("bookList", bookList);
         }
-        //model.addAttribute("debug", debugString);
-        return "catalog";
+        return "/books/catalog";
     }
 
     @GetMapping("/filter")
@@ -44,14 +41,14 @@ public class CatalogController {
         if (!bookList.isEmpty()) {
             model.addAttribute("bookList", bookList);
         }
-        return "catalog";
+        return "/books/catalog";
     }
 
     @GetMapping("/new")
     public String newBookForm(Model model, Book book) {
         List<Library> libraryList = this.libraryService.libraryList();
         model.addAttribute("libraries", libraryList);
-        return "add_book";
+        return "/books/add_book";
     }
 
     @PostMapping("/save")
@@ -61,12 +58,12 @@ public class CatalogController {
             model.addAttribute("libraries", libraryList);
             String error = result.toString();
             model.addAttribute("error", error);
-            return "add_book";
+            return "/books/add_book";
         }
         book.setLibrary(this.libraryService.get(book.getLibraryId()));
         this.bookService.save(book);
         //model.addAttribute("bookList", bookService.booksList());
-        return "redirect:/books";
+        return "redirect:/books/";
     }
 
     @GetMapping("/edit-book")
@@ -77,13 +74,13 @@ public class CatalogController {
         model.addAttribute("book", book);
         List<Library> libraryList = this.libraryService.libraryList();
         model.addAttribute("libraries", libraryList);
-        return "edit_book";
+        return "/books/edit_book";
     }
 
     @GetMapping("/delete")
     public String deleteBook(@RequestParam Integer id) {
         bookService.delete(id);
-        return "redirect:/books";
+        return "redirect:/books/";
     }
 
 }

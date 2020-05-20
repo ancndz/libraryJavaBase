@@ -33,11 +33,11 @@ public class RentController {
         if (!rents.isEmpty()) {
             model.addAttribute("rents", rents);
         }
-        return "rents";
+        return "/rents/rents";
     }
 
     @GetMapping("/new")
     public String newRentForm(Model model, Rent rent) {
-        return "new_rent";
+        return "/rents/new_rent";
     }
 }
