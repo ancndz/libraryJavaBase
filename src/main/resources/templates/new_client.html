@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Create user</title>
+    <h2 align="center"><a href="/jobs/">Jobs</a> | <a href="/staff/">Staff</a> | <a href="/libs/">Libraries</a> | <a href="/books/">Books</a> | <a href="/users/">Users</a></h2>
 </head>
 <body>
+<h3 th:align="center">Please, fill Your profile:</h3>
+<br>
 <!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.nonbusiness.User"*/-->
-<form action="#" th:action="@{/users/save}" th:object="${user}" method="post">
+<form action="#" th:action="@{/users/save}" th:object="${user}" method="post" th:align="center">
     <table border="1" cellpadding="5" align="center">
         <thead>
         <tr>
@@ -23,6 +26,7 @@
             <td><input type="text" th:field="*{client.status}" id="status" placeholder="status"></td>
         </tbody>
     </table>
+    <br>
     <table border="1" cellpadding="5" align="center">
         <thead>
         <tr>
@@ -33,6 +37,7 @@
         <td><input type="text" th:field="*{card.code}" id="code" placeholder="Code"></td>
         </tbody>
     </table>
+    <br>
     <input type="submit" value="Create User">
 </form>
 </body>

@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "jobs")
-public class Worker {
+public class Job {
     /**
      * id должности
      */
@@ -27,7 +27,7 @@ public class Worker {
     @Column(name = "pay")
     protected int pay;
 
-    public Worker(){}
+    public Job(){}
 
     /**
      * конструктор
@@ -35,7 +35,7 @@ public class Worker {
      * @param name название должности
      * @param pay зар. плата, тыс. руб.
      */
-    public Worker(int id, String name, int pay) {
+    public Job(int id, String name, int pay) {
         this.id = id;
         this.name = name;
         this.pay = pay;
@@ -69,9 +69,9 @@ public class Worker {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Worker worker = (Worker) o;
-        return getPay() == worker.getPay() &&
-                getName().equals(worker.getName());
+        Job job = (Job) o;
+        return getPay() == job.getPay() &&
+                getName().equals(job.getName());
     }
 
     @Override
@@ -81,7 +81,7 @@ public class Worker {
 
     @Override
     public String toString() {
-        return "Worker{" +
+        return "Job{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", pay=" + pay +

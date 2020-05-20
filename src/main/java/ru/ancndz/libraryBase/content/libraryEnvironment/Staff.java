@@ -1,6 +1,6 @@
 package ru.ancndz.libraryBase.content.libraryEnvironment;
 
-import ru.ancndz.libraryBase.content.jobs.Worker;
+import ru.ancndz.libraryBase.content.jobs.Job;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -41,15 +41,22 @@ public class Staff {
     /**
      * должность
      */
-    @ManyToOne(targetEntity = Worker.class)
+    @ManyToOne(targetEntity = Job.class)
     @JoinColumn(name = "job_id", unique = true, nullable = false)
-    private Worker job;
+    private Job job;
+
+    @Transient
+    private int job_id;
+
     /**
      * библиотека, в которой сотрудник работает
      */
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Library.class)
     @JoinColumn(name = "library_id")
     private Library library;
+
+    @Transient
+    private int library_id;
 
     public Staff() {
     }
@@ -63,7 +70,7 @@ public class Staff {
      * @param number тел. номер (без +)
      * @param job должность
      */
-    public Staff(int id, String firstName, String secondName, String address, int number, Worker job) {
+    public Staff(int id, String firstName, String secondName, String address, int number, Job job) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = secondName;
@@ -112,11 +119,11 @@ public class Staff {
         this.number = number;
     }
 
-    public Worker getJob() {
+    public Job getJob() {
         return job;
     }
 
-    public void setJob(Worker job) {
+    public void setJob(Job job) {
         this.job = job;
     }
 
@@ -126,6 +133,22 @@ public class Staff {
 
     public void setLibrary(Library library) {
         this.library = library;
+    }
+
+    public int getJob_id() {
+        return job_id;
+    }
+
+    public void setJob_id(int job_id) {
+        this.job_id = job_id;
+    }
+
+    public int getLibrary_id() {
+        return library_id;
+    }
+
+    public void setLibrary_id(int library_id) {
+        this.library_id = library_id;
     }
 
     @Override

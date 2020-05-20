@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add staff</title>
+    <h2 align="center"><a href="/libs/">Libraries</a> | <a href="/books/">Books</a> | <a href="/users/">Users</a></h2>
+    <h2 align="center">Fill data:</h2>
+</head>
+<body>
+
+<!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.libraryEnvironment.Staff"*/-->
+<form action="#" th:action="@{/staff/save}" th:object="${staff}" method="post" align="center">
+    <table border="1" cellpadding="5" align="center">
+        <thead>
+        <tr>
+            <th><label for="firstName">First Name</label></th>
+            <th><label for="lastName">Last Name</label></th>
+        </tr>
+        </thead>
+        <tbody>
+        <td><input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name"></td>
+        <td><input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name"></td>
+        </tbody>
+    </table>
+    <br>
+    <table border="1" cellpadding="5" align="center">
+        <thead>
+        <tr>
+            <th><label for="address">Address</label></th>
+            <th><label for="number">Number</label></th>
+        </tr>
+        </thead>
+        <tbody>
+        <td><input type="text" th:field="*{address}" id="address" placeholder="Address"></td>
+        <td><input type="text" th:field="*{number}" id="number" placeholder="Number"></td>
+        </tbody>
+    </table>
+    <br>
+    <table border="1" cellpadding="5" align="center">
+        <thead>
+        <tr>
+            <th><label for="library_id">Library</label></th>
+            <th><label for="job_id">Job</label></th>
+        </tr>
+        </thead>
+        <tbody>
+        <td>
+            <select th:field="*{library_id}" id="library_id">
+                <option th:each="library : ${libraries}"
+                        th:value="${library.id}"
+                        th:utext="${library.name +', '+ library.address}"></option>
+            </select>
+        </td>
+        <td>
+            <select th:field="*{job_id}" id="job_id">
+                <option th:each="job : ${jobs}"
+                        th:value="${job.id}"
+                        th:utext="${job.name}"></option>
+            </select>
+        </td>
+        </tbody>
+    </table>
+    <br>
+    <input type="submit" value="Add Staff">
+    <div th:switch="${error}">
+        <p th:case="null"></p>
+        <p th:case="*" th:text="${error}"></p>
+    </div>
+</form>
+</body>
+</html>

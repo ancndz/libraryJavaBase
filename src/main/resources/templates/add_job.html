@@ -7,22 +7,22 @@
     <h2 align="center">Fill data:</h2>
 </head>
 <body>
-<!--/*@thymesVar id="library" type="ru.ancndz.libraryBase.content.libraryEnvironment.Library"*/-->
-<form action="#" th:action="@{/libs/save}" th:object="${library}" method="post" align="center">
+<!--/*@thymesVar id="job" type="ru.ancndz.libraryBase.content.jobs.Job"*/-->
+<form action="#" th:action="@{/jobs/save}" th:object="${job}" method="post" align="center">
     <table border="1" cellpadding="5" align="center">
         <thead>
         <tr>
             <th><label for="name">Name</label></th>
-            <th><label for="address">Address</label></th>
+            <th><label for="pay">Pay</label></th>
         </tr>
         </thead>
         <tbody>
         <td><input type="text" th:field="*{name}" id="name" placeholder="Name"></td>
-        <td><input type="text" th:field="*{address}" id="address" placeholder="Address"></td>
+        <td><input type="text" th:field="*{pay}" id="pay" placeholder="Pay"></td>
         </tbody>
     </table>
     <br>
-    <input type="submit" value="Add Library">
+    <input type="submit" value="Add Job">
 </form>
 </body>
 </html>

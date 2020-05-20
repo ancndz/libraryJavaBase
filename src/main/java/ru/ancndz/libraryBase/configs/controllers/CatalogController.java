@@ -65,7 +65,7 @@ public class CatalogController {
         }
         book.setLibrary(this.libraryService.get(book.getLibraryId()));
         this.bookService.save(book);
-        model.addAttribute("bookList", bookService.booksList());
+        //model.addAttribute("bookList", bookService.booksList());
         return "redirect:/books";
     }
 
