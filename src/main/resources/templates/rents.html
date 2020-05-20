@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Clients</title>
-    <h2 align="center"><a href="/jobs/">Jobs</a> | <a href="/staff/">Staff</a> | <a href="/libs/">Libraries</a> | <a href="/books/">Books</a> | <a href="/users/">Users</a></h2>
+    <title>Rents</title>
+    <h2 align="center"><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> | <a th:href="@{/users/}">Users</a></h2>
 </head>
 <body>
 <div th:switch="${rents}" align="center">
@@ -31,13 +31,13 @@
                 <td th:text="${rent.staff.firstName} + ' ' + ${rent.staff.lastName}"></td>
                 <td th:text="${rent.book.name} + ' in ' + ${rent.book.library.name}"></td>
                 <td th:text="${rent.card.id}"></td>
-                <td><a th:href="@{/libs/close-rent(id=${rent.id})}">Close</a>
+                <td><a th:th:href="@{/libs/close-rent(id=${rent.id})}">Close</a>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a href="/rents/new">Add Rent</a></p>
+    <p><a th:href="@{/rents/new}">Add Rent</a></p>
 </div>
 </body>
 </html>
