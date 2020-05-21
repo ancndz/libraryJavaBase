@@ -72,7 +72,7 @@ public class StaffController {
         return "redirect:/staff/";
     }
 
-    @GetMapping("edit-staff")
+    @GetMapping("edit")
     public String edit(@RequestParam int id, Model model) {
         model.addAttribute("staff", this.staffService.get(id));
         model.addAttribute("libs", this.libraryService.libraryList());

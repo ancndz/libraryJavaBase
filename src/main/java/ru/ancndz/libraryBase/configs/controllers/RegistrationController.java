@@ -41,7 +41,17 @@ public class RegistrationController {
     @GetMapping("/staff")
     public String registrationStaff(Staff staff, Model model) {
         List<Library> libraryList = this.libraryService.libraryList();
+        if (libraryList.isEmpty()) {
+            Library lib = new Library("none", "none");
+            this.libraryService.save(lib);
+            staff.setLibrary(lib);
+        }
         List<Job> jobList = this.jobService.jobList();
+        if (jobList.isEmpty()) {
+            Job job = new Job("none", 0);
+            this.jobService.save(job);
+            staff.setJob(job);
+        }
         model.addAttribute("libraries", libraryList);
         model.addAttribute("jobs", jobList);
         model.addAttribute("staff", staff);
@@ -59,7 +69,6 @@ public class RegistrationController {
 
     @PostMapping("/save")
     public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
-
         if (bindingResult.hasErrors()) {
             return "/users/add_user";
         }
@@ -76,7 +85,6 @@ public class RegistrationController {
 
     @PostMapping("/staff/save")
     public String addStaff(@Valid Staff staff, BindingResult bindingResult, Model model) {
-
         if (bindingResult.hasErrors()) {
             return "/staff/add_staff";
         }
@@ -84,16 +92,8 @@ public class RegistrationController {
             model.addAttribute("errorText", "Пароли не совпадают");
             return "/staff/add_staff";
         }
-        if (staff.getLibrary() == null) {
-            Library lib = new Library("none", "none");
-            this.libraryService.save(lib);
-            staff.setLibrary(lib);
-        }
-        if (staff.getJob() == null) {
-            Job job = new Job("none", 0);
-            this.jobService.save(job);
-            staff.setJob(job);
-        }
+        staff.setJob(this.jobService.get(staff.getJob_id()));
+        staff.setLibrary(this.libraryService.get(staff.getLibrary_id()));
         if (!staffService.save(staff)){
             model.addAttribute("errorText", "Пользователь с таким email уже существует");
             return "/staff/add_staff";
