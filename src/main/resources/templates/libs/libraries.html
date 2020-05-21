@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
 <head>
     <meta charset="UTF-8">
     <title>Libraries</title>
-    <h2 align="center"><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> | <a th:href="@{/users/}">Users</a></h2>
+    <div align="center">
+        <div sec:authorize="hasRole('ADMIN')">
+            <h2><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/users/}">Users</a></h2>
+        </div>
+        <h2><a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a></h2>
+    </div>
 </head>
 <body>
 <div th:switch="${libraries}" align="center">
@@ -16,22 +22,50 @@
                 <th>Name</th>
                 <th>Address</th>
                 <th>Action</th>
+                <th sec:authorize="hasRole('ADMIN')">User action</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="lib : ${libraries}">
-                <td th:text="${lib.id}"></td>
+                <td sec:authorize="hasRole('ADMIN')" th:text="${lib.id}"></td>
                 <td th:text="${lib.name}"></td>
                 <td th:text="${lib.address}"></td>
-                <td><a th:href="@{/libs/edit-lib(id=${lib.id})}">Edit</a>
-                    <a th:href="@{/libs/delete(id=${lib.id})}">Delete</a>
-                    <a th:href="@{/books/filter(id=${lib.id})}">View catalog</a>
+                <td sec:authorize="hasRole('ADMIN')">
+                    <form th:action="@{/books/edit(id=${lib.id})}" method="get">
+                        <input type="submit" value="Edit"/>
+                    </form>
+                    <form th:action="@{/books/delete(id=${lib.id})}" method="get">
+                        <input type="submit" value="Delete"/>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/books/filter(id=${lib.id})}" method="get">
+                        <input type="submit" value="View catalog"/>
+                    </form>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a th:href="@{/libs/new}">Add library</a></p>
+    <br>
+    <div sec:authorize="hasRole('ADMIN')">
+        <form th:action="@{/libs/new}" method="get">
+            <input type="submit" value="New Library"/>
+        </form>
+    </div>
+    <br>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+    <div align="center" sec:authorize="isAnonymous()">
+        <a th:href="@{/registration}">Register</a>
+        <br>
+        <a th:href="@{/registration/staff}">Register staff</a>
+        <br>
+        <a th:href="@{/login}">Login</a>
+    </div>
 </div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 package ru.ancndz.libraryBase.content.operations;
 
+import ru.ancndz.libraryBase.content.entity.User;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Book;
-import ru.ancndz.libraryBase.content.libraryEnvironment.Card;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
 
 import javax.persistence.*;
@@ -50,7 +50,7 @@ public class Rent {
     private Book book;
     @ManyToOne
     @JoinColumn(name = "card_id")
-    private Card card;
+    private User user;
 
     public Rent() {}
 
@@ -64,14 +64,14 @@ public class Rent {
      * @param book книга
      */
     public Rent(int id, LocalDateTime startDate, LocalDateTime endDate,
-                LocalDateTime factEndDate, Staff staff, Book book, Card card) {
+                LocalDateTime factEndDate, Staff staff, Book book, User user) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.factEndDate = factEndDate;
         this.staff = staff;
         this.book = book;
-        this.card = card;
+        this.user = user;
     }
 
     public int getId() {
@@ -122,12 +122,12 @@ public class Rent {
         this.book = book;
     }
 
-    public Card getCard() {
-        return card;
+    public User getUser() {
+        return user;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -140,12 +140,12 @@ public class Rent {
                 Objects.equals(getFactEndDate(), rent.getFactEndDate()) &&
                 getStaff().equals(rent.getStaff()) &&
                 getBook().equals(rent.getBook()) &&
-                getCard().equals(rent.getCard());
+                getUser().equals(rent.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getStartDate(), getEndDate(), getFactEndDate(), getStaff(), getBook(), getCard());
+        return Objects.hash(getStartDate(), getEndDate(), getFactEndDate(), getStaff(), getBook(), getUser());
     }
 
     @Override
@@ -157,7 +157,7 @@ public class Rent {
                 ", factEndDate=" + factEndDate +
                 ", staff=" + staff +
                 ", book=" + book +
-                ", card=" + card +
+                ", user=" + user +
                 '}';
     }
 }

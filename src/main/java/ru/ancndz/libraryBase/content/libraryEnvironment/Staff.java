@@ -1,16 +1,21 @@
 package ru.ancndz.libraryBase.content.libraryEnvironment;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import ru.ancndz.libraryBase.content.jobs.Job;
+import ru.ancndz.libraryBase.content.jobs.Role;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Класс сотрудника
  */
 @Entity
 @Table(name = "staff")
-public class Staff {
+public class Staff implements UserDetails {
     /**
      * айди работника
      */
@@ -22,6 +27,8 @@ public class Staff {
     private String email;
     @Column(name = "password")
     private String password;
+    @Transient
+    private String passwordConfirm;
     /**
      * имя работника
      */
@@ -46,7 +53,7 @@ public class Staff {
      * должность
      */
     @ManyToOne(targetEntity = Job.class)
-    @JoinColumn(name = "job_id", unique = true, nullable = false)
+    @JoinColumn(name = "jobs_id", unique = true, nullable = false)
     private Job job;
 
     @Transient
@@ -62,18 +69,16 @@ public class Staff {
     @Transient
     private int library_id;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "roles_has_staff",
+            joinColumns = @JoinColumn(name = "staff_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    private Set<Role> roles;
+
     public Staff() {
     }
 
-    /**
-     * конструктор
-     * @param id айди работника
-     * @param firstName имя работника
-     * @param secondName фамилия работника
-     * @param address адрес проживания
-     * @param number тел. номер (без +)
-     * @param job должность
-     */
     public Staff(int id, String password, String firstName, String secondName, String address, int number, Job job) {
         this.id = id;
         this.password = password;
@@ -82,6 +87,18 @@ public class Staff {
         this.address = address;
         this.number = number;
         this.job = job;
+    }
+
+    public boolean passwordConfirms() {
+        return this.password.equals(this.passwordConfirm);
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     public int getId() {
@@ -100,8 +117,47 @@ public class Staff {
         this.email = email;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {
@@ -201,5 +257,9 @@ public class Staff {
                 ", job=" + job +
                 ", library=" + library +
                 '}';
+    }
+
+    public boolean passwordsCheck() {
+        return this.password.equals(this.passwordConfirm);
     }
 }

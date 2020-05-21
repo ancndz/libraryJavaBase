@@ -1,6 +1,6 @@
 package ru.ancndz.libraryBase.content.operations;
 
-import ru.ancndz.libraryBase.content.entity.User;
+import ru.ancndz.libraryBase.content.entity.UserExtras;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Book;
 
 import javax.persistence.*;
@@ -18,12 +18,12 @@ public class Reservations {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class, cascade = CascadeType.DETACH)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserExtras.class, cascade = CascadeType.DETACH)
     @JoinColumn(name = "card_id")
-    private User user;
+    private UserExtras userExtras;
 
     @Transient
-    private int client_id;
+    private int user_id;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Book.class, cascade = CascadeType.DETACH)
     @JoinColumn(name = "book_id")
@@ -35,10 +35,10 @@ public class Reservations {
     public Reservations() {
     }
 
-    public Reservations(int id, LocalDateTime endDate, User user, Book book) {
+    public Reservations(int id, LocalDateTime endDate, UserExtras userExtras, Book book) {
         this.id = id;
         this.endDate = endDate;
-        this.user = user;
+        this.userExtras = userExtras;
         this.book = book;
     }
 
@@ -58,12 +58,12 @@ public class Reservations {
         this.endDate = endDate;
     }
 
-    public User getUser() {
-        return user;
+    public UserExtras getUserExtras() {
+        return userExtras;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserExtras(UserExtras userExtras) {
+        this.userExtras = userExtras;
     }
 
     public Book getBook() {
@@ -74,12 +74,12 @@ public class Reservations {
         this.book = book;
     }
 
-    public int getClient_id() {
-        return client_id;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setClient_id(int client_id) {
-        this.client_id = client_id;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public int getBook_id() {
@@ -96,13 +96,13 @@ public class Reservations {
         if (o == null || getClass() != o.getClass()) return false;
         Reservations that = (Reservations) o;
         return getEndDate().equals(that.getEndDate()) &&
-                getUser().equals(that.getUser()) &&
+                getUserExtras().equals(that.getUserExtras()) &&
                 getBook().equals(that.getBook());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getEndDate(), getUser(), getBook());
+        return Objects.hash(getEndDate(), getUserExtras(), getBook());
     }
 
     @Override
@@ -110,7 +110,7 @@ public class Reservations {
         return "Reservations{" +
                 "id=" + id +
                 ", endDate=" + endDate +
-                ", user=" + user +
+                ", userExtras=" + userExtras +
                 ", book=" + book +
                 '}';
     }

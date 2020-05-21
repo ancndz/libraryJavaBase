@@ -1,6 +1,6 @@
 package ru.ancndz.libraryBase.content.operations;
 
-import ru.ancndz.libraryBase.content.libraryEnvironment.Card;
+import ru.ancndz.libraryBase.content.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -52,7 +52,7 @@ public class Penalty {
     private Rent rent;
     @ManyToOne
     @JoinColumn(name = "card_id", unique = true, nullable = false)
-    private Card card;
+    private User user;
 
     public Penalty() {
     }
@@ -67,7 +67,7 @@ public class Penalty {
      * @param rent аренда
      */
     public Penalty(int id, String reason, LocalDateTime date, LocalDateTime payDate,
-                   int amount, int completeAmount, Rent rent, Card card) {
+                   int amount, int completeAmount, Rent rent, User user) {
         this.id = id;
         this.reason = reason;
         this.date = date;
@@ -75,7 +75,7 @@ public class Penalty {
         this.amount = amount;
         this.completeAmount = completeAmount;
         this.rent = rent;
-        this.card = card;
+        this.user = user;
     }
 
     public int getId() {
@@ -134,12 +134,12 @@ public class Penalty {
         this.rent = rent;
     }
 
-    public Card getCard() {
-        return card;
+    public User getUser() {
+        return user;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -152,12 +152,12 @@ public class Penalty {
                 getDate().equals(penalty.getDate()) &&
                 Objects.equals(getPayDate(), penalty.getPayDate()) &&
                 getRent().equals(penalty.getRent()) &&
-                getCard().equals(penalty.getCard());
+                getUser().equals(penalty.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getReason(), getDate(), getPayDate(), getAmount(), getRent(), getCard());
+        return Objects.hash(getReason(), getDate(), getPayDate(), getAmount(), getRent(), getUser());
     }
 
     @Override
@@ -170,7 +170,7 @@ public class Penalty {
                 ", amount=" + amount +
                 ", completeAmount=" + completeAmount +
                 ", rent=" + rent +
-                ", card=" + card +
+                ", user=" + user +
                 '}';
     }
 }

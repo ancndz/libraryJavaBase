@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.ancndz.libraryBase.configs.services.JobService;
 import ru.ancndz.libraryBase.configs.services.LibraryService;
 import ru.ancndz.libraryBase.configs.services.StaffService;
@@ -55,10 +56,27 @@ public class StaffController {
         if (result.hasErrors()) {
             model.addAttribute("error", result.toString());
             return "/staff/add_staff";
+        } else if (!staff.passwordConfirms()) {
+            model.addAttribute("error", "password not equals!");
+            return "/staff/add_staff";
         }
         staff.setJob(this.jobService.get(staff.getJob_id()));
         staff.setLibrary(this.libraryService.get(staff.getLibrary_id()));
         this.staffService.save(staff);
         return "redirect:/staff/";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam int id) {
+        this.staffService.delete(id);
+        return "redirect:/staff/";
+    }
+
+    @GetMapping("edit-staff")
+    public String edit(@RequestParam int id, Model model) {
+        model.addAttribute("staff", this.staffService.get(id));
+        model.addAttribute("libs", this.libraryService.libraryList());
+        model.addAttribute("jobs", this.jobService.jobList());
+        return "/staff/edit_staff";
     }
 }

@@ -1,18 +1,10 @@
 package ru.ancndz.libraryBase.configs.repos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.query.Procedure;
-import org.springframework.stereotype.Repository;
 import ru.ancndz.libraryBase.content.entity.User;
 
-//@RepositoryRestResource(collectionResourceRel = "users", path = "users")
-@Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    @Procedure(procedureName = "unregisterClient")
-    int unregisterClient(int id);
-
-    @Procedure(procedureName = "register_client")
-    void registerClient(String firstName, String lastName, String email, String status, String hashPin);
-
-    User findUserByEmail(String email);
+    User getByUserExtras_Id(int id);
+    void deleteByUserExtras_Id(int id);
+    User findByEmail(String email);
 }

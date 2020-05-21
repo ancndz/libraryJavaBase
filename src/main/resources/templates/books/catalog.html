@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/security/tags ">
 <head>
     <meta charset="UTF-8">
     <title>Books</title>
-    <h2 align="center"><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> | <a th:href="@{/users/}">Users</a></h2>
+    <div align="center">
+        <div sec:authorize="hasRole('ADMIN')">
+            <h2><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/users/}">Users</a>
+            </h2>
+        </div>
+        <h2><a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a></h2>
+    </div>
 </head>
 <body>
 <!--/*@thymesVar id="bookList" type="java.util.List"*/-->
@@ -14,7 +22,7 @@
         <table border="1" cellpadding="5">
             <thead>
             <tr>
-                <th>Id</th>
+                <th sec:authorize="hasRole('ADMIN')">Id</th>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Year</th>
@@ -24,11 +32,12 @@
                 <th>Count</th>
                 <th>Where?</th>
                 <th>Action</th>
+                <th sec:authorize="hasRole('ADMIN')">User action</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="book : ${bookList}">
-                <td th:text="${book.id}"></td>
+                <td sec:authorize="hasRole('ADMIN')" th:text="${book.id}"></td>
                 <td th:text="${book.name}"></td>
                 <td th:text="${book.author}"></td>
                 <td th:text="${book.pubYear}"></td>
@@ -37,13 +46,41 @@
                 <td th:text="${book.genre}"></td>
                 <td th:text="${book.count}"></td>
                 <td th:text="${book.library.address + ', ' + book.library.name}"></td>
-                <td><a th:href="@{/books/edit-book(id=${book.id})}">Edit</a>
-                    <a th:href="@{/books/delete(id=${book.id})}">Delete</a></td>
+                <td sec:authorize="hasRole('ADMIN')">
+                    <form th:action="@{/books/edit(id=${book.id})}" method="get">
+                        <input type="submit" value="Edit"/>
+                    </form>
+                    <form th:action="@{/books/delete(id=${book.id})}" method="get">
+                        <input type="submit" value="Delete"/>
+                    </form>
+                </td>
+                <td sec:authorize="hasRole('USER')">
+                    <form th:action="@{/books/reserv(id=${book.id})}" method="get">
+                        <input type="submit" value="Reserv"/>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a th:href="@{/books/new}">Add book</a></p>
+    <div sec:authorize="hasRole('ADMIN')">
+        <form th:action="@{/book/new}" method="get">
+            <input type="submit" value="Add Book"/>
+        </form>
+    </div>
+    <br>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+    <div align="center" sec:authorize="isAnonymous()">
+        <a th:href="@{/registration}">Register</a>
+        <br>
+        <a th:href="@{/registration/staff}">Register staff</a>
+        <br>
+        <a th:href="@{/login}">Login</a>
+    </div>
     <!--<p th:text="${debug}"></p>-->
 </div>
 </body>

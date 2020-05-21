@@ -46,7 +46,7 @@ public class LibraryController {
         return "redirect:/libs/";
     }
 
-    @GetMapping("/edit-lib")
+    @GetMapping("/edit")
     public String editLibForm(@RequestParam Integer id, Model model) {
         Library library = this.libraryService.get(id);
         model.addAttribute("library", library);

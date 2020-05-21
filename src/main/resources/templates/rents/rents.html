@@ -30,7 +30,7 @@
                 <td th:text="${rent.factEndDate}"></td>
                 <td th:text="${rent.staff.firstName} + ' ' + ${rent.staff.lastName}"></td>
                 <td th:text="${rent.book.name} + ' in ' + ${rent.book.library.name}"></td>
-                <td th:text="${rent.card.id}"></td>
+                <td th:text="${rent.user.id}"></td>
                 <td><a th:th:href="@{/libs/close-rent(id=${rent.id})}">Close</a>
                 </td>
             </tr>

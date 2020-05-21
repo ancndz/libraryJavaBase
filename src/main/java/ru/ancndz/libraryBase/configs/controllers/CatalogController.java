@@ -66,7 +66,7 @@ public class CatalogController {
         return "redirect:/books/";
     }
 
-    @GetMapping("/edit-book")
+    @GetMapping("/edit")
     public String editBookForm(@RequestParam Integer id, Model model) {
         //ModelAndView mav = new ModelAndView("edit_client");
         Book book = bookService.get(id);

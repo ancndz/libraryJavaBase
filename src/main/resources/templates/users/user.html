@@ -13,30 +13,29 @@
             <thead>
             <tr>
                 <th>Id</th>
-                <th>First name</th>
-                <th>Last name</th>
+                <th>Name</th>
                 <th>e-mail</th>
-                <th>status</th>
+                <th>Status</th>
                 <th>reg date</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody>
+            <!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.User"*/-->
             <tr th:each="user : ${userList}">
+                <!--/*@thymesVar id="userExtras" type="ru.ancndz.libraryBase.content.entity.UserExtras"*/-->
                 <td th:text="${user.id}"></td>
-                <td th:text="${user.firstName}"></td>
-                <td th:text="${user.lastName}"></td>
+                <td th:text="${userExtras.firstName} + ' ' + ${userExtras.lastName}"></td>
                 <td th:text="${user.email}"></td>
-                <td th:text="${user.status}"></td>
-                <td th:text="${user.dateReg}"></td>
-                <td><a th:href="@{/users/edit-clientWithCard(id=${user.id})}">Edit</a>
+                <td th:text="${userExtras.status}"></td>
+                <td th:text="${userExtras.dateReg}"></td>
+                <td><a th:href="@{/users/edit-client(id=${user.id})}">Edit</a>
                 <a th:href="@{/users/delete(id=${user.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
     <p><a th:href="@{/users/new}">Create User</a></p>
-    <p th:text="${debugString}"></p>
 </div>
 </body>
 </html>

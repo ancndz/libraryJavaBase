@@ -11,8 +11,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/src/main/resources/application.xml" />
+  <component name="ProjectResources">
+    <resource url="http://www.springframework.org/security/tags" location="$PROJECT_DIR$" />
+    <resource url="http://www.thymeleaf.org" location="$PROJECT_DIR$" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8.0_242" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />

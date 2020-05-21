@@ -1,59 +1,73 @@
 package ru.ancndz.libraryBase.configs.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.ancndz.libraryBase.configs.repos.CardRepository;
-import ru.ancndz.libraryBase.content.entity.User;
+import ru.ancndz.libraryBase.configs.repos.RoleRepository;
 import ru.ancndz.libraryBase.configs.repos.UserRepository;
-import ru.ancndz.libraryBase.content.libraryEnvironment.Card;
+import ru.ancndz.libraryBase.content.entity.User;
+import ru.ancndz.libraryBase.content.jobs.Role;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository repository;
-    private final CardRepository cardRepository;
+    private final RoleRepository roleRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository repository, CardRepository cardRepository) {
+    public UserService(UserRepository repository, RoleRepository roleRepository) {
         this.repository = repository;
-        this.cardRepository = cardRepository;
+        this.roleRepository = roleRepository;
     }
 
-    public void save(User user, Card card) {
-        if (this.repository.findUserByEmail(user.getEmail()) == null ||
-                this.repository.findUserByEmail(user.getEmail()).getId() == user.getId()) {
-            repository.save(user);
-            cardRepository.save(card);
+    public boolean save(User user) {
+
+        if (this.repository.findByEmail(user.getEmail()) != null &&
+            this.repository.findByEmail(user.getEmail()).getId() != user.getId()) {
+            return false;
         }
+
+        user.setRoles(Collections.singleton(new Role(2, "ROLE_USER")));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPasswordConfirm(bCryptPasswordEncoder.encode(user.getPassword()));
+        repository.save(user);
+        return true;
     }
 
-    public List<User> clientList() {
-        return (List<User>) repository.findAll();
+    public void deleteByExtras(int id) {
+        this.repository.deleteByUserExtras_Id(id);
     }
 
-    public List<Card> cardList() {
-        return (List<Card>) cardRepository.findAll();
+    public void delete(int id) {
+        this.repository.deleteById(id);
     }
 
-    public User getClient(Integer id) {
-        return repository.findById(id).get();
+    public User getByExtras(int id) {
+        return this.repository.getByUserExtras_Id(id);
     }
 
-    public Card getCard(Integer id) {
-        return cardRepository.findById(id).get();
+    public User get(int id) {
+        return this.repository.getOne(id);
     }
 
-    public Card getCardByClientId(int id) {
-        return cardRepository.getCardByClient_Id(id);
+    public List<User> getAll() {
+        return (List<User>) this.repository.findAll();
     }
 
-    public void deleteCard(Integer id) {
-        cardRepository.deleteById(id);
-    }
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User user = this.repository.findByEmail(s);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user;
 
-    public int deleteClient(Integer id) {
-        return repository.unregisterClient(id);
     }
-
 }

@@ -13,9 +13,9 @@ public interface RentRepos extends JpaRepository<Rent, Integer> {
      * @param id - айди клиента
      * @return лист аренд
      */
-    List<Rent> findAllByCard_Client_Id(int id);
+    //List<Rent> findAllByCard_Client_Id(int id);
 
-    List<Rent> findAllByFactEndDateIsNullAndCard_Client_Id(int id);
+    //List<Rent> findAllByFactEndDateIsNullAndCard_Client_Id(int id);
 
-    List<Rent> findAllByEndDateIsBeforeAndFactEndDateIsNullAndCard_Client_Id(LocalDateTime now, int id);
+    //List<Rent> findAllByEndDateIsBeforeAndFactEndDateIsNullAndCard_Client_Id(LocalDateTime now, int id);
 }

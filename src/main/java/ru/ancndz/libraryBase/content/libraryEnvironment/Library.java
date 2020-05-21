@@ -2,30 +2,21 @@ package ru.ancndz.libraryBase.content.libraryEnvironment;
 
 
 import javax.persistence.*;
-import java.util.Map;
+
 import java.util.Objects;
 
-/**
- * Класс библиотеки
- */
 @Entity
 @Table(name = "library")
 public class Library {
-    /**
-     * айди библиотеки
-     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private  int id;
-    /**
-     * название библиотеки
-     */
+
     @Column(name = "name")
     private  String name;
-    /**
-     * адрес библиотеки
-     */
+
     @Column(name = "address")
     private  String address;
 
@@ -37,6 +28,11 @@ public class Library {
      */
     public Library(int id,String name,String address) {
         this.id = id;
+        this.name = name;
+        this.address = address;
+    }
+
+    public Library(String name, String address) {
         this.name = name;
         this.address = address;
     }

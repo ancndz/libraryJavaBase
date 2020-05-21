@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
 <head>
     <meta charset="UTF-8">
     <title>Main page</title>
-    <h2 align="center"><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> | <a th:href="@{/users/}">Users</a></h2>
+    <div align="center">
+        <div sec:authorize="hasRole('ADMIN')">
+            <h2><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/users/}">Users</a></h2>
+        </div>
+        <h2><a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a></h2>
+    </div>
 </head>
 <body>
+<h2 align="center">Main Page</h2>
+<div align="center" sec:authorize="isAnonymous()">
+    <a th:href="@{/registration}">Register</a>
+    <br>
+    <a th:href="@{/registration/staff}">Register staff</a>
+    <br>
+    <a th:href="@{/login}">Login</a>
+</div>
 </body>
 </html>

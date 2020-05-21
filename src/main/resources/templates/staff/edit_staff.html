@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Add staff</title>
+<meta charset="UTF-8">
+<title>Edit User</title>
+<h2 align="center"><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> | <a th:href="@{/users/}">Users</a></h2>
+<h2 align="center">Fill data:</h2>
 </head>
 <body>
 
-<!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.libraryEnvironment.Staff"*/-->
-<form action="#" th:action="@{/registration/staff/save}" th:object="${staff}" method="post" align="center">
+<!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.User"*/-->
+<form action="#" th:action="@{/staff/save}" th:object="${staff}" method="post" align="center">
     <table border="1" cellpadding="5" align="center">
         <thead>
         <tr>
@@ -46,7 +47,7 @@
         <tbody>
         <td>
             <select th:field="*{library_id}" id="library_id">
-                <option th:each="library : ${libraries}"
+                <option th:each="library : ${libs}"
                         th:value="${library.id}"
                         th:utext="${library.name +', '+ library.address}"></option>
             </select>
@@ -74,11 +75,7 @@
         </tbody>
     </table>
     <br>
-    <input type="submit" value="Add Staff">
-    <div th:switch="${error}">
-        <p th:case="null"></p>
-        <p th:case="*" th:text="${error}"></p>
-    </div>
+    <input type="submit" value="Edit Staff">
 </form>
 </body>
 </html>

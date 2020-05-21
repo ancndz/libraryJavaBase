@@ -4,78 +4,45 @@ package ru.ancndz.libraryBase.content.libraryEnvironment;
 import javax.persistence.*;
 import java.util.Objects;
 
-/**
- * Класс книги, журнала, и т.п.
- */
 @Entity
-@Table(name = "catalog")
+@Table(name = "book")
 public class Book {
     /**
      * айди книги
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
-    /**
-     * тип книги (журнал, книга, статья и т.п.)
-     */
+    @Column(name = "book_type")
     private String bookType;
-    /**
-     * название книги
-     */
+    @Column(name = "name")
     private String name;
-    /**
-     * автор книги
-     */
+    @Column(name = "author")
     private String author;
-    /**
-     * издание книги
-     */
+    @Column(name = "edition")
     private String edition;
-    /**
-     * номер издания
-     */
+    @Column(name = "edition_num")
     private String editionNum;
-    /**
-     * год публикации
-     */
+    @Column(name = "pub_year")
     private int pubYear;
-    /**
-     * жанр книги
-     */
+    @Column(name = "genre")
     private String genre;
-    /**
-     * кол-во книг в библиотеке
-     */
+    @Column(name = "count")
     private int count;
-    /**
-     * доп информация о книге
-     */
+    @Column(name = "extra")
     private String extra;
-    /**
-     * библиотека, в которой книга
-     */
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH, targetEntity = Library.class)
     @JoinColumn(name = "library_id")
     private Library library;
+
     @Transient
     private int libraryId;
 
     public Book() {
     }
 
-    /**
-     * конструктор
-     * @param id айди книги
-     * @param bookType тип книги
-     * @param name название книги
-     * @param author автор книги
-     * @param edition издание книги
-     * @param pubYear жанр книги
-     * @param genre кол-во книг в библиотеке
-     * @param count доп информация о книге
-     * @param extra доп информация о книге
-     */
     public Book(int id, String bookType, String name, String author,
                 String edition, String editionNum, int pubYear, String genre,
                 int count, String extra, Library library) {

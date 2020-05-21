@@ -25,9 +25,9 @@ public class RentService {
         return (List<Rent>) this.rentRepos.findAll();
     }
 
-    public List<Rent> clientRentsList(int id) {
-        return this.rentRepos.findAllByCard_Client_Id(id);
-    }
+    //public List<Rent> clientRentsList(int id) {
+    //    return this.rentRepos.findAllByCard_Client_Id(id);
+    //}
 
     public void delete(int id) {
         this.rentRepos.deleteById(id);
@@ -37,11 +37,11 @@ public class RentService {
         return this.rentRepos.getOne(id);
     }
 
-    public List<Rent> clientUnfinishedRents(int id) {
+    /*public List<Rent> clientUnfinishedRents(int id) {
         return this.rentRepos.findAllByFactEndDateIsNullAndCard_Client_Id(id);
     }
 
     public List<Rent> clientExpRents(int id) {
         return this.rentRepos.findAllByEndDateIsBeforeAndFactEndDateIsNullAndCard_Client_Id(LocalDateTime.now(), id);
-    }
+    }*/
 }

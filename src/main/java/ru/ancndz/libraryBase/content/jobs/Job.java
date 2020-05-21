@@ -9,32 +9,24 @@ import java.util.Objects;
 @Entity
 @Table(name = "jobs")
 public class Job {
-    /**
-     * id должности
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
-    /**
-     * название должности
-     */
+
     @Column(name = "name")
     protected String name;
-    /**
-     * зарплата, тысяч рублей
-     */
+
     @Column(name = "pay")
     protected int pay;
 
     public Job(){}
 
-    /**
-     * конструктор
-     * @param id айди должности
-     * @param name название должности
-     * @param pay зар. плата, тыс. руб.
-     */
+    public Job(String name, int pay) {
+        this.name = name;
+        this.pay = pay;
+    }
+
     public Job(int id, String name, int pay) {
         this.id = id;
         this.name = name;

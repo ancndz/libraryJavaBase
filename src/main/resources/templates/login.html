@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.libraryEnvironment.Staff"*/-->
+<form method="POST" th:action="@{/login}" align="center">
+    <table border="1" cellpadding="5" align="center">
+        <thead>
+        <tr>
+            <th><label for="email">Email</label></th>
+            <th><label for="pass">Password</label></th>
+        </tr>
+        </thead>
+        <tbody>
+        <td><input type="text" th:name="username" id="email" placeholder="Email"></td>
+        <td><input type="password" th:name="password" id="pass" placeholder="Password"></td>
+        </tbody>
+    </table>
+    <br>
+    <input type="submit" value="Login">
+    <h3 align="center"><a th:href="@{/registration}">Register</a></h3>
+    <h3 align="center"><a th:href="@{/registration/staff}">Register (staff only)</a></h3>
+</form>
+</body>
+</html>

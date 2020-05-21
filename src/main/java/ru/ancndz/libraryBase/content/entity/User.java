@@ -1,60 +1,65 @@
 package ru.ancndz.libraryBase.content.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import ru.ancndz.libraryBase.content.jobs.Role;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
-/**
- * Класс клиента
- */
 @Entity
-@Table(name = "client")
-public class User {
-    /**
-     * айди клиента
-     */
+@Table(name = "user")
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    /**
-     * имя клиента
-     */
-    @Column(name = "first_name")
-    private String firstName;
-    /**
-     * фамилия клиента
-     */
-    @Column(name = "last_name")
-    private String lastName;
-    /**
-     * дата регистрации
-     */
-    @Column(name = "date_reg")
-    private LocalDateTime dateReg;
-    /**
-     * e-mail клиента
-     */
+
+    @Column(name = "password")
+    private String password;
+
+    @Transient
+    private String passwordConfirm;
+
     @Column(name = "email")
     private String email;
-    /**
-     * студент? науч работник?
-     */
-    @Column(name = "status")
-    private String status;
+
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = UserExtras.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_extras_id", unique = true, nullable = false)
+    private UserExtras userExtras;
+
+    @Transient
+    private int userExtrasId;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "roles_has_user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    private Set<Role> roles;
+
 
     public User(){
-        this.dateReg = LocalDateTime.now();
     }
 
-    public User(int id, String firstName, String lastName, String email, String status) {
+    public User(int id, String password, UserExtras userExtras) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateReg = LocalDateTime.now();
-        this.email = email;
-        this.status = status;
+        this.password = password;
+        this.userExtras = userExtras;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public boolean passwordsCheck() {
+        return this.password.equals(this.passwordConfirm);
     }
 
     public int getId() {
@@ -65,44 +70,40 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public UserExtras getUserExtras() {
+        return userExtras;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDateTime getDateReg() {
-        return dateReg;
-    }
-
-    public void setDateReg(LocalDateTime dateReg) {
-        this.dateReg = dateReg;
+    public void setUserExtras(UserExtras userExtras) {
+        this.userExtras = userExtras;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getStatus() {
-        return status;
+    public int getUserExtrasId() {
+        return userExtrasId;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setUserExtrasId(int userExtrasId) {
+        this.userExtrasId = userExtrasId;
     }
 
     @Override
@@ -110,26 +111,48 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return getFirstName().equals(user.getFirstName()) &&
-                getLastName().equals(user.getLastName()) &&
-                Objects.equals(getEmail(), user.getEmail()) &&
-                getStatus().equals(user.getStatus());
+        return getPassword().equals(user.getPassword()) &&
+                email.equals(user.email) &&
+                getUserExtras().equals(user.getUserExtras());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getFirstName(), getLastName(), getEmail(), getStatus());
+        return Objects.hash(getPassword(), email);
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", dateReg=" + dateReg +
-                ", email='" + email + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
