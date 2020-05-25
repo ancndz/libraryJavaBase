@@ -35,14 +35,15 @@ public class UserController {
 
     @GetMapping("/new")
     public String newClientForm(User user) {
-        user.setUserExtras(new UserExtras());
+        /*user.setUserExtras(new UserExtras());
         user.getUserExtras().setDateReg(LocalDateTime.now());
-        return "/users/add_user";
+        return "/users/add_user";*/
+        return "redirect:/registration/";
     }
 
     @PostMapping("/save")
     public String saveClient(@Valid User user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
+        /*if (result.hasErrors()) {
             String errorText = result.toString();
             model.addAttribute("errorText", errorText);
             return "/users/add_user";
@@ -52,10 +53,11 @@ public class UserController {
             return "/users/add_user";
         }
         userService.save(user);
-        return "redirect:/users/";
+        return "redirect:/users/";*/
+        return "redirect:/registration/save";
     }
 
-    @GetMapping("/edit-user")
+    @GetMapping("/edit")
     public String editClientForm(@RequestParam Integer id, Model model) {
         User user = this.userService.get(id);
         model.addAttribute("user", user);

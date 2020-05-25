@@ -11,5 +11,6 @@
 <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
 <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
 <a href="index.html" th:href="@{/mainPage.html}">Back to Home Page</a>
+<div th:insert="/fragments/header :: login"></div>
 </body>
 </html>

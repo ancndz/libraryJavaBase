@@ -7,6 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.ancndz.libraryBase.configs.services.JobService;
 import ru.ancndz.libraryBase.content.jobs.Job;
+import ru.ancndz.libraryBase.content.libraryEnvironment.Book;
+import ru.ancndz.libraryBase.content.libraryEnvironment.Library;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -42,6 +44,15 @@ public class JobController {
         }
         jobService.save(job);
         return "redirect:/jobs/";
+    }
+
+    @GetMapping("/edit")
+    public String editBookForm(@RequestParam Integer id, Model model) {
+        //ModelAndView mav = new ModelAndView("edit_client");
+        Job job = jobService.get(id);
+        //mav.addObject("client", client);
+        model.addAttribute("job", job);
+        return "/jobs/edit_job";
     }
 
     @GetMapping("/delete")

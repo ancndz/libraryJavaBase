@@ -41,16 +41,17 @@ public class StaffController {
 
     @GetMapping("/new")
     public String getNewStaffForm(Staff staff, Model model) {
-        List<Library> libraryList = this.libraryService.libraryList();
+        /*List<Library> libraryList = this.libraryService.libraryList();
         List<Job> jobList = this.jobService.jobList();
         model.addAttribute("libraries", libraryList);
         model.addAttribute("jobs", jobList);
-        return "/staff/add_staff";
+        return "/staff/add_staff";*/
+        return "redirect:/registration/staff";
     }
 
     @PostMapping("/save")
     public String saveStaff(@Valid Staff staff, BindingResult result, Model model) {
-        if (result.hasErrors()) {
+        /*if (result.hasErrors()) {
             model.addAttribute("error", result.toString());
             return "/staff/add_staff";
         } else if (!staff.passwordConfirms()) {
@@ -60,7 +61,8 @@ public class StaffController {
         staff.setJob(this.jobService.get(staff.getJob_id()));
         staff.setLibrary(this.libraryService.get(staff.getLibrary_id()));
         this.staffService.save(staff);
-        return "redirect:/staff/";
+        return "redirect:/staff/";*/
+        return "redirect:/registration/staff/save";
     }
 
     @GetMapping("/delete")

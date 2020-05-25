@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
 <head>
     <meta charset="UTF-8">
     <title>Clients</title>
@@ -29,13 +30,23 @@
                 <td th:text="${user.email}"></td>
                 <td th:text="${userExtras.status}"></td>
                 <td th:text="${userExtras.dateReg}"></td>
-                <td><a th:href="@{/users/edit-client(id=${user.id})}">Edit</a>
-                <a th:href="@{/users/delete(id=${user.id})}">Delete</a></td>
+                <td sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/users/edit(id=${user.id})}">
+                        <span>Edit</span>
+                    </a>
+                    <br>
+                    <a th:href="@{/users/delete(id=${user.id})}">
+                        <span>Delete</span>
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a th:href="@{/users/new}">Create User</a></p>
+    <form th:action="@{/users/new}" method="get" align="center">
+        <input type="submit" value="Add User"/>
+    </form>
 </div>
+<div th:insert="/fragments/header :: login"></div>
 </body>
 </html>

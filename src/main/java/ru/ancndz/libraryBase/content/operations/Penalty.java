@@ -51,7 +51,7 @@ public class Penalty {
     @JoinColumn(name = "rent_id", unique = true, nullable = false)
     private Rent rent;
     @ManyToOne
-    @JoinColumn(name = "card_id", unique = true, nullable = false)
+    @JoinColumn(name = "user_id", unique = true, nullable = false)
     private User user;
 
     public Penalty() {

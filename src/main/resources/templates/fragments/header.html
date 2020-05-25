@@ -16,5 +16,20 @@
             <h2><a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a></h2>
         </div>
     </div>
+    <div align="center" th:fragment="login">
+        <br>
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </div>
+        <div align="center" sec:authorize="isAnonymous()">
+            <a th:href="@{/registration}">Register</a>
+            <br>
+            <a th:href="@{/registration/staff}">Register staff</a>
+            <br>
+            <a th:href="@{/login}">Login</a>
+        </div>
+    </div>
 </body>
 </html>

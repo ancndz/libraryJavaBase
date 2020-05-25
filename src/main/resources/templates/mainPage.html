@@ -7,12 +7,6 @@
 <body>
 <div th:insert="/fragments/header :: header"></div>
 <h2 align="center">Main Page</h2>
-<div align="center" sec:authorize="isAnonymous()">
-    <a th:href="@{/registration}">Register</a>
-    <br>
-    <a th:href="@{/registration/staff}">Register staff</a>
-    <br>
-    <a th:href="@{/login}">Login</a>
-</div>
+<div th:insert="/fragments/header :: login"></div>
 </body>
 </html>

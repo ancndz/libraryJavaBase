@@ -25,14 +25,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity/*
-                .csrf()
-                .disable()*/
+        httpSecurity
                 .authorizeRequests()
                     //Доступ только для не зарегистрированных пользователей
-                    .antMatchers("/registration/**").not().fullyAuthenticated()
+                    //.antMatchers("/registration/**").not().fullyAuthenticated()
+                    //.antMatchers("/registration/save/**").not().fullyAuthenticated()
                     //Доступ только для пользователей с ролью Администратор
-                    .antMatchers("/staff/**").hasRole("ADMIN")
+                    .antMatchers("/registration/staff/**").hasRole("ADMIN")
+                    .antMatchers("/registration/staff/save/**").hasRole("ADMIN")
+                    .antMatchers("/staff/edit/**").hasRole("ADMIN")
+                    .antMatchers("/staff/delete/**").hasRole("ADMIN")
+                    .antMatchers("/staff/save/**").hasRole("ADMIN")
+                    .antMatchers("/jobs/edit/**").hasRole("ADMIN")
+                    .antMatchers("/jobs/delete/**").hasRole("ADMIN")
+                    .antMatchers("/jobs/save/**").hasRole("ADMIN")
                     .antMatchers("/jobs/**").hasRole("ADMIN")
                     .antMatchers("/libs/edit/**").hasRole("ADMIN")
                     .antMatchers("/libs/delete/**").hasRole("ADMIN")
@@ -42,6 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/books/").hasRole("USER")
                     //Доступ разрешен всем пользователей
                     .antMatchers("/books/", "/libs/", "/books/filter").permitAll()
+                    .antMatchers("/registration/**").permitAll()
+                    .antMatchers("/registration/save/**").permitAll()
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
                 .and()
@@ -54,7 +62,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                     .permitAll()
-                    .logoutSuccessUrl("/");
+                    .logoutSuccessUrl("/").and()
+                .csrf()
+                .disable();
     }
 
     @Autowired

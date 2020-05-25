@@ -42,17 +42,18 @@
                 <td th:text="${book.count}"></td>
                 <td th:text="${book.library.address + ', ' + book.library.name}"></td>
                 <td sec:authorize="hasRole('ADMIN')">
-                    <form th:action="@{/books/edit(id=${book.id})}" method="get">
-                        <input type="submit" value="Edit"/>
-                    </form>
-                    <form th:action="@{/books/delete(id=${book.id})}" method="get">
-                        <input type="submit" value="Delete"/>
-                    </form>
+                    <a th:href="@{/books/edit(id=${book.id})}">
+                        <span>Edit</span>
+                    </a>
+                    <br>
+                    <a th:href="@{/books/delete(id=${book.id})}">
+                        <span>Delete</span>
+                    </a>
                 </td>
                 <td sec:authorize="hasRole('USER')">
-                    <form th:action="@{/books/reserv(id=${book.id})}" method="get">
-                        <input type="submit" value="Reserv"/>
-                    </form>
+                    <a th:href="@{/rents/new(id=${book.id})}">
+                        <span>Rent</span>
+                    </a>
                 </td>
             </tr>
             </tbody>
@@ -63,20 +64,7 @@
             <input type="submit" value="Add Book"/>
         </form>
     </div>
-    <br>
-    <div sec:authorize="isAuthenticated()">
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-    </div>
-    <div align="center" sec:authorize="isAnonymous()">
-        <a th:href="@{/registration}">Register</a>
-        <br>
-        <a th:href="@{/registration/staff}">Register staff</a>
-        <br>
-        <a th:href="@{/login}">Login</a>
-    </div>
-    <!--<p th:text="${debug}"></p>-->
 </div>
+<div th:insert="/fragments/header :: login"></div>
 </body>
 </html>

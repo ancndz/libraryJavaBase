@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
 <head>
     <meta charset="UTF-8">
     <title>Jobs</title>
@@ -23,14 +24,23 @@
                 <td th:text="${job.id}"></td>
                 <td th:text="${job.name}"></td>
                 <td th:text="${job.pay}"></td>
-                <td><a th:href="@{/libs/edit-lib(id=${job.id})}">Edit</a>
-                    <a th:href="@{/libs/delete(id=${job.id})}">Delete</a>
+                <td sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/jobs/edit(id=${job.id})}">
+                        <span>Edit</span>
+                    </a>
+                    <br>
+                    <a th:href="@{/jobs/delete(id=${job.id})}">
+                        <span>Delete</span>
+                    </a>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a th:href="@{/jobs/new}">Add job</a></p>
+    <form th:action="@{/jobs/new}" method="get" align="center">
+        <input type="submit" value="Add Job"/>
+    </form>
 </div>
+<div th:insert="/fragments/header :: login"></div>
 </body>
 </html>

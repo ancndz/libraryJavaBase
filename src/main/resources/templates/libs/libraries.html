@@ -13,7 +13,7 @@
         <table border="1" cellpadding="5">
             <thead>
             <tr>
-                <th>Id</th>
+                <th sec:authorize="hasRole('ADMIN')">Id</th>
                 <th>Name</th>
                 <th>Address</th>
                 <th>Action</th>
@@ -26,17 +26,18 @@
                 <td th:text="${lib.name}"></td>
                 <td th:text="${lib.address}"></td>
                 <td sec:authorize="hasRole('ADMIN')">
-                    <form th:action="@{/books/edit(id=${lib.id})}" method="get">
-                        <input type="submit" value="Edit"/>
-                    </form>
-                    <form th:action="@{/books/delete(id=${lib.id})}" method="get">
-                        <input type="submit" value="Delete"/>
-                    </form>
+                    <a th:href="@{/libs/edit(id=${lib.id})}">
+                        <span>Edit</span>
+                    </a>
+                    <br>
+                    <a th:href="@{/libs/delete(id=${lib.id})}">
+                        <span>Delete</span>
+                    </a>
                 </td>
                 <td>
-                    <form th:action="@{/books/filter(id=${lib.id})}" method="get">
-                        <input type="submit" value="View catalog"/>
-                    </form>
+                    <a th:href="@{/books/filter(id=${lib.id})}">
+                        <span>View Catalog</span>
+                    </a>
                 </td>
             </tr>
             </tbody>
@@ -48,19 +49,7 @@
             <input type="submit" value="New Library"/>
         </form>
     </div>
-    <br>
-    <div sec:authorize="isAuthenticated()">
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-    </div>
-    <div align="center" sec:authorize="isAnonymous()">
-        <a th:href="@{/registration}">Register</a>
-        <br>
-        <a th:href="@{/registration/staff}">Register staff</a>
-        <br>
-        <a th:href="@{/login}">Login</a>
-    </div>
 </div>
+<div th:insert="/fragments/header :: login"></div>
 </body>
 </html>

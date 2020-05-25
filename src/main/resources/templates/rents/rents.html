@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
 <head>
     <meta charset="UTF-8">
     <title>Rents</title>
@@ -31,13 +32,19 @@
                 <td th:text="${rent.staff.firstName} + ' ' + ${rent.staff.lastName}"></td>
                 <td th:text="${rent.book.name} + ' in ' + ${rent.book.library.name}"></td>
                 <td th:text="${rent.user.id}"></td>
-                <td><a th:th:href="@{/libs/close-rent(id=${rent.id})}">Close</a>
+                <td>
+                    <a th:href="@{/rents/close(id=${rent.id})}">
+                        <span>Close</span>
+                    </a>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a th:href="@{/rents/new}">Add Rent</a></p>
+    <form th:action="@{/rents/new}" method="get" align="center">
+        <input type="submit" value="Add Rent"/>
+    </form>
 </div>
+<div th:insert="/fragments/header :: login"></div>
 </body>
 </html>
