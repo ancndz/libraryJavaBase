@@ -24,6 +24,10 @@ public class LibraryService {
         return (List<Library>) libraryRepository.findAll();
     }
 
+    public List<Library> libraryListBusiness(){
+        return libraryRepository.findAllByIdIsNot(16);
+    }
+
     public Library get(Integer id) {
         return libraryRepository.findById(id).get();
     }

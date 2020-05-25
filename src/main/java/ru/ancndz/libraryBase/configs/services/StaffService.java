@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.ancndz.libraryBase.configs.repos.RoleRepository;
 import ru.ancndz.libraryBase.configs.repos.StaffRepository;
+import ru.ancndz.libraryBase.content.entity.User;
 import ru.ancndz.libraryBase.content.jobs.Role;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
 
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class StaffService implements UserDetailsService {
+public class StaffService {
 
     private final StaffRepository staffRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -36,7 +37,6 @@ public class StaffService implements UserDetailsService {
                 this.staffRepository.findByEmail(staff.getEmail()).getId() != staff.getId()) {
             return false;
         }
-
         staff.setRoles(new HashSet<>(this.repository.findAll()));
         staff.setPassword(bCryptPasswordEncoder.encode(staff.getPassword()));
         staff.setPasswordConfirm(bCryptPasswordEncoder.encode(staff.getPassword()));
@@ -60,8 +60,4 @@ public class StaffService implements UserDetailsService {
         return this.staffListByLibrary(id);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return this.staffRepository.findByEmail(s);
-    }
 }

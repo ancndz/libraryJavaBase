@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <meta charset="UTF-8">
-<title>Edit clientWithCard</title>
-<h2 align="center"><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> | <a th:href="@{/users/}">Users</a></h2>
+<title>Edit Library</title>
 </head>
 <body>
+<div th:insert="/fragments/header :: header"></div>
 <form action="#" th:action="@{/libs/save}" th:object="${library}" method="post">
     <h3 align="center" >Fill data for library with <span th:text="*{id}"></span> id:</h3>
     <table align="center" border="1" cellpadding="5">

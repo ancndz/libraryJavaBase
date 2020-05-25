@@ -5,7 +5,7 @@
     <title>Add staff</title>
 </head>
 <body>
-
+<div th:insert="/fragments/header :: header"></div>
 <!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.libraryEnvironment.Staff"*/-->
 <form action="#" th:action="@{/registration/staff/save}" th:object="${staff}" method="post" align="center">
     <table border="1" cellpadding="5" align="center">

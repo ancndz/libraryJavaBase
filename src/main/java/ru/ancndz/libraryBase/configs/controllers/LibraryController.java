@@ -24,7 +24,7 @@ public class LibraryController {
 
     @GetMapping("")
     public String home(Model model) {
-        List<Library> libraryList = this.libraryService.libraryList();
+        List<Library> libraryList = this.libraryService.libraryListBusiness();
         if (!libraryList.isEmpty()) {
             model.addAttribute("libraries", libraryList);
         }

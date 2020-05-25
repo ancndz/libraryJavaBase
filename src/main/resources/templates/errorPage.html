@@ -4,15 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Error</title>
-    <div sec:authorize="isAuthenticated()">
-        <div sec:authorize="hasRole('ADMIN')">
-            <h2 align="center"><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/users/}">Users</a></h2>
-        </div>
-        <h2><a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a></h2>
-    </div>
     <h1 align="center">Error!</h1>
 </head>
 <body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+<div th:insert="/fragments/header :: header"></div>
 <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
 <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
 <a href="index.html" th:href="@{/mainPage.html}">Back to Home Page</a>

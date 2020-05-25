@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Rents</title>
-    <h2 align="center"><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> | <a th:href="@{/users/}">Users</a></h2>
 </head>
 <body>
+<div th:insert="/fragments/header :: header"></div>
 <div th:switch="${rents}" align="center">
     <h2 th:case="null">No libs found!</h2>
     <div th:case="*">

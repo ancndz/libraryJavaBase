@@ -4,14 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Libraries</title>
-    <div align="center">
-        <div sec:authorize="hasRole('ADMIN')">
-            <h2><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/users/}">Users</a></h2>
-        </div>
-        <h2><a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a></h2>
-    </div>
 </head>
 <body>
+<div th:insert="/fragments/header :: header"></div>
 <div th:switch="${libraries}" align="center">
     <h2 th:case="null">No libs found!</h2>
     <div th:case="*">

@@ -15,25 +15,23 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
     private final UserRepository repository;
     private final RoleRepository roleRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository repository, RoleRepository roleRepository) {
+    public UserService(UserRepository repository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.repository = repository;
         this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public boolean save(User user) {
-
         if (this.repository.findByEmail(user.getEmail()) != null &&
             this.repository.findByEmail(user.getEmail()).getId() != user.getId()) {
             return false;
         }
-
         user.setRoles(Collections.singleton(new Role(2, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setPasswordConfirm(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -61,13 +59,4 @@ public class UserService implements UserDetailsService {
         return (List<User>) this.repository.findAll();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = this.repository.findByEmail(s);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        return user;
-
-    }
 }

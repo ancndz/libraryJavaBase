@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Library</title>
-    <h2 align="center"><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> | <a th:href="@{/users/}">Users</a></h2>
-    <h2 align="center">Fill data:</h2>
 </head>
 <body>
+<div th:insert="/fragments/header :: header"></div>
 <!--/*@thymesVar id="library" type="ru.ancndz.libraryBase.content.libraryEnvironment.Library"*/-->
 <form action="#" th:action="@{/libs/save}" th:object="${library}" method="post" align="center">
     <table border="1" cellpadding="5" align="center">
