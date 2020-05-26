@@ -26,4 +26,4 @@ hs_err_pid*
 # server tomcat
 tomcat local service/
 
-.properties
+application.properties
