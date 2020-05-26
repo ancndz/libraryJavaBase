@@ -44,9 +44,9 @@
         </table>
     </div>
     <br>
-    <form th:action="@{/staff/new}" method="get" align="center">
-        <input type="submit" value="Add Staff"/>
-    </form>
+    <a th:href="@{/staff/new}">
+        <span>Add Staff</span>
+    </a>
 </div>
 <div th:insert="/fragments/header :: login"></div>
 </body>

@@ -43,7 +43,7 @@ public class MainController {
             }
         }
         model.addAttribute("name", username);
-        System.out.println(username);
+        //System.out.println(username);
         return "/mainPage";
     }
 

@@ -68,9 +68,7 @@ public class CatalogController {
 
     @GetMapping("/edit")
     public String editBookForm(@RequestParam Integer id, Model model) {
-        //ModelAndView mav = new ModelAndView("edit_client");
         Book book = bookService.get(id);
-        //mav.addObject("client", client);
         model.addAttribute("book", book);
         List<Library> libraryList = this.libraryService.libraryList();
         model.addAttribute("libraries", libraryList);

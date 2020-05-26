@@ -26,10 +26,10 @@
             <tr th:each="user : ${userList}">
                 <!--/*@thymesVar id="userExtras" type="ru.ancndz.libraryBase.content.entity.UserExtras"*/-->
                 <td th:text="${user.id}"></td>
-                <td th:text="${userExtras.firstName} + ' ' + ${userExtras.lastName}"></td>
+                <td th:text="${user.userExtras.firstName} + ' ' + ${user.userExtras.lastName}"></td>
                 <td th:text="${user.email}"></td>
-                <td th:text="${userExtras.status}"></td>
-                <td th:text="${userExtras.dateReg}"></td>
+                <td th:text="${user.userExtras.status}"></td>
+                <td th:text="${user.userExtras.dateReg}"></td>
                 <td sec:authorize="hasRole('ADMIN')">
                     <a th:href="@{/users/edit(id=${user.id})}">
                         <span>Edit</span>
@@ -43,9 +43,9 @@
             </tbody>
         </table>
     </div>
-    <form th:action="@{/users/new}" method="get" align="center">
-        <input type="submit" value="Add User"/>
-    </form>
+    <a th:href="@{/user/new}">
+        <span>Add User</span>
+    </a>
 </div>
 <div th:insert="/fragments/header :: login"></div>
 </body>

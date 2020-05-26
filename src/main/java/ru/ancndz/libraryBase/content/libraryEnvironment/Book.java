@@ -148,7 +148,7 @@ public class Book {
     }
 
     public int getLibraryId() {
-        return libraryId;
+        return library.getId();
     }
 
     public void setLibraryId(int libraryId) {

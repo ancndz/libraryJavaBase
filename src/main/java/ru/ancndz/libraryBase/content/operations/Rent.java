@@ -26,30 +26,23 @@ public class Rent {
      */
     @Column(name = "start_date")
     private LocalDateTime startDate;
-    /**
-     * дата конца аренды
-     */
+
     @Column(name = "end_date")
     private LocalDateTime endDate;
-    /**
-     * фактическое окончание аренды (книга возвращена)
-     */
+
     @Column(name = "fact_end_date")
     private LocalDateTime factEndDate;
-    /**
-     * сотрудник, выдавшего книгу
-     */
+
     @OneToOne
     @JoinColumn(name = "staff_id", unique = true, nullable = false)
     private Staff staff;
-    /**
-     * книга
-     */
+
     @OneToOne()
     @JoinColumn(name = "book_id", unique = true, nullable = false)
     private Book book;
+
     @ManyToOne
-    @JoinColumn(name = "card_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Rent() {}

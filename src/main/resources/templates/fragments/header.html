@@ -13,7 +13,7 @@
                 <h2><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/users/}">Users</a>
                 </h2>
             </div>
-            <h2><a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a></h2>
+            <h2><a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> <a sec:authorize="isAuthenticated()" th:href="@{/rents/}"> | Rents</a> </h2>
         </div>
     </div>
     <div align="center" th:fragment="login">

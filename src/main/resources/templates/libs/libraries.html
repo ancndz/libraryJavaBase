@@ -45,9 +45,9 @@
     </div>
     <br>
     <div sec:authorize="hasRole('ADMIN')">
-        <form th:action="@{/libs/new}" method="get">
-            <input type="submit" value="New Library"/>
-        </form>
+        <a th:href="@{/libs/new}">
+            <span>Add Lib</span>
+        </a>
     </div>
 </div>
 <div th:insert="/fragments/header :: login"></div>

@@ -26,7 +26,7 @@
                 <th>Genre</th>
                 <th>Count</th>
                 <th>Where?</th>
-                <th>Action</th>
+                <th sec:authorize="isAuthenticated()">Action</th>
                 <th sec:authorize="hasRole('ADMIN')">User action</th>
             </tr>
             </thead>
@@ -51,7 +51,7 @@
                     </a>
                 </td>
                 <td sec:authorize="hasRole('USER')">
-                    <a th:href="@{/rents/new(id=${book.id})}">
+                    <a th:href="@{/rents/new_order(book_id=${book.id})}">
                         <span>Rent</span>
                     </a>
                 </td>
@@ -60,9 +60,9 @@
         </table>
     </div>
     <div sec:authorize="hasRole('ADMIN')">
-        <form th:action="@{/book/new}" method="get">
-            <input type="submit" value="Add Book"/>
-        </form>
+        <a th:href="@{/books/new}">
+            <span>Add Book</span>
+        </a>
     </div>
 </div>
 <div th:insert="/fragments/header :: login"></div>

@@ -18,7 +18,16 @@ public class BookService {
     }
 
     public void save(Book book) {
-        bookRepository.save(book);
+        Book bookInStore = this.bookRepository.findByNameAndAuthorAndPubYearAndLibrary_Id(
+                book.getName(), book.getAuthor(), book.getPubYear(), book.getLibrary().getId());
+        if (bookInStore != null) {
+            if (bookInStore.getId() != book.getId()) {
+                bookInStore.setCount(bookInStore.getCount() + book.getCount());
+            }
+            bookRepository.save(bookInStore);
+        } else {
+            bookRepository.save(book);
+        }
     }
     public List<Book> booksList() {
         return (List<Book>) bookRepository.findAll();

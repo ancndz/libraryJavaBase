@@ -1,21 +1,15 @@
 package ru.ancndz.libraryBase.configs.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.ancndz.libraryBase.configs.repos.RoleRepository;
 import ru.ancndz.libraryBase.configs.repos.StaffRepository;
-import ru.ancndz.libraryBase.content.entity.User;
-import ru.ancndz.libraryBase.content.jobs.Role;
+import ru.ancndz.libraryBase.configs.repos.UserRepository;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class StaffService {
@@ -23,18 +17,21 @@ public class StaffService {
     private final StaffRepository staffRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RoleRepository repository;
-
+    private final UserRepository userRepository;
 
     @Autowired
-    public StaffService(StaffRepository staffRepository, RoleRepository repository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public StaffService(StaffRepository staffRepository, RoleRepository repository, BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository) {
         this.staffRepository = staffRepository;
         this.repository = repository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userRepository = userRepository;
     }
 
     public boolean save(Staff staff) {
         if (this.staffRepository.findByEmail(staff.getEmail()) != null &&
                 this.staffRepository.findByEmail(staff.getEmail()).getId() != staff.getId()) {
+            return false;
+        } else if (this.userRepository.findByEmail(staff.getEmail()) != null) {
             return false;
         }
         staff.setRoles(new HashSet<>(this.repository.findAll()));

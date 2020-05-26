@@ -7,32 +7,35 @@
 </head>
 <body>
 <div th:insert="/fragments/header :: header"></div>
+<div th:switch="${error}" align="center">
+    <h2 th:case="null"></h2>
+    <div th:case="*"> <span th:text="${error}"></span> </div>
 <div th:switch="${rents}" align="center">
-    <h2 th:case="null">No libs found!</h2>
+    <h2 th:case="null">No rents found!</h2>
     <div th:case="*">
         <table border="1" cellpadding="5">
             <thead>
             <tr>
-                <th>Id</th>
+                <th sec:authorize="hasRole('ADMIN')">Id</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Fact End Date</th>
-                <th>Staff</th>
+                <th sec:authorize="hasRole('ADMIN')">Staff</th>
                 <th>Book</th>
-                <th>User</th>
-                <th>Actions</th>
+                <th sec:authorize="hasRole('ADMIN')">User</th>
+                <th sec:authorize="hasRole('ADMIN')">Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="rent : ${rents}">
-                <td th:text="${rent.id}"></td>
+                <td th:text="${rent.id}" sec:authorize="hasRole('ADMIN')"></td>
                 <td th:text="${rent.startDate}"></td>
                 <td th:text="${rent.endDate}"></td>
                 <td th:text="${rent.factEndDate}"></td>
-                <td th:text="${rent.staff.firstName} + ' ' + ${rent.staff.lastName}"></td>
+                <td th:text="${rent.staff.firstName} + ' ' + ${rent.staff.lastName}" sec:authorize="hasRole('ADMIN')"></td>
                 <td th:text="${rent.book.name} + ' in ' + ${rent.book.library.name}"></td>
-                <td th:text="${rent.user.id}"></td>
-                <td>
+                <td th:text="${rent.user.id}" sec:authorize="hasRole('ADMIN')"></td>
+                <td sec:authorize="hasRole('ADMIN')">
                     <a th:href="@{/rents/close(id=${rent.id})}">
                         <span>Close</span>
                     </a>
@@ -41,9 +44,9 @@
             </tbody>
         </table>
     </div>
-    <form th:action="@{/rents/new}" method="get" align="center">
+    <!--<form th:action="@{/rents/new}" method="get" align="center">
         <input type="submit" value="Add Rent"/>
-    </form>
+    </form>-->
 </div>
 <div th:insert="/fragments/header :: login"></div>
 </body>
