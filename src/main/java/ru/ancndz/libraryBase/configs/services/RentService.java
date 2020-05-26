@@ -32,4 +32,8 @@ public class RentService {
     public Rent get(int id) {
         return this.rentRepos.getOne(id);
     }
+
+    public List<Rent> getByUserId(int id) {
+        return this.rentRepos.findAllByUser_Id(id);
+    }
 }
