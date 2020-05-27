@@ -57,10 +57,10 @@ public class RentService {
             Duration duration = Duration.between(LocalDateTime.now(), each.getEndDate());
             //int amount = (int) duration.toDays() * 30;
             //todo change back to days
-            int amount = (int) duration.toHours() * 2;
+            int amount = (int) duration.toMinutes() * 6;
             amount = Math.abs(amount);
             Penalty penalty = this.penaltyRepository.
-                    findByRent_IdAndReasonEquals(each.getId(), "_rent_expired");
+                    findByRent_IdAndReasonEqualsAndPayDateIsNull(each.getId(), "_rent_expired");
             if (penalty == null) {
                 penalty = new Penalty();
                 penalty.setReason("_rent_expired");
@@ -69,7 +69,7 @@ public class RentService {
                 penalty.setAmount(amount);
                 penalty.setDate(LocalDateTime.now());
             } else {
-                penalty.setAmount(amount);
+                penalty.setAmount(amount - penalty.getAmount());
             }
             this.penaltyRepository.save(penalty);
         }

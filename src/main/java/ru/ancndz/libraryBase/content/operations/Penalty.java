@@ -32,11 +32,11 @@ public class Penalty {
     private int completeAmount;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "rent_id", unique = true, nullable = false)
+    @JoinColumn(name = "rent_id", nullable = false)
     private Rent rent;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", unique = true, nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Penalty() {
@@ -118,14 +118,14 @@ public class Penalty {
         this.user = user;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Penalty penalty = (Penalty) o;
         return getAmount() == penalty.getAmount() &&
-                getReason().equals(penalty.getReason()) &&
+                getCompleteAmount() == penalty.getCompleteAmount() &&
+                Objects.equals(getReason(), penalty.getReason()) &&
                 getDate().equals(penalty.getDate()) &&
                 Objects.equals(getPayDate(), penalty.getPayDate()) &&
                 getRent().equals(penalty.getRent()) &&
@@ -134,7 +134,7 @@ public class Penalty {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getReason(), getDate(), getPayDate(), getAmount(), getRent(), getUser());
+        return Objects.hash(getReason(), getDate(), getPayDate(), getAmount(), getCompleteAmount(), getRent(), getUser());
     }
 
     @Override

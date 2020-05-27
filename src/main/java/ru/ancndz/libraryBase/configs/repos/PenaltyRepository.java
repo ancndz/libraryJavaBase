@@ -12,5 +12,5 @@ public interface PenaltyRepository extends JpaRepository<Penalty, Integer> {
 
     List<Penalty> findAllByPayDateIsNull();
 
-    Penalty findByRent_IdAndReasonEquals(int id, String reason);
+    Penalty findByRent_IdAndReasonEqualsAndPayDateIsNull(int id, String reason);
 }

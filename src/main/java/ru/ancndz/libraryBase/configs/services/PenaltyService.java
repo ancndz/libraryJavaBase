@@ -3,21 +3,21 @@ package ru.ancndz.libraryBase.configs.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.ancndz.libraryBase.configs.repos.PenaltyRepository;
+import ru.ancndz.libraryBase.configs.repos.RentRepos;
 import ru.ancndz.libraryBase.content.operations.Penalty;
 
-import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.List;
 
 @Service
 public class PenaltyService {
     private final PenaltyRepository penaltyRepository;
+    private final RentRepos rentRepos;
 
     @Autowired
-    public PenaltyService(PenaltyRepository penaltyRepository) {
+    public PenaltyService(PenaltyRepository penaltyRepository, RentRepos rentRepos) {
         this.penaltyRepository = penaltyRepository;
+        this.rentRepos = rentRepos;
     }
 
     public List<Penalty> penaltyList() {
@@ -36,7 +36,9 @@ public class PenaltyService {
         Penalty penalty = this.penaltyRepository.getOne(id);
         penalty.setCompleteAmount(penalty.getCompleteAmount() + amount);
         if (penalty.getAmount() <= penalty.getCompleteAmount()) {
-            penalty.setPayDate(LocalDateTime.now());
+            if (this.rentRepos.existsByIdAndFactEndDateIsNotNull(penalty.getRent().getId())) {
+                penalty.setPayDate(LocalDateTime.now());
+            }
         }
         this.penaltyRepository.save(penalty);
     }

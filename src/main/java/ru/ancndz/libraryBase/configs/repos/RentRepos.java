@@ -13,4 +13,6 @@ public interface RentRepos extends JpaRepository<Rent, Integer> {
     List<Rent> findAllByUser_Id(int id);
 
     List<Rent> findAllByFactEndDateIsNullAndEndDateBefore(LocalDateTime endDate);
+
+    boolean existsByIdAndFactEndDateIsNotNull(int id);
 }

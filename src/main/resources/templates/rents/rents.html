@@ -37,9 +37,10 @@
                 <td th:text="${rent.book.name} + ' in ' + ${rent.book.library.name}"></td>
                 <td th:text="${rent.user.id}" sec:authorize="hasRole('ADMIN')"></td>
                 <td sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/rents/close(id=${rent.id})}">
-                        <span>Close</span>
-                    </a>
+                    <form action="#" th:action="@{/rents/close}"  method="post" align="center">
+                        <input readonly hidden type="text" th:value="${rent.id}" name="id">
+                        <input type="submit" value="Close">
+                    </form>
                 </td>
             </tr>
             </tbody>
