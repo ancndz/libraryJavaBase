@@ -42,16 +42,24 @@
                 <td th:text="${book.count}"></td>
                 <td th:text="${book.library.address + ', ' + book.library.name}"></td>
                 <td sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/books/edit(id=${book.id})}">
+                    <!--<a th:href="@{/books/edit(id=${book.id})}">
                         <span>Edit</span>
-                    </a>
+                    </a>-->
+                    <form action="#" th:action="@{/books/edit}"  method="post" align="center">
+                        <input readonly hidden type="number" th:field="*{book.id}" name="id">
+                        <input type="submit" value="Edit">
+                    </form>
                     <br>
-                    <a th:href="@{/books/delete(id=${book.id})}">
+                    <!--<a th:href="@{/books/delete(id=${book.id})}">
                         <span>Delete</span>
-                    </a>
+                    </a>-->
+                    <form action="#" th:action="@{/books/delete}"  method="post" align="center">
+                        <input readonly hidden type="number" th:field="*{book.id}" name="id">
+                        <input type="submit" value="Delete">
+                    </form>
                 </td>
                 <td sec:authorize="hasRole('USER')">
-                    <a th:href="@{/rents/new_order(book_id=${book.id})}">
+                    <a th:href="@{/rents/new_order(book_id=${book.id})}" onclick="alert('Hello World!')">
                         <span>Rent</span>
                     </a>
                 </td>

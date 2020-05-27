@@ -3,7 +3,7 @@
       xmlns:sec="http://www.springframework.org/security/tags">
 <head>
     <meta charset="UTF-8">
-    <title>Rents</title>
+    <title>Rents&Penalties</title>
 </head>
 <body>
 <div th:insert="/fragments/header :: header"></div>
@@ -11,8 +11,9 @@
     <h2 th:case="null"></h2>
     <div th:case="*"> <span th:text="${error}"></span> </div>
 <div th:switch="${rents}" align="center">
-    <h2 th:case="null">No rents found!</h2>
+    <h3 th:case="null">No rents found!</h3>
     <div th:case="*">
+        <h3>Rents</h3>
         <table border="1" cellpadding="5">
             <thead>
             <tr>
@@ -44,9 +45,51 @@
             </tbody>
         </table>
     </div>
-    <!--<form th:action="@{/rents/new}" method="get" align="center">
-        <input type="submit" value="Add Rent"/>
-    </form>-->
+</div>
+</div>
+    <br>
+    <br>
+    <div th:switch="${penalties}" align="center">
+        <h3 th:case="null">No penalties found!</h3>
+        <div th:case="*">
+            <h3>Penalties</h3>
+            <table border="1" cellpadding="5">
+                <thead>
+                <tr>
+                    <th sec:authorize="hasRole('ADMIN')">Id</th>
+                    <th sec:authorize="hasRole('ADMIN')">Rent id</th>
+                    <th sec:authorize="hasRole('ADMIN')">User id</th>
+                    <th>Reason</th>
+                    <th>Date</th>
+                    <th sec:authorize="hasRole('ADMIN')">Pay Date</th>
+                    <th>Amount Remaining</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="penalty : ${penalties}">
+                    <td th:text="${penalty.id}" sec:authorize="hasRole('ADMIN')"></td>
+                    <td th:text="${penalty.rent.id}" sec:authorize="hasRole('ADMIN')"></td>
+                    <td th:text="${penalty.user.id}" sec:authorize="hasRole('ADMIN')"></td>
+                    <td th:text="${penalty.reason}"></td>
+                    <td th:text="${penalty.date}"></td>
+                    <td sec:authorize="hasRole('ADMIN')" th:text="${penalty.payDate}"></td>
+                    <td th:text="${penalty.amount} - ${penalty.completeAmount}"></td>
+                    <td>
+                        <a th:href="@{/rents/pay_penalty(id=${penalty.id})}">
+                            <span>Pay</span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<br>
+<div align="center">
+    <a th:href="@{/rents/refresh}">
+        <span>Refresh</span>
+    </a>
 </div>
 <div th:insert="/fragments/header :: login"></div>
 </body>

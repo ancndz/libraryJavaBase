@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.ancndz.libraryBase.configs.repos.PenaltyRepository;
 import ru.ancndz.libraryBase.configs.repos.RentRepos;
+import ru.ancndz.libraryBase.content.operations.Penalty;
 import ru.ancndz.libraryBase.content.operations.Rent;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class RentService {
     }
 
     public boolean save(Rent rent) {
-        if (!this.penaltyRepository.findAllByUser_IdAndPayDateIsNotNull(rent.getUser().getId()).isEmpty()) {
+        if (!this.penaltyRepository.findAllByUser_IdAndPayDateIsNull(rent.getUser().getId()).isEmpty()) {
             return false;
         } else {
             this.rentRepos.save(rent);
@@ -47,5 +49,29 @@ public class RentService {
 
     public void close(int id) {
         this.rentRepos.getOne(id).setFactEndDate(LocalDateTime.now());
+    }
+
+    public void findOutdatedRents() {
+        List<Rent> outDatedRents = this.rentRepos.findAllByFactEndDateIsNullAndEndDateBefore(LocalDateTime.now());
+        for (Rent each: outDatedRents) {
+            Duration duration = Duration.between(LocalDateTime.now(), each.getEndDate());
+            //int amount = (int) duration.toDays() * 30;
+            //todo change back to days
+            int amount = (int) duration.toHours() * 2;
+            amount = Math.abs(amount);
+            Penalty penalty = this.penaltyRepository.
+                    findByRent_IdAndReasonEquals(each.getId(), "_rent_expired");
+            if (penalty == null) {
+                penalty = new Penalty();
+                penalty.setReason("_rent_expired");
+                penalty.setRent(each);
+                penalty.setUser(each.getUser());
+                penalty.setAmount(amount);
+                penalty.setDate(LocalDateTime.now());
+            } else {
+                penalty.setAmount(amount);
+            }
+            this.penaltyRepository.save(penalty);
+        }
     }
 }

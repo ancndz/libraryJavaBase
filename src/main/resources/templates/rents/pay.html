@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+<meta charset="UTF-8">
+<title>Pay Penalty</title>
+</head>
+<body>
+<div th:insert="/fragments/header :: header"></div>
+<div align="center">
+<form action="#" th:action="@{/rents/pay_penalty/save}" method="post" align="center">
+    <table border="1" cellpadding="5" align="center">
+        <thead>
+        <tr>
+            <th sec:authorize="hasRole('ADMIN')">Id</th>
+            <th>Reason</th>
+            <th>Date</th>
+            <th>Amount Remaining</th>
+            <th>Amount to pay</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${penalty.id}" sec:authorize="hasRole('ADMIN')"></td>
+            <td th:text="${penalty.reason}"></td>
+            <td th:text="${penalty.date}"></td>
+            <td th:text="${penalty.amount} - ${penalty.completeAmount}"></td>
+            <td>
+                <input type="number" th:name="pay" placeholder="Amount to pay">
+                <input readonly hidden type="number" th:name="id" th:value="${penalty.id}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <input type="submit" value="Pay" onclick="alert('Подтвердите платеж:')">
+</form>
+</div>
+<div th:insert="/fragments/header :: login"></div>
+</body>
+</html>
