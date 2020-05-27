@@ -65,7 +65,7 @@ public class StaffController {
         return "redirect:/registration/staff/save";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String delete(@RequestParam int id) {
         this.staffService.delete(id);
         return "redirect:/staff/";

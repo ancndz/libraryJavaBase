@@ -26,13 +26,14 @@
                 <td th:text="${lib.name}"></td>
                 <td th:text="${lib.address}"></td>
                 <td sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/libs/edit(id=${lib.id})}">
-                        <span>Edit</span>
-                    </a>
-                    <br>
-                    <a th:href="@{/libs/delete(id=${lib.id})}">
-                        <span>Delete</span>
-                    </a>
+                    <form action="#" th:action="@{/libs/edit}"  method="get" align="center">
+                        <input readonly type="hidden" th:value="${lib.id}" name="id">
+                        <input type="submit" value="Edit">
+                    </form>
+                    <form action="#" th:action="@{/libs/delete}"  method="post" align="center">
+                        <input readonly hidden type="text" th:value="${lib.id}" name="id">
+                        <input type="submit" value="Delete">
+                    </form>
                 </td>
                 <td>
                     <a th:href="@{/books/filter(id=${lib.id})}">

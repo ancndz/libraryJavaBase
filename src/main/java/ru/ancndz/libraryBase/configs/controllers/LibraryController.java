@@ -53,7 +53,7 @@ public class LibraryController {
         return "/libs/edit_lib";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String deleteLib(@RequestParam Integer id) {
         libraryService.delete(id);
         return "redirect:/libs/";

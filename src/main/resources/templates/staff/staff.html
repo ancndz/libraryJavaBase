@@ -31,13 +31,14 @@
                 <td th:text="${staff.job.name}"></td>
                 <td th:text="${staff.library.address} + ', ' + ${staff.library.name}"></td>
                 <td sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/staff/edit(id=${staff.id})}">
-                        <span>Edit</span>
-                    </a>
-                    <br>
-                    <a th:href="@{/staff/delete(id=${staff.id})}">
-                        <span>Delete</span>
-                    </a>
+                    <form action="#" th:action="@{/staff/edit}"  method="get" align="center">
+                        <input readonly type="hidden" th:value="${staff.id}" name="id">
+                        <input type="submit" value="Edit">
+                    </form>
+                    <form action="#" th:action="@{/staff/delete}"  method="post" align="center">
+                        <input readonly hidden type="text" th:value="${staff.id}" name="id">
+                        <input type="submit" value="Delete">
+                    </form>
                 </td>
             </tr>
             </tbody>

@@ -55,7 +55,7 @@ public class JobController {
         return "/jobs/edit_job";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String delete(@RequestParam int id) {
         this.jobService.delete(id);
         return "redirect:/jobs/";
