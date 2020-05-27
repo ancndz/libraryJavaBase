@@ -69,7 +69,7 @@ public class RentService {
                 penalty.setAmount(amount);
                 penalty.setDate(LocalDateTime.now());
             } else {
-                penalty.setAmount(amount - penalty.getAmount());
+                penalty.setAmount(amount);
             }
             this.penaltyRepository.save(penalty);
         }
