@@ -23,7 +23,8 @@ public class RentService {
     }
 
     public boolean save(Rent rent) {
-        if (!this.penaltyRepository.findAllByUser_IdAndPayDateIsNull(rent.getUser().getId()).isEmpty()) {
+        //if (!this.penaltyRepository.findAllByUser_IdAndPayDateIsNull(rent.getUser().getId()).isEmpty()) {
+        if (!this.penaltyRepository.existsAllByUser_IdAndPayDateIsNull(rent.getUser().getId())) {
             return false;
         } else {
             this.rentRepos.save(rent);
@@ -49,6 +50,11 @@ public class RentService {
 
     public void close(int id) {
         this.rentRepos.getOne(id).setFactEndDate(LocalDateTime.now());
+        Penalty penalty = this.penaltyRepository.findByRent_IdAndReasonEqualsAndAmount(id, "_rent_expired", 0);
+        if (penalty != null) {
+            penalty.setPayDate(LocalDateTime.now());
+            this.penaltyRepository.save(penalty);
+        }
     }
 
     public void findOutdatedRents() {

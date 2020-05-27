@@ -73,7 +73,7 @@ public class RentController {
         return "/rents/rents";
     }
 
-    @GetMapping("/new_order")
+    @PostMapping("/new_order")
     public String newRentForm(@RequestParam int book_id, Model model, Authentication authentication) {
         if (authentication != null) {
             if (authentication.isAuthenticated()) {

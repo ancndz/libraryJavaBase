@@ -29,7 +29,7 @@
                 <td th:text="${user.userExtras.firstName} + ' ' + ${user.userExtras.lastName}"></td>
                 <td th:text="${user.email}"></td>
                 <td th:text="${user.userExtras.status}"></td>
-                <td th:text="${user.userExtras.dateReg}"></td>
+                <td th:text="${#temporals.format(user.userExtras.dateReg, 'dd-MM-yyyy HH:mm')}"></td>
                 <td sec:authorize="hasRole('ADMIN')">
                     <a th:href="@{/users/edit(id=${user.id})}">
                         <span>Edit</span>
