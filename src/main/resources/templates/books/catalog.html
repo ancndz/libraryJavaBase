@@ -45,8 +45,8 @@
                     <!--<a th:href="@{/books/edit(id=${book.id})}">
                         <span>Edit</span>
                     </a>-->
-                    <form action="#" th:action="@{/books/edit}"  method="post" align="center">
-                        <input readonly hidden type="number" th:field="*{book.id}" name="id">
+                    <form action="#" th:action="@{/books/edit}"  method="get" align="center">
+                        <input readonly type="hidden" th:value="${book.id}" name="id">
                         <input type="submit" value="Edit">
                     </form>
                     <br>
@@ -54,12 +54,12 @@
                         <span>Delete</span>
                     </a>-->
                     <form action="#" th:action="@{/books/delete}"  method="post" align="center">
-                        <input readonly hidden type="number" th:field="*{book.id}" name="id">
+                        <input readonly hidden type="text" th:value="${book.id}" name="id">
                         <input type="submit" value="Delete">
                     </form>
                 </td>
                 <td sec:authorize="hasRole('USER')">
-                    <a th:href="@{/rents/new_order(book_id=${book.id})}" onclick="alert('Hello World!')">
+                    <a th:href="@{/rents/new_order(book_id=${book.id})}" onclick="alert('Accept the order')">
                         <span>Rent</span>
                     </a>
                 </td>

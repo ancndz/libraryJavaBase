@@ -75,7 +75,7 @@ public class CatalogController {
         return "/books/edit_book";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String deleteBook(@RequestParam Integer id) {
         bookService.delete(id);
         return "redirect:/books/";
