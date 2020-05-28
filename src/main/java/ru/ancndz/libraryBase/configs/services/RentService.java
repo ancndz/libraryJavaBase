@@ -7,6 +7,7 @@ import ru.ancndz.libraryBase.configs.repos.RentRepos;
 import ru.ancndz.libraryBase.content.operations.Penalty;
 import ru.ancndz.libraryBase.content.operations.Rent;
 
+import javax.management.remote.rmi._RMIConnection_Stub;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,8 +51,9 @@ public class RentService {
 
     public void close(int id) {
         this.rentRepos.getOne(id).setFactEndDate(LocalDateTime.now());
-        Penalty penalty = this.penaltyRepository.findByRent_IdAndReasonEqualsAndAmount(id, "_rent_expired", 0);
-        if (penalty != null) {
+        Penalty penalty = this.penaltyRepository.findByRent_IdAndReasonEquals(id, "_rent_expired");
+        System.out.println(penalty);
+        if (penalty.getAmount() <= penalty.getCompleteAmount()) {
             penalty.setPayDate(LocalDateTime.now());
             this.penaltyRepository.save(penalty);
         }

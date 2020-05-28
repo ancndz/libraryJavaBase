@@ -12,7 +12,7 @@ public interface PenaltyRepository extends JpaRepository<Penalty, Integer> {
 
     boolean existsAllByUser_IdAndPayDateIsNull(int id);
 
-    Penalty findByRent_IdAndReasonEqualsAndAmount(int id, String reason, int amount);
+    Penalty findByRent_IdAndReasonEquals(int id, String reason);
 
     List<Penalty> findAllByPayDateIsNull();
 
