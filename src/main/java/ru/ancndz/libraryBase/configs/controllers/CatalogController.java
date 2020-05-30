@@ -12,6 +12,7 @@ import ru.ancndz.libraryBase.content.libraryEnvironment.Library;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/books")
@@ -35,9 +36,47 @@ public class CatalogController {
         return "/books/catalog";
     }
 
-    @GetMapping("/filter")
-    public String homeByLibId(@RequestParam int id, Model model) {
+    /*@GetMapping("/filter")
+    public String homeByLibId(@RequestParam(value = "id") int id, Model model) {
         List<Book> bookList = bookService.booksByLibrary(id);
+        if (!bookList.isEmpty()) {
+            model.addAttribute("bookList", bookList);
+        }
+        return "/books/catalog";
+    }*/
+
+    @GetMapping("/filter")
+    public String homeByAuthor(@RequestParam Map<String,String> allParams, Model model) {
+        int year = 0;
+        int lib_id = 0;
+        String name = null;
+        String author = null;
+        String genre = null;
+        if (allParams.containsKey("name")) {
+            name = allParams.get("name");
+        }
+        if (allParams.containsKey("author")) {
+            author = allParams.get("author");
+        }
+        if (allParams.containsKey("genre")) {
+            genre = allParams.get("genre");
+        }
+        if (allParams.containsKey("year")) {
+            try {
+                year = Integer.getInteger(allParams.get("year"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (allParams.containsKey("lib_id")) {
+            try {
+                year = Integer.getInteger(allParams.get("lib_id"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        List<Book> bookList = bookService.findByCriteria(name,
+                author, year, genre, lib_id);
         if (!bookList.isEmpty()) {
             model.addAttribute("bookList", bookList);
         }
