@@ -5,12 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.ancndz.libraryBase.configs.services.RentService;
 import ru.ancndz.libraryBase.configs.services.UserService;
 import ru.ancndz.libraryBase.content.entity.User;
-import ru.ancndz.libraryBase.content.entity.UserExtras;
+import ru.ancndz.libraryBase.content.operations.Rent;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -18,10 +21,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final RentService rentService;
 
     @Autowired
-    UserController(UserService userService) {
+    UserController(UserService userService, RentService rentService) {
         this.userService = userService;
+        this.rentService = rentService;
     }
 
     @GetMapping("")
@@ -30,6 +35,7 @@ public class UserController {
         if (!userList.isEmpty()) {
             model.addAttribute("userList", userList);
         }
+        model.addAttribute("listName", "Все участники");
         return "/users/user";
     }
 
@@ -68,6 +74,37 @@ public class UserController {
     public String deleteClient(@RequestParam Integer id) {
         this.userService.delete(id);
         return "redirect:/users/";
+    }
+
+    @GetMapping("/lost")
+    public String findLostClients(@RequestParam(value = "date") String dateString, Model model) {
+        ChronoUnit chronoUnit;
+        switch (dateString) {
+            case "week": chronoUnit = ChronoUnit.WEEKS;
+                break;
+            case "month": chronoUnit = ChronoUnit.MONTHS;
+                break;
+            case "year": chronoUnit = ChronoUnit.YEARS;
+                break;
+            default: chronoUnit = ChronoUnit.MINUTES;
+                break;
+        }
+        List<User> allUsers = this.userService.getAll();
+        List<User> lostUser = new ArrayList<>();
+        for (User user: allUsers) {
+            Rent lastRent = this.rentService.getLastRentByUserId(user.getId());
+            if (lastRent != null) {
+                if (lastRent.getFactEndDate() != null &&
+                        lastRent.getStartDate().plus(1, chronoUnit).isBefore(LocalDateTime.now())) {
+                    lostUser.add(user);
+                }
+            } else {
+                lostUser.add(user);
+            }
+        }
+        model.addAttribute("userList", lostUser);
+        model.addAttribute("listName", "Неактивные участники");
+        return "/users/user";
     }
 
 }

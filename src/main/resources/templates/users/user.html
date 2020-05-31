@@ -10,6 +10,8 @@
 <div th:switch="${userList}" align="center">
     <h2 th:case="null">No users found!</h2>
     <div th:case="*">
+        <h3><span th:text="${listName}"></span></h3>
+        <br>
         <table border="1" cellpadding="5">
             <thead>
             <tr>
@@ -43,9 +45,23 @@
             </tbody>
         </table>
     </div>
-    <a th:href="@{/user/new}">
+    <br>
+    <a th:href="@{/users/new}">
         <span>Add User</span>
     </a>
+    <br>
+    <div th:border="5">
+        <form th:action="@{/users/lost}" method="get">
+            <h5>Показать неактивных читателей за указанный период</h5>
+            <select name="date">
+                <option value="week">Неделя</option>
+                <option value="month">Месяц</option>
+                <option value="year">Год</option>
+                <option selected value="minute">Минута</option>
+            </select>
+            <input type="submit" value="Показать">
+        </form>
+    </div>
 </div>
 <div th:insert="/fragments/header :: login"></div>
 </body>
