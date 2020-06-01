@@ -49,6 +49,10 @@ public class RentService {
         return this.rentRepos.findAllByUser_Id(id);
     }
 
+    public Rent getLastRentByUserId(int id) {
+        return this.rentRepos.getFirstByUser_Id(id);
+    }
+
     public void close(int id) {
         this.rentRepos.getOne(id).setFactEndDate(LocalDateTime.now());
         Penalty penalty = this.penaltyRepository.findByRent_IdAndReasonEquals(id, "_rent_expired");

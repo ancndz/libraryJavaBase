@@ -14,6 +14,42 @@
 <div th:switch="${bookList}" align="center">
     <h2 th:case="null">No books found!</h2>
     <div th:case="*">
+        <br>
+        <form action="#" th:action="@{/books/filter}" method="get" align="center">
+            <table border="1" cellpadding="5" align="center">
+                <thead>
+                <tr>
+                    <th><label>Search by author:</label></th>
+                </tr>
+                </thead>
+                <tbody>
+                <td><input type="text" name="author" placeholder="Author"></td>
+                </tbody>
+            </table>
+            <!--<table border="1" cellpadding="5" align="center">
+                <thead>
+                <tr>
+                    <th><label>Search by title:</label></th>
+                </tr>
+                </thead>
+                <tbody>
+                <td><input type="text" name="name" placeholder="Title"></td>
+                </tbody>
+            </table>
+            <table border="1" cellpadding="5" align="center">
+                <thead>
+                <tr>
+                    <th><label>Search by year:</label></th>
+                </tr>
+                </thead>
+                <tbody>
+                <td><input type="number" name="year" placeholder="Year"></td>
+                </tbody>
+            </table>-->
+            <br>
+            <input type="submit" value="Search">
+        </form>
+        <br>
         <table border="1" cellpadding="5">
             <thead>
             <tr>
