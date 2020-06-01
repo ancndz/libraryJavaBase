@@ -9,15 +9,14 @@ import ru.ancndz.libraryBase.configs.services.JobService;
 import ru.ancndz.libraryBase.configs.services.LibraryService;
 import ru.ancndz.libraryBase.configs.services.RentService;
 import ru.ancndz.libraryBase.configs.services.StaffService;
+import ru.ancndz.libraryBase.content.entity.User;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
 import ru.ancndz.libraryBase.content.operations.Rent;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/staff")
@@ -68,23 +67,27 @@ public class StaffController {
             default: chronoUnit = ChronoUnit.MINUTES;
                 break;
         }
-        List<Staff> allStaff = this.staffService.staffList();
-        //Staff staff = this.staffService.get(id);
+        //List<Staff> allStaff = this.staffService.staffList();
+        Staff staff = this.staffService.get(id);
         List<Rent> allRents;
-        Map<Staff, Integer> allStaffWithWorks = new HashMap<>();
-        for (Staff staff: allStaff) {
+        //Map<Staff, Integer> allStaffWithWorks = new HashMap<>();
+        Set<User> staffUsers = new HashSet<>();
+        //for (Staff staff: allStaff) {
             int countRents = 0;
             allRents = this.rentService.getAllByStaffId(staff.getId());
             if (allRents != null && !allRents.isEmpty()) {
                 for (Rent rent: allRents) {
                     if (rent.getStartDate().plus(1, chronoUnit).isAfter(LocalDateTime.now())) {
                         countRents += 1;
+                        staffUsers.add(rent.getUser());
                     }
                 }
             }
-            allStaffWithWorks.put(staff, countRents);
-        }
-        model.addAttribute("staffWithRents", allStaffWithWorks);
+            //allStaffWithWorks.put(staff, countRents);
+        //}
+        model.addAttribute("staff", staff);
+        model.addAttribute("works", countRents);
+        model.addAttribute("staffUsers", staffUsers);
         return "/staff/works";
     }
 
