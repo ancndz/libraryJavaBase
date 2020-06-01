@@ -46,37 +46,27 @@ public class CatalogController {
     }*/
 
     @GetMapping("/filter")
-    public String homeByAuthor(@RequestParam Map<String,String> allParams, Model model) {
-        int year = 0;
-        int lib_id = 0;
-        String name = null;
-        String author = null;
-        String genre = null;
-        if (allParams.containsKey("name")) {
-            name = allParams.get("name");
+    public String homeByAuthor(@RequestParam(value = "name", required = false) String name,
+                               @RequestParam(value = "author", required = false) String author,
+                               @RequestParam(value = "genre", required = false) String genre,
+                               @RequestParam(value = "edition", required = false) String edition,
+                               @RequestParam(value = "year", required = false) String year,
+                               @RequestParam(value = "lib_id", required = false) String lib_id,
+                               Model model) {
+        int year_int = 0;
+        int lib_id_int = 0;
+        try {
+            year_int = Integer.parseInt(year);
+        } catch (Exception ignored) {
+
         }
-        if (allParams.containsKey("author")) {
-            author = allParams.get("author");
-        }
-        if (allParams.containsKey("genre")) {
-            genre = allParams.get("genre");
-        }
-        if (allParams.containsKey("year")) {
-            try {
-                year = Integer.getInteger(allParams.get("year"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        if (allParams.containsKey("lib_id")) {
-            try {
-                year = Integer.getInteger(allParams.get("lib_id"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            lib_id_int =Integer.parseInt(lib_id);
+        } catch (Exception ignored) {
+
         }
         List<Book> bookList = bookService.findByCriteria(name,
-                author, year, genre, lib_id);
+                author, year_int, genre, edition, lib_id_int);
         if (!bookList.isEmpty()) {
             model.addAttribute("bookList", bookList);
         }

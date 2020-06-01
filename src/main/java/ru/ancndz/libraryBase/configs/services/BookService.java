@@ -35,20 +35,23 @@ public class BookService {
         }
     }
 
-    public List<Book> findByCriteria(String name, String author, int pubYear, String genre, int lib_id){
+    public List<Book> findByCriteria(String name, String author, int pubYear, String genre, String edition, int lib_id){
         return this.bookRepository.findAll((Specification<Book>) (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if(name != null) {
+            if(name != "") {
                 predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("name"), "%"+name+"%")));
             }
-            if(author != null){
+            if(author != ""){
                 predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("author"), author)));
             }
             if(pubYear != 0){
-                predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("pub_year"), pubYear)));
+                predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("pubYear"), pubYear)));
             }
-            if(genre != null){
+            if(genre != ""){
                 predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("genre"), genre)));
+            }
+            if(edition != ""){
+                predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("edition"), edition)));
             }
             if(lib_id != 0){
                 predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("library_id"), lib_id)));

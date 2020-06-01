@@ -19,33 +19,17 @@
             <table border="1" cellpadding="5" align="center">
                 <thead>
                 <tr>
-                    <th><label>Search by author:</label></th>
+                    <th><label>Search:</label></th>
                 </tr>
                 </thead>
                 <tbody>
-                <td><input type="text" name="author" placeholder="Author"></td>
+                <tr><td><input type="text" name="author" placeholder="Author"></td></tr>
+                <tr><td><input type="text" name="name" placeholder="Title"></td></tr>
+                <tr><td><input type="text" name="genre" placeholder="Genre"></td></tr>
+                <tr><td><input type="text" name="edition" placeholder="Edition"></td></tr>
+                <tr><td><input type="number" name="year" placeholder="Year"></td></tr>
                 </tbody>
             </table>
-            <!--<table border="1" cellpadding="5" align="center">
-                <thead>
-                <tr>
-                    <th><label>Search by title:</label></th>
-                </tr>
-                </thead>
-                <tbody>
-                <td><input type="text" name="name" placeholder="Title"></td>
-                </tbody>
-            </table>
-            <table border="1" cellpadding="5" align="center">
-                <thead>
-                <tr>
-                    <th><label>Search by year:</label></th>
-                </tr>
-                </thead>
-                <tbody>
-                <td><input type="number" name="year" placeholder="Year"></td>
-                </tbody>
-            </table>-->
             <br>
             <input type="submit" value="Search">
         </form>
@@ -97,6 +81,7 @@
             </tbody>
         </table>
     </div>
+    <br>
     <div sec:authorize="hasRole('ADMIN')">
         <a th:href="@{/books/new}">
             <span>Add Book</span>
