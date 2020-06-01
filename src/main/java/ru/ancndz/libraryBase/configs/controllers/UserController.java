@@ -10,6 +10,7 @@ import ru.ancndz.libraryBase.configs.services.UserService;
 import ru.ancndz.libraryBase.content.entity.User;
 import ru.ancndz.libraryBase.content.operations.Rent;
 
+import javax.jws.WebParam;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -61,6 +62,16 @@ public class UserController {
         userService.save(user);
         return "redirect:/users/";*/
         return "redirect:/registration/save";
+    }
+
+    @GetMapping("/reading_now")
+    public String readingNow(@RequestParam(value = "name") String name, @RequestParam(value = "author") String author, Model model) {
+        List<Rent> rents = this.rentService.getAllActiveByBook(author, name);
+        List<User> users = new ArrayList<>();
+        rents.forEach(rent -> users.add(rent.getUser()));
+        model.addAttribute("userList", users);
+        model.addAttribute("listName", "Читатели " + author + ", " + name);
+        return "/users/user";
     }
 
     @GetMapping("/edit")

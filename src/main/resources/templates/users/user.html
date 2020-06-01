@@ -62,6 +62,15 @@
             <input type="submit" value="Показать">
         </form>
     </div>
+    <br>
+    <div th:border="5">
+        <form th:action="@{/users/reading_now}" method="get">
+            <h5>Показать читателей данной книги:</h5>
+            <input type="text" name="author" placeholder="Author">
+            <input type="text" name="name" placeholder="Title">
+            <input type="submit" value="Показать">
+        </form>
+    </div>
 </div>
 <div th:insert="/fragments/header :: login"></div>
 </body>

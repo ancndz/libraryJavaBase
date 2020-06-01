@@ -82,7 +82,12 @@
                             <span th:text="${penalty.amount} - ${penalty.completeAmount}"></span>
                         </div>
                         <div th:unless="${penalty.amount} - ${penalty.completeAmount} > 0">
-                            <span>Rent close remaining</span>
+                            <div th:if="${penalty.payDate} == null">
+                                <span>Rent close remaining</span>
+                            </div>
+                            <div th:unless="${penalty.payDate} == null">
+                                <span>Penalty closed.</span>
+                            </div>
                         </div>
                     </td>
                     <td>

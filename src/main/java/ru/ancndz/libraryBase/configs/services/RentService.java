@@ -61,6 +61,7 @@ public class RentService {
     }
 
     public void close(int id) {
+        findOutdatedRents();
         this.rentRepos.getOne(id).setFactEndDate(LocalDateTime.now());
         Penalty penalty = this.penaltyRepository.findByRent_IdAndReasonEquals(id, "_rent_expired");
         System.out.println(penalty);
@@ -68,6 +69,10 @@ public class RentService {
             penalty.setPayDate(LocalDateTime.now());
             this.penaltyRepository.save(penalty);
         }
+    }
+
+    public List<Rent> getAllActiveByBook(String author, String name) {
+        return this.rentRepos.findAllByBook_AuthorAndBook_NameAndFactEndDateIsNull(author, name);
     }
 
     public void findOutdatedRents() {
