@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff</title>
+</head>
+<body>
+<div th:insert="/fragments/header :: header"></div>
+<div th:switch="${staffWithRents}" align="center">
+    <h2 th:case="null">No staff found!</h2>
+    <div th:case="*">
+        <div th:border="5">
+            <form th:action="@{/staff/works}" method="get">
+                <h5>Показать число обслуженных клиентов за:</h5>
+                <select name="time">
+                    <option value="week">Неделя</option>
+                    <option value="month">Месяц</option>
+                    <option value="year">Год</option>
+                    <option selected value="minute">Минута</option>
+                </select>
+                <input type="submit" value="Показать">
+            </form>
+        </div>
+        <br>
+        <table border="1" cellpadding="5">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Number</th>
+                <th>Job</th>
+                <th>Library</th>
+                <th>Works</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="each : ${staffWithRents.entrySet()}">
+                <td th:text="${each.key.id}"></td>
+                <td th:text="${each.key.firstName} + ' ' + ${each.key.lastName}"></td>
+                <td th:text="${each.key.address}"></td>
+                <td th:text="${each.key.number}"></td>
+                <td th:text="${each.key.job.name}"></td>
+                <td th:text="${each.key.library.address} + ', ' + ${each.key.library.name}"></td>
+                <td th:text="${each.value}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div th:insert="/fragments/header :: login"></div>
+</body>
+</html>

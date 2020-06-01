@@ -7,13 +7,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.ancndz.libraryBase.configs.services.JobService;
 import ru.ancndz.libraryBase.configs.services.LibraryService;
+import ru.ancndz.libraryBase.configs.services.RentService;
 import ru.ancndz.libraryBase.configs.services.StaffService;
-import ru.ancndz.libraryBase.content.jobs.Job;
-import ru.ancndz.libraryBase.content.libraryEnvironment.Library;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
+import ru.ancndz.libraryBase.content.operations.Rent;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/staff")
@@ -22,12 +26,14 @@ public class StaffController {
     private final StaffService staffService;
     private final LibraryService libraryService;
     private final JobService jobService;
+    private final RentService rentService;
 
     @Autowired
-    public StaffController(StaffService staffService, LibraryService libraryService, JobService jobService) {
+    public StaffController(StaffService staffService, LibraryService libraryService, JobService jobService, RentService rentService) {
         this.staffService = staffService;
         this.libraryService = libraryService;
         this.jobService = jobService;
+        this.rentService = rentService;
     }
 
     @GetMapping("")
@@ -47,6 +53,39 @@ public class StaffController {
         model.addAttribute("jobs", jobList);
         return "/staff/add_staff";*/
         return "redirect:/registration/staff";
+    }
+
+    @GetMapping("/works")
+    public String getWorks(@RequestParam(value = "id") int id, @RequestParam(value = "time") String duration, Model model) {
+        ChronoUnit chronoUnit;
+        switch (duration) {
+            case "week": chronoUnit = ChronoUnit.WEEKS;
+                break;
+            case "month": chronoUnit = ChronoUnit.MONTHS;
+                break;
+            case "year": chronoUnit = ChronoUnit.YEARS;
+                break;
+            default: chronoUnit = ChronoUnit.MINUTES;
+                break;
+        }
+        List<Staff> allStaff = this.staffService.staffList();
+        //Staff staff = this.staffService.get(id);
+        List<Rent> allRents;
+        Map<Staff, Integer> allStaffWithWorks = new HashMap<>();
+        for (Staff staff: allStaff) {
+            int countRents = 0;
+            allRents = this.rentService.getAllByStaffId(staff.getId());
+            if (allRents != null && !allRents.isEmpty()) {
+                for (Rent rent: allRents) {
+                    if (rent.getStartDate().plus(1, chronoUnit).isAfter(LocalDateTime.now())) {
+                        countRents += 1;
+                    }
+                }
+            }
+            allStaffWithWorks.put(staff, countRents);
+        }
+        model.addAttribute("staffWithRents", allStaffWithWorks);
+        return "/staff/works";
     }
 
     @PostMapping("/save")

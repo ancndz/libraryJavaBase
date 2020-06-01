@@ -24,8 +24,7 @@ public class RentService {
     }
 
     public boolean save(Rent rent) {
-        //if (!this.penaltyRepository.findAllByUser_IdAndPayDateIsNull(rent.getUser().getId()).isEmpty()) {
-        if (!this.penaltyRepository.existsAllByUser_IdAndPayDateIsNull(rent.getUser().getId())) {
+        if (this.penaltyRepository.existsAllByUser_IdAndPayDateIsNull(rent.getUser().getId())) {
             return false;
         } else {
             this.rentRepos.save(rent);
@@ -49,9 +48,15 @@ public class RentService {
         return this.rentRepos.findAllByUser_Id(id);
     }
 
+    public List<Rent> getAllByStaffId(int id) {
+        return this.rentRepos.findAllByStaff_Id(id);
+    }
+
     public Rent getLastRentByUserId(int id) {
         return this.rentRepos.getFirstByUser_Id(id);
     }
+
+
 
     public void close(int id) {
         this.rentRepos.getOne(id).setFactEndDate(LocalDateTime.now());

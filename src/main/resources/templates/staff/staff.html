@@ -48,6 +48,19 @@
     <a th:href="@{/staff/new}">
         <span>Add Staff</span>
     </a>
+    <br>
+    <div th:border="5">
+        <form th:action="@{/staff/works}" method="get">
+            <h5>Показать число обслуженных клиентов за:</h5>
+            <select name="time">
+                <option value="week">Неделя</option>
+                <option value="month">Месяц</option>
+                <option value="year">Год</option>
+                <option selected value="minute">Минута</option>
+            </select>
+            <input type="submit" value="Показать">
+        </form>
+    </div>
 </div>
 <div th:insert="/fragments/header :: login"></div>
 </body>
