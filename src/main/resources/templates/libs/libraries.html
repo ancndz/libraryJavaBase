@@ -34,6 +34,10 @@
                         <input readonly hidden type="text" th:value="${lib.id}" name="id">
                         <input type="submit" value="Delete">
                     </form>
+                    <form action="#" th:action="@{/libs/shelves}"  method="get" align="center">
+                        <input readonly hidden type="text" th:value="${lib.id}" name="id">
+                        <input type="submit" value="View Shelves">
+                    </form>
                 </td>
                 <td>
                     <a th:href="@{/books/filter(lib_id=${lib.id})}">

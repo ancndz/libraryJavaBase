@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/security/tags ">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+</head>
+<body>
+<div th:insert="/fragments/header :: header"></div>
+<!--/*@thymesVar id="bookList" type="java.util.List"*/-->
+<!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
+<div th:switch="${books}" align="center">
+    <h2 th:case="null">No books found!</h2>
+    <div th:case="*">
+        <h3>Книги на руках из <span th:text="${books.get(0).library.name} + ' по адресу ' + ${books.get(0).library.address}"></span>
+         с полки под буквой "<span th:text="${letter}"></span>"</h3>
+        <table border="1" cellpadding="5">
+            <thead>
+            <tr>
+                <th sec:authorize="hasRole('ADMIN')">Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>Edition</th>
+                <th>Edition num</th>
+                <th>Genre</th>
+                <th>Count available</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td sec:authorize="hasRole('ADMIN')" th:text="${book.id}"></td>
+                <td th:text="${book.name}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.pubYear}"></td>
+                <td th:text="${book.edition}"></td>
+                <td th:text="${book.editionNum}"></td>
+                <td th:text="${book.genre}"></td>
+                <td th:text="${book.count}"></td>
+            </tr>
+            </tbody>
+            <br>
+        </table>
+    </div>
+</div>
+<div th:insert="/fragments/header :: login"></div>
+</body>
+</html>

@@ -56,7 +56,9 @@ public class RentService {
         return this.rentRepos.getFirstByUser_Id(id);
     }
 
-
+    public List<Rent> getActiveByLibId(int id) {
+        return this.rentRepos.findAllByBook_Library_IdAndFactEndDateIsNull(id);
+    }
 
     public void close(int id) {
         this.rentRepos.getOne(id).setFactEndDate(LocalDateTime.now());

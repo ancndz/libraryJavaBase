@@ -14,7 +14,6 @@ import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
 import ru.ancndz.libraryBase.content.operations.Penalty;
 import ru.ancndz.libraryBase.content.operations.Rent;
 
-import javax.jws.WebParam;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -158,5 +157,23 @@ public class RentController {
     public String savePay(@RequestParam(value = "pay") int pay, @RequestParam(value = "id") int id) {
         this.penaltyService.payPenalty(id, pay);
         return "redirect:/rents/";
+    }
+
+    @GetMapping("/active")
+    public String viewActives(@RequestParam(value = "letter") String letter, @RequestParam(value = "lib_id") int id, Model model) {
+        List<Rent> libRents = this.rentService.getActiveByLibId(id);
+        List<Book> activeBooks = new ArrayList<>();
+        for (Rent each: libRents) {
+            String book_letter = each.getBook().getName();
+            book_letter = book_letter.toLowerCase().replaceFirst("the ", "");
+            book_letter = book_letter.substring(0, 1).toLowerCase();
+
+            if (letter.toLowerCase().equals(book_letter)) {
+                activeBooks.add(each.getBook());
+            }
+        }
+        model.addAttribute("books", activeBooks);
+        model.addAttribute("letter", letter);
+        return "/rents/actives";
     }
 }
