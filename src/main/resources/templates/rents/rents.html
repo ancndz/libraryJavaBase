@@ -73,8 +73,15 @@
                 <tr th:each="penalty : ${penalties}">
                     <td th:text="${penalty.id}" sec:authorize="hasRole('ADMIN')"></td>
                     <td th:text="${penalty.rent.id}" sec:authorize="hasRole('ADMIN')"></td>
-                    <td th:text="${penalty.user.id}" sec:authorize="hasRole('ADMIN')"></td>
-                    <td th:text="${penalty.reason}"></td>
+                    <td th:text="${penalty.user.userExtras.firstName} + ' ' + ${penalty.user.userExtras.lastName}" sec:authorize="hasRole('ADMIN')"></td>
+                    <td>
+                        <div th:if="${penalty.reason} == '_rent_expired'">
+                            <span>Аренда просрочена</span>
+                        </div>
+                        <div th:unless="${penalty.reason} == '_rent_expired'">
+                            <span th:text="${penalty.reason}"></span>
+                        </div>
+                    </td>
                     <td th:text="${#temporals.format(penalty.date, 'dd-MM-yyyy HH:mm')}"></td>
                     <td sec:authorize="hasRole('ADMIN')" th:text="${penalty.payDate}"></td>
                     <td>
@@ -91,9 +98,14 @@
                         </div>
                     </td>
                     <td>
-                        <a th:href="@{/rents/pay_penalty(id=${penalty.id})}">
-                            <span>Pay</span>
-                        </a>
+                        <div th:if="${penalty.amount} - ${penalty.completeAmount} > 0">
+                            <a th:href="@{/rents/pay_penalty(id=${penalty.id})}">
+                                <span>Pay</span>
+                            </a>
+                        </div>
+                        <div th:unless="${penalty.amount} - ${penalty.completeAmount} > 0">
+                            <span>Нет действий</span>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
