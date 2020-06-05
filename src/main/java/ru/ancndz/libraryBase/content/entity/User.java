@@ -40,8 +40,11 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private Set<Role> roles;
 
+    @Transient
+    private int library_id;
 
-    public User(){
+
+    public User() {
     }
 
     public User(int id, String password, UserExtras userExtras) {

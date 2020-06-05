@@ -57,6 +57,7 @@ public class Book {
         this.count = count;
         this.extra = extra;
         this.library = library;
+        this.libraryId = library.getId();
     }
 
     public int getId() {

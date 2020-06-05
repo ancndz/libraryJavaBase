@@ -27,7 +27,7 @@
                 <td sec:authorize="hasRole('ADMIN')">
                     <form action="#" th:action="@{/jobs/edit}"  method="get" align="center">
                         <input readonly type="hidden" th:value="${job.id}" name="id">
-                        <input type="submit" value="Edit (ne nazimaite plz)">
+                        <input type="submit" value="Edit">
                     </form>
                     <form action="#" th:action="@{/jobs/delete}"  method="post" align="center">
                         <input readonly hidden type="text" th:value="${job.id}" name="id">
@@ -40,7 +40,7 @@
     </div>
     <br>
         <a th:href="@{/jobs/new}">
-            <span>Add Book</span>
+            <span>Add Job</span>
         </a>
 </div>
 <div th:insert="/fragments/header :: login"></div>
