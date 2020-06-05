@@ -27,3 +27,6 @@ hs_err_pid*
 tomcat local service/
 
 application.properties
+
+# test res
+src/main/resources/testResources/

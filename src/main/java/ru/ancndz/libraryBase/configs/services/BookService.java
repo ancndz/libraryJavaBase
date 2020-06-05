@@ -6,10 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.ancndz.libraryBase.configs.repos.BookRepository;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Book;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class BookService {
 
     public void save(Book book) {
         Book bookInStore = this.bookRepository.findByNameAndAuthorAndPubYearAndLibrary_Id(
-                book.getName(), book.getAuthor(), book.getPubYear(), book.getLibrary().getId());
+                book.getName(), book.getAuthor(), book.getPubYear(), book.getLibraryId());
         if (bookInStore != null) {
             if (bookInStore.getId() != book.getId()) {
                 bookInStore.setCount(bookInStore.getCount() + book.getCount());
@@ -34,6 +31,7 @@ public class BookService {
             bookRepository.save(book);
         }
     }
+
 
     public List<Book> findByCriteria(String name, String author, int pubYear, String genre, String edition, int lib_id){
         return this.bookRepository.findAll((Specification<Book>) (root, query, criteriaBuilder) -> {
@@ -60,10 +58,6 @@ public class BookService {
         });
     }
 
-    public List<Book> booksByAuthor(String author) {
-        return this.bookRepository.findAllByAuthor(author);
-    }
-
     public List<Book> booksList() {
         return (List<Book>) bookRepository.findAll();
     }
@@ -75,5 +69,8 @@ public class BookService {
     }
     public void delete(Integer id) {
         bookRepository.deleteById(id);
+    }
+    public void deleteAll() {
+        bookRepository.deleteAll();
     }
 }
