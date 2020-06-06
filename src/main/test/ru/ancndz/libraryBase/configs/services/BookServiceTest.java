@@ -4,7 +4,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -35,15 +34,18 @@ class BookServiceTest {
         System.out.println("Test init...");
         String dir = "src\\main\\test\\resources\\";
 
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader(dir + "1000books.json"))
-        {
-            Object obj = parser.parse(reader);
-            JSONArray books = (JSONArray) obj;
-            books.forEach(bookJson -> parseBook((JSONObject) bookJson));
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
+        for (int i = 1; i <= 5; i++) {
+            JSONParser parser = new JSONParser();
+            try (FileReader reader = new FileReader(dir + "books" + i + ".json")) {
+                Object obj = parser.parse(reader);
+                JSONArray books = (JSONArray) obj;
+                books.forEach(bookJson -> parseBook((JSONObject) bookJson));
+            } catch (IOException | ParseException e) {
+                e.printStackTrace();
+            }
         }
+
+        Assertions.assertEquals(5000, bookList.size());
     }
 
     private static void parseBook(JSONObject bookJsonRaw) {
@@ -64,13 +66,6 @@ class BookServiceTest {
 
         BookServiceTest.bookList.add(book);
     }
-
-
-    /*@Test
-    void readFromJsonTest() {
-        Assertions.assertNotNull(bookList.get(0));
-        Assertions.assertEquals(1000, bookList.size());
-    }*/
 
     @Test
     void saveTest() {
