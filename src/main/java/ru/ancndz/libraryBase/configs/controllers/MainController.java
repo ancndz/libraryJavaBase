@@ -44,11 +44,11 @@ public class MainController {
         }
         model.addAttribute("name", username);
         //System.out.println(username);
-        return "/mainPage";
+        return "mainPage";
     }
 
     @GetMapping("/login")
     public String loginPage() {
-        return "/login";
+        return "login";
     }
 }

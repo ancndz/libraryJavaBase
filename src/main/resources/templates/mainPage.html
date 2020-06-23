@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -39,10 +40,10 @@
       </nav>
     </div>
   </header> -->
-<div th:insert="/fragments/header :: header"></div>
+<div th:insert="fragments/header :: header"></div>
   <main role="main" class="inner cover">
     <h1 class="cover-heading">Hello, <span th:text="${name} + '!'"> Stranger!</span></h1>
-    <div th:insert="/fragments/header :: login"></div>
+    <div th:insert="fragments/header :: login"></div>
   </main>
 
   <footer class="mastfoot mt-auto">

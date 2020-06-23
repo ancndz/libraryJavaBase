@@ -29,18 +29,18 @@ public class JobController {
         if (!jobList.isEmpty()) {
             model.addAttribute("jobs", jobList);
         }
-        return "/jobs/jobs";
+        return "jobs/jobs";
     }
 
     @GetMapping("/new")
     public String newJobForm(Job job) {
-        return "/jobs/add_job";
+        return "jobs/add_job";
     }
 
     @PostMapping("/save")
     public String save(@Valid Job job, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "/jobs/add_job";
+            return "jobs/add_job";
         }
         jobService.save(job);
         return "redirect:/jobs/";
@@ -52,7 +52,7 @@ public class JobController {
         Job job = jobService.get(id);
         //mav.addObject("client", client);
         model.addAttribute("job", job);
-        return "/jobs/edit_job";
+        return "jobs/edit_job";
     }
 
     @PostMapping("/delete")

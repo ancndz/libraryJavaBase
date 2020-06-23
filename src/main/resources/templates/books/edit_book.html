@@ -4,7 +4,7 @@
 <title>Edit book</title>
 </head>
 <body>
-<div th:insert="/fragments/header :: header"></div>
+<div th:insert="fragments/header :: header"></div>
 <form action="#" th:action="@{/books/save}" th:object="${book}" method="post" align="center">
     <h3 align="center" >Fill data for book with <span th:text="*{id}"></span> id:</h3>
     <table border="1" cellpadding="5" align="center">
@@ -72,6 +72,6 @@
     <input type="text" hidden readonly th:field="*{id}">
     <input type="submit" value="Save Book">
 </form>
-<div th:insert="/fragments/header :: login"></div>
+<div th:insert="fragments/header :: login"></div>
 </body>
 </html>

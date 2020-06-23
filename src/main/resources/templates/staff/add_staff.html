@@ -5,7 +5,7 @@
     <title>Add staff</title>
 </head>
 <body>
-<div th:insert="/fragments/header :: header"></div>
+<div th:insert="fragments/header :: header"></div>
 <!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.libraryEnvironment.Staff"*/-->
 <form action="#" th:action="@{/registration/staff/save}" th:object="${staff}" method="post" align="center">
     <table border="1" cellpadding="5" align="center">
@@ -75,11 +75,11 @@
     </table>
     <br>
     <input type="submit" value="Add Staff">
-    <div th:switch="${error}">
+    <div th:switch="${errorText}">
         <p th:case="null"></p>
-        <p th:case="*" th:text="${error}"></p>
+        <p th:case="*" th:text="${errorText}"></p>
     </div>
 </form>
-<div th:insert="/fragments/header :: login"></div>
+<div th:insert="fragments/header :: login"></div>
 </body>
 </html>

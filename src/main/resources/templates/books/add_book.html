@@ -5,7 +5,7 @@
     <title>Add book</title>
 </head>
 <body>
-<div th:insert="/fragments/header :: header"></div>
+<div th:insert="fragments/header :: header"></div>
 <!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
 <form action="#" th:action="@{/books/save}" th:object="${book}" method="post" align="center">
     <table border="1" cellpadding="5" align="center">
@@ -76,6 +76,6 @@
         <p th:case="*" th:text="${error}"></p>
     </div>
 </form>
-<div th:insert="/fragments/header :: login"></div>
+<div th:insert="fragments/header :: login"></div>
 </body>
 </html>

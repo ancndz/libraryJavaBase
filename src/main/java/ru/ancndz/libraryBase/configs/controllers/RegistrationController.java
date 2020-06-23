@@ -56,7 +56,7 @@ public class RegistrationController {
         model.addAttribute("libraries", libraryList);
         model.addAttribute("jobs", jobList);
         model.addAttribute("staff", staff);
-        return "/staff/add_staff";
+        return "staff/add_staff";
     }
 
     @GetMapping("")
@@ -65,7 +65,7 @@ public class RegistrationController {
         user.setUserExtras(new UserExtras());
         user.getUserExtras().setDateReg(LocalDateTime.now());
         model.addAttribute("user", user);
-        return "/users/add_user";
+        return "users/add_user";
     }
 
     @PostMapping("/save")

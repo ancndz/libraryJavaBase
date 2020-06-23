@@ -37,7 +37,7 @@ public class UserController {
             model.addAttribute("userList", userList);
         }
         model.addAttribute("listName", "Все участники");
-        return "/users/user";
+        return "users/user";
     }
 
     @GetMapping("/new")
@@ -71,14 +71,14 @@ public class UserController {
         rents.forEach(rent -> users.add(rent.getUser()));
         model.addAttribute("userList", users);
         model.addAttribute("listName", "Читатели " + author + ", " + name);
-        return "/users/user";
+        return "users/user";
     }
 
     @GetMapping("/edit")
     public String editClientForm(@RequestParam Integer id, Model model) {
         User user = this.userService.get(id);
         model.addAttribute("user", user);
-        return "/users/edit_user";
+        return "users/edit_user";
     }
 
     @PostMapping("/delete")
@@ -115,7 +115,7 @@ public class UserController {
         }
         model.addAttribute("userList", lostUser);
         model.addAttribute("listName", "Неактивные участники");
-        return "/users/user";
+        return "users/user";
     }
 
 }

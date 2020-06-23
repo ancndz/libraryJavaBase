@@ -30,7 +30,7 @@
 </head>
 <body class="text-center">
  <form class="form-signin">
-<div th:insert="/fragments/header :: header"></div>
+<div th:insert="fragments/header :: header"></div>
 <!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.libraryEnvironment.Staff"*/-->
 <div align="center">
 <form method="POST" th:action="@{/login}">
@@ -46,8 +46,9 @@
 <button class="btn btn-lg btn-primary btn-block" value="Login" type="submit">Sign in</button>
 
 </form>
+</div>
 <button class="btn btn-outline-primary btn-block" th:href="@{/registration}" formnovalidate >Register</button>
 <!--<button class="btn btn-outline-primary" th:href="@{/registration/staff}" formnovalidate> Register (staff only)</button>-->
-
+ </form>
 </body>
 </html>

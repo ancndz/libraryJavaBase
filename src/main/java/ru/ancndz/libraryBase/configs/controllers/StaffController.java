@@ -41,7 +41,7 @@ public class StaffController {
         if (!staffList.isEmpty()) {
             model.addAttribute("staffList", staffList);
         }
-        return "/staff/staff";
+        return "staff/staff";
     }
 
     @GetMapping("/new")
@@ -88,7 +88,7 @@ public class StaffController {
         model.addAttribute("staff", staff);
         model.addAttribute("works", countRents);
         model.addAttribute("staffUsers", staffUsers);
-        return "/staff/works";
+        return "staff/works";
     }
 
     @PostMapping("/save")
@@ -118,6 +118,6 @@ public class StaffController {
         model.addAttribute("staff", this.staffService.get(id));
         model.addAttribute("libs", this.libraryService.libraryList());
         model.addAttribute("jobs", this.jobService.jobList());
-        return "/staff/edit_staff";
+        return "staff/edit_staff";
     }
 }

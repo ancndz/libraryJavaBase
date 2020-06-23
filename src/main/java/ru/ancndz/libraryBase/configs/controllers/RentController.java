@@ -69,7 +69,7 @@ public class RentController {
         if (!penalties.isEmpty()) {
             model.addAttribute("penalties", penalties);
         }
-        return "/rents/rents";
+        return "rents/rents";
     }
 
     @PostMapping("/new_order")
@@ -94,11 +94,11 @@ public class RentController {
                 }
                 rent.setBook(this.bookService.get(book_id));
                 model.addAttribute("rent", rent);
-                return "/rents/new_rent";
+                return "rents/new_rent";
             }
         }
         model.addAttribute("error", "not authed");
-        return "/rents/rents";
+        return "rents/rents";
     }
 
     @PostMapping("/save")
@@ -115,7 +115,7 @@ public class RentController {
                 rent.setBook(book);
             } else {
                 model.addAttribute("error", "Книг не осталось!");
-                return "/rents/rents";
+                return "rents/rents";
             }
             if (this.rentService.save(rent)) {
                 book.setCount(book.getCount() - 1);
@@ -123,11 +123,11 @@ public class RentController {
                 return "redirect:/books/";
             } else {
                 model.addAttribute("error", "У вас есть задолженности, невозможно совершить аренду.");
-                return "/rents/rents";
+                return "rents/rents";
             }
         } else {
             model.addAttribute("error", "Пользователь не найден!");
-            return "/rents/rents";
+            return "rents/rents";
         }
     }
 
@@ -150,7 +150,7 @@ public class RentController {
     public String pay(@RequestParam int id, Model model) {
         Penalty penalty = this.penaltyService.get(id);
         model.addAttribute("penalty", penalty);
-        return  "/rents/pay";
+        return  "rents/pay";
     }
 
     @PostMapping("/pay_penalty/save")
@@ -174,6 +174,6 @@ public class RentController {
         }
         model.addAttribute("books", activeBooks);
         model.addAttribute("letter", letter);
-        return "/rents/actives";
+        return "rents/actives";
     }
 }

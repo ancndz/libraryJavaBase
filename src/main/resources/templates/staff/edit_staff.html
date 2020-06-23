@@ -4,7 +4,7 @@
 <title>Edit User</title>
 </head>
 <body>
-<div th:insert="/fragments/header :: header"></div>
+<div th:insert="fragments/header :: header"></div>
 <!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.User"*/-->
 <form action="#" th:action="@{/staff/save}" th:object="${staff}" method="post" align="center">
     <table border="1" cellpadding="5" align="center">
@@ -75,6 +75,6 @@
     <br>
     <input type="submit" value="Edit Staff">
 </form>
-<div th:insert="/fragments/header :: login"></div>
+<div th:insert="fragments/header :: login"></div>
 </body>
 </html>

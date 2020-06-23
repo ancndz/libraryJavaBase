@@ -6,7 +6,7 @@
     <title>Libraries</title>
 </head>
 <body>
-<div th:insert="/fragments/header :: header"></div>
+<div th:insert="fragments/header :: header"></div>
 <div th:switch="${libraries}" align="center">
     <h2 th:case="null">No libs found!</h2>
     <div th:case="*">
@@ -55,6 +55,6 @@
         </a>
     </div>
 </div>
-<div th:insert="/fragments/header :: login"></div>
+<div th:insert="fragments/header :: login"></div>
 </body>
 </html>
