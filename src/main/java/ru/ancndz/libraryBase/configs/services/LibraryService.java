@@ -3,6 +3,7 @@ package ru.ancndz.libraryBase.configs.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.ancndz.libraryBase.configs.repos.LibraryRepository;
+import ru.ancndz.libraryBase.content.jobs.Job;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Library;
 
 import java.util.List;
@@ -22,15 +23,28 @@ public class LibraryService {
     }
 
     public List<Library> libraryList() {
-        return (List<Library>) libraryRepository.findAll();
+        checkEmpty();
+        return libraryRepository.findAll();
+    }
+
+    private void checkEmpty() {
+        if (this.libraryRepository.findAll().isEmpty()) {
+            Library library = new Library();
+            library.setId(1);
+            library.setAddress("none");
+            library.setName("none");
+            this.libraryRepository.save(library);
+        }
     }
 
     public List<Library> libraryListBusiness(){
-        return libraryRepository.findAllByIdIsNot(16);
+        checkEmpty();
+        return libraryRepository.findAllByIdIsNot(1);
     }
 
     public Library get(Integer id) {
-        return libraryRepository.findById(id).get();
+        checkEmpty();
+        return libraryRepository.getOne(id);
     }
 
     public void delete(Integer id) {

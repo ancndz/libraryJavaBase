@@ -69,7 +69,7 @@ public class RentController {
         if (!penalties.isEmpty()) {
             model.addAttribute("penalties", penalties);
         }
-        return "/rents/rents";
+        return "rents/rents";
     }
 
     @PostMapping("/new_order")
@@ -98,7 +98,7 @@ public class RentController {
             }
         }
         model.addAttribute("error", "not authed");
-        return "/rents/rents";
+        return "rents/rents";
     }
 
     @PostMapping("/save")
@@ -127,7 +127,7 @@ public class RentController {
             }
         } else {
             model.addAttribute("error", "Пользователь не найден!");
-            return "/rents/rents";
+            return "rents/rents";
         }
     }
 
@@ -150,7 +150,7 @@ public class RentController {
     public String pay(@RequestParam int id, Model model) {
         Penalty penalty = this.penaltyService.get(id);
         model.addAttribute("penalty", penalty);
-        return  "/rents/pay";
+        return  "rents/pay";
     }
 
     @PostMapping("/pay_penalty/save")
@@ -174,6 +174,6 @@ public class RentController {
         }
         model.addAttribute("books", activeBooks);
         model.addAttribute("letter", letter);
-        return "/rents/actives";
+        return "rents/actives";
     }
 }

@@ -6,7 +6,7 @@
     <title>Clients</title>
 </head>
 <body>
-<div th:insert="/fragments/header :: header"></div>
+<div th:insert="fragments/header :: header"></div>
 <div th:switch="${userList}" align="center">
     <h2 th:case="null">No users found!</h2>
     <div th:case="*">
@@ -72,6 +72,6 @@
         </form>
     </div>
 </div>
-<div th:insert="/fragments/header :: login"></div>
+<div th:insert="fragments/header :: login"></div>
 </body>
 </html>

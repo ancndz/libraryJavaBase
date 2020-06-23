@@ -6,7 +6,7 @@
     <title>Rents&Penalties</title>
 </head>
 <body>
-<div th:insert="/fragments/header :: header"></div>
+<div th:insert="fragments/header :: header"></div>
 <div th:switch="${error}" align="center">
     <h2 th:case="null"></h2>
     <div th:case="*"> <span th:text="${error}"></span> </div>
@@ -118,6 +118,6 @@
         <span>Refresh</span>
     </a>
 </div>
-<div th:insert="/fragments/header :: login"></div>
+<div th:insert="fragments/header :: login"></div>
 </body>
 </html>

@@ -5,7 +5,7 @@
     <title>Create User</title>
 </head>
 <body>
-<div th:insert="/fragments/header :: header"></div>
+<div th:insert="fragments/header :: header"></div>
 <h3 align="center">Please, fill Your profile:</h3>
 <div th:switch="${errorText}">
     <p th:case="null"></p>
@@ -44,6 +44,6 @@
     <br>
     <input type="submit" value="Create User">
 </form>
-<div th:insert="/fragments/header :: login"></div>
+<div th:insert="fragments/header :: login"></div>
 </body>
 </html>

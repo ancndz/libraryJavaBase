@@ -34,7 +34,7 @@ public class LibraryController {
         if (!libraryList.isEmpty()) {
             model.addAttribute("libraries", libraryList);
         }
-        return "/libs/libraries";
+        return "libs/libraries";
     }
 
     @GetMapping("/new")
@@ -45,7 +45,7 @@ public class LibraryController {
     @PostMapping("/save")
     public String saveLib(@Valid Library library, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "/libs/add_lib";
+            return "libs/add_lib";
         }
         this.libraryService.save(library);
         model.addAttribute("libraries", this.libraryService.libraryList());
@@ -56,7 +56,7 @@ public class LibraryController {
     public String editLibForm(@RequestParam Integer id, Model model) {
         Library library = this.libraryService.get(id);
         model.addAttribute("library", library);
-        return "/libs/edit_lib";
+        return "libs/edit_lib";
     }
 
     @PostMapping("/delete")
@@ -79,7 +79,7 @@ public class LibraryController {
         model.addAttribute("letters", sortedLetters);
         model.addAttribute("shelf", booksOnShelves);
         model.addAttribute("lib_id", id);
-        return "/libs/shelves";
+        return "libs/shelves";
     }
 
     private String getTitleFirstLetter(Book book) {

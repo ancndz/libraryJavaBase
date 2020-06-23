@@ -33,7 +33,7 @@ public class CatalogController {
         if (!bookList.isEmpty()) {
             model.addAttribute("bookList", bookList);
         }
-        return "/books/catalog";
+        return "books/catalog";
     }
 
     /*@GetMapping("/filter")
@@ -42,7 +42,7 @@ public class CatalogController {
         if (!bookList.isEmpty()) {
             model.addAttribute("bookList", bookList);
         }
-        return "/books/catalog";
+        return "books/catalog";
     }*/
 
     @GetMapping("/filter")
@@ -70,14 +70,14 @@ public class CatalogController {
         if (!bookList.isEmpty()) {
             model.addAttribute("bookList", bookList);
         }
-        return "/books/catalog";
+        return "books/catalog";
     }
 
     @GetMapping("/new")
     public String newBookForm(Model model, Book book) {
         List<Library> libraryList = this.libraryService.libraryList();
         model.addAttribute("libraries", libraryList);
-        return "/books/add_book";
+        return "books/add_book";
     }
 
     @PostMapping("/save")
@@ -87,7 +87,7 @@ public class CatalogController {
             model.addAttribute("libraries", libraryList);
             String error = result.toString();
             model.addAttribute("error", error);
-            return "/books/add_book";
+            return "books/add_book";
         }
         book.setLibrary(this.libraryService.get(book.getLibraryId()));
         this.bookService.save(book);
@@ -101,7 +101,7 @@ public class CatalogController {
         model.addAttribute("book", book);
         List<Library> libraryList = this.libraryService.libraryList();
         model.addAttribute("libraries", libraryList);
-        return "/books/edit_book";
+        return "books/edit_book";
     }
 
     @PostMapping("/delete")

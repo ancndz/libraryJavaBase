@@ -5,10 +5,10 @@
     <title>Main page</title>
 </head>
 <body>
-<div th:insert="/fragments/header :: header"></div>
+<div th:insert="fragments/header :: header"></div>
 <h2 align="center">Main Page</h2>
 <br>
 <h2 align="center">Hello, <span align="center" th:text="${name} + '!'"> Stranger!</span></h2>
-<div th:insert="/fragments/header :: login"></div>
+<div th:insert="fragments/header :: login"></div>
 </body>
 </html>
