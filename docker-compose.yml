@@ -15,7 +15,8 @@ networks:
 services:
 
   mysql-base:
-    image: mysql:8.0
+    #image: mysql:8.0
+    image: mariadb
     environment:
       MYSQL_USER: '${mysql_user}'
       MYSQL_PASSWORD: '${mysql_pass}'
