@@ -11,7 +11,6 @@ volumes:
 networks:
   lib-net:
 
-
 services:
 
   mysql-base:
@@ -35,7 +34,6 @@ services:
       - ./mysql/my.cnf:/etc/mysql/my.cnf
       - dblogs:/var/log/mysql
       - dbfiles:/var/lib/mysql-files
-    command: bash -c "chown -R mysql:mysql /var/log/mysql && chown -R mysql:mysql /var/lib && exec /entrypoint.sh mysqld"
     networks:
       lib-net:
         aliases:
