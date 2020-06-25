@@ -21,10 +21,22 @@ public class JobService {
     }
 
     public List<Job> jobList() {
-        return (List<Job>) this.jobRepository.findAll();
+        checkEmpty();
+        return this.jobRepository.findAll();
+    }
+
+    private void checkEmpty() {
+        if (this.jobRepository.findAll().isEmpty()) {
+            Job job = new Job();
+            job.setId(1);
+            job.setName("none");
+            job.setPay(0);
+            this.jobRepository.save(job);
+        }
     }
 
     public Job get(int id) {
+        checkEmpty();
         return this.jobRepository.getOne(id);
     }
 

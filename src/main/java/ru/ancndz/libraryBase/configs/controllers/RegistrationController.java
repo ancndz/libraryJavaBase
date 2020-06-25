@@ -61,7 +61,7 @@ public class RegistrationController {
 
     @GetMapping("")
     public String registrationUser(User user, Model model) {
-        //model.addAttribute("userForm", new User());
+        this.staffService.checkEmpty();
         user.setUserExtras(new UserExtras());
         user.getUserExtras().setDateReg(LocalDateTime.now());
         model.addAttribute("user", user);
@@ -71,15 +71,15 @@ public class RegistrationController {
     @PostMapping("/save")
     public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "/users/add_user";
+            return "users/add_user";
         }
         if (!user.passwordsCheck()){
             model.addAttribute("errorText", "Пароли не совпадают");
-            return "/users/add_user";
+            return "users/add_user";
         }
         if (!userService.save(user)){
             model.addAttribute("errorText", "Пользователь с таким email уже существует");
-            return "/users/add_user";
+            return "users/add_user";
         }
         return "login";
     }
@@ -88,17 +88,17 @@ public class RegistrationController {
     public String addStaff(@Valid Staff staff, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "/staff/add_staff";
+            return "staff/add_staff";
         }
         if (!staff.passwordsCheck()){
             model.addAttribute("errorText", "Пароли не совпадают");
-            return "/staff/add_staff";
+            return "staff/add_staff";
         }
         staff.setJob(this.jobService.get(staff.getJob_id()));
         staff.setLibrary(this.libraryService.get(staff.getLibrary_id()));
         if (!staffService.save(staff)){
             model.addAttribute("errorText", "Пользователь с таким email уже существует");
-            return "/staff/add_staff";
+            return "staff/add_staff";
         }
         return "login";
     }

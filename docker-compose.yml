@@ -1,0 +1,62 @@
+version: '3'
+
+volumes:
+  dbdata:
+    driver: local
+  dblogs:
+    driver: local
+  dbfiles:
+    driver: local
+
+networks:
+  lib-net:
+
+services:
+
+  mysql-base:
+    #image: mysql:8.0
+    image: mariadb
+    environment:
+      MYSQL_USER: '${mysql_user}'
+      MYSQL_PASSWORD: '${mysql_pass}'
+      MYSQL_DATABASE: 'library_database'
+      MYSQL_ROOT_PASSWORD: '${mysql_root_pass}'
+      MYSQL_ROOT_HOST: '%'
+    container_name: mysql-base
+    restart: unless-stopped
+    tty: true
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - dblogs:/var/log/mysql
+      - dbfiles:/var/lib/mysql-files
+    networks:
+      lib-net:
+        aliases:
+          - mysql-base
+
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: ancndz/library-java-base
+    container_name: app
+    restart: on-failure
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    depends_on:
+      - mysql-base
+    ports:
+      - '8088:8080'
+    expose:
+      - '8088'
+    networks:
+      lib-net:
+        aliases:
+          - app

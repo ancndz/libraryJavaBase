@@ -42,7 +42,7 @@ public class CatalogController {
         if (!bookList.isEmpty()) {
             model.addAttribute("bookList", bookList);
         }
-        return "/books/catalog";
+        return "books/catalog";
     }*/
 
     @GetMapping("/filter")

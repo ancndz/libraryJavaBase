@@ -15,15 +15,14 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository repository;
-    private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    private final RoleService roleService;
     private final StaffRepository staffRepository;
 
     @Autowired
-    public UserService(UserRepository repository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, StaffRepository staffRepository) {
+    public UserService(UserRepository repository, BCryptPasswordEncoder bCryptPasswordEncoder, RoleService roleService, StaffRepository staffRepository) {
         this.repository = repository;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.staffRepository = staffRepository;
     }
@@ -35,7 +34,7 @@ public class UserService {
         } else if (this.staffRepository.findByEmail(user.getEmail()) != null) {
             return false;
         }
-        user.setRoles(Collections.singleton(new Role(2, "ROLE_USER")));
+        user.setRoles(this.roleService.findUserRole());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setPasswordConfirm(bCryptPasswordEncoder.encode(user.getPassword()));
         repository.save(user);
