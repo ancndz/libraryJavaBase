@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.ancndz.libraryBase.configs.services.LoginService;
-import ru.ancndz.libraryBase.configs.services.UserService;
 import ru.ancndz.libraryBase.content.entity.User;
 import ru.ancndz.libraryBase.content.entity.UserExtras;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
@@ -25,21 +24,15 @@ public class MainController {
     @GetMapping("")
     public String mainPage(Authentication authentication, Model model) {
         String username = "Stranger";
-        if (authentication != null) {
-            if (authentication.isAuthenticated()) {
-                if (authentication.getPrincipal() instanceof UserDetails) {
-                    username = ((UserDetails)authentication.getPrincipal()).getUsername();
-                } else {
-                    username = authentication.getPrincipal().toString();
-                }
-                UserDetails userDetails = this.loginService.loadUserByUsername(username);
-                if (userDetails instanceof User) {
-                    UserExtras extras = ((User) userDetails).getUserExtras();
-                    username = extras.getFirstName() + " " + extras.getLastName();
-                } else if (userDetails instanceof Staff) {
-                    username = ((Staff) userDetails).getFirstName() + " " + ((Staff) userDetails).getLastName();
-                }
 
+        UserDetails userDetails = this.loginService.loadByAuth(authentication);
+
+        if (userDetails != null) {
+            if (userDetails instanceof User) {
+                UserExtras extras = ((User) userDetails).getUserExtras();
+                username = extras.getFirstName() + " " + extras.getLastName();
+            } else if (userDetails instanceof Staff) {
+                username = ((Staff) userDetails).getFirstName() + " " + ((Staff) userDetails).getLastName();
             }
         }
         model.addAttribute("name", username);
