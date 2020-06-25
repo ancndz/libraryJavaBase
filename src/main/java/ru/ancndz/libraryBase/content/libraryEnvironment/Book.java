@@ -5,36 +5,45 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "book")
+@Table
 public class Book {
     /**
      * айди книги
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private int id;
-    @Column(name = "book_type")
+
+    @Column
     private String bookType;
-    @Column(name = "name")
+
+    @Column
     private String name;
-    @Column(name = "author")
+
+    @Column
     private String author;
-    @Column(name = "edition")
+
+    @Column
     private String edition;
-    @Column(name = "edition_num")
+
+    @Column
     private String editionNum;
-    @Column(name = "pub_year")
+
+    @Column
     private int pubYear;
-    @Column(name = "genre")
+
+    @Column
     private String genre;
-    @Column(name = "count")
+
+    @Column
     private int count;
-    @Column(name = "extra")
+
+    @Column
     private String extra;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH, targetEntity = Library.class)
-    @JoinColumn(name = "library_id")
+    @JoinColumn
     private Library library;
 
     @Transient
@@ -43,22 +52,6 @@ public class Book {
     public Book() {
     }
 
-    public Book(int id, String bookType, String name, String author,
-                String edition, String editionNum, int pubYear, String genre,
-                int count, String extra, Library library) {
-        this.id = id;
-        this.bookType = bookType;
-        this.name = name;
-        this.author = author;
-        this.edition = edition;
-        this.editionNum = editionNum;
-        this.pubYear = pubYear;
-        this.genre = genre;
-        this.count = count;
-        this.extra = extra;
-        this.library = library;
-        this.libraryId = library.getId();
-    }
 
     public int getId() {
         return id;

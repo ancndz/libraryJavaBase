@@ -14,7 +14,7 @@
         <tr>
             <th><label for="book">Book</label></th>
             <th><label for="lib">Library</label></th>
-            <th sec:authorize="hasRole('ADMIN')"><label for="user">User</label></th>
+            <th sec:authorize="hasRole('ADMIN')"><label for="libraryUser">User</label></th>
         </tr>
         </thead>
         <tbody>
@@ -26,11 +26,11 @@
             <span th:text="${rent.book.library.address} + ', ' + ${rent.book.library.name}"></span>
             <input type="text" hidden readonly th:field="${rent.book.library}" id="lib">
             <input type="text" hidden readonly th:field="${rent.staff}">
-            <input type="text" hidden readonly th:field="${rent.user}">
+            <input type="text" hidden readonly th:field="${rent.libraryUser}">
         </td>
         <td sec:authorize="hasRole('ADMIN')">
-            <span th:text="${rent.user.email}"></span>
-            <input type="text" th:field="${rent.user.email}" id="user">
+            <span th:text="${rent.libraryUser.email}"></span>
+            <input type="text" th:field="${rent.libraryUser.email}" id="libraryUser">
         </td>
         </tbody>
     </table>

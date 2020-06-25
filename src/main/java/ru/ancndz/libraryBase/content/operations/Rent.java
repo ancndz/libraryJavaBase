@@ -1,8 +1,8 @@
 package ru.ancndz.libraryBase.content.operations;
 
-import ru.ancndz.libraryBase.content.entity.User;
+import ru.ancndz.libraryBase.content.entity.LibraryUser;
+import ru.ancndz.libraryBase.content.entity.Staff;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Book;
-import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,60 +12,40 @@ import java.util.Objects;
  * Класс аренды
  */
 @Entity
-@Table(name = "rent")
+@Table
 public class Rent {
     /**
      * айди аренды
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private int id;
     /**
      * дата начала аренды
      */
-    @Column(name = "start_date")
+    @Column
     private LocalDateTime startDate;
 
-    @Column(name = "end_date")
+    @Column
     private LocalDateTime endDate;
 
-    @Column(name = "fact_end_date")
+    @Column
     private LocalDateTime factEndDate;
 
     @OneToOne
-    @JoinColumn(name = "staff_id", unique = true, nullable = false)
+    @JoinColumn(unique = true, nullable = false)
     private Staff staff;
 
     @OneToOne()
-    @JoinColumn(name = "book_id", unique = true, nullable = false)
+    @JoinColumn(unique = true, nullable = false)
     private Book book;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn
+    private LibraryUser libraryUser;
 
     public Rent() {}
-
-    /**
-     * конструктор
-     * @param id айди аренды
-     * //@param dateStart дата начала аренды
-     * //@param endDate дата завершения аренды
-     * @param factEndDate дата фактического завершения аренда (книга возвращена в библиотеку)
-     * @param staff сотрудник
-     * @param book книга
-     */
-    public Rent(int id, LocalDateTime startDate, LocalDateTime endDate,
-                LocalDateTime factEndDate, Staff staff, Book book, User user) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.factEndDate = factEndDate;
-        this.staff = staff;
-        this.book = book;
-        this.user = user;
-    }
 
     public int getId() {
         return id;
@@ -115,12 +95,12 @@ public class Rent {
         this.book = book;
     }
 
-    public User getUser() {
-        return user;
+    public LibraryUser getLibraryUser() {
+        return libraryUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setLibraryUser(LibraryUser libraryUser) {
+        this.libraryUser = libraryUser;
     }
 
     @Override
@@ -133,12 +113,12 @@ public class Rent {
                 Objects.equals(getFactEndDate(), rent.getFactEndDate()) &&
                 getStaff().equals(rent.getStaff()) &&
                 getBook().equals(rent.getBook()) &&
-                getUser().equals(rent.getUser());
+                getLibraryUser().equals(rent.getLibraryUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getStartDate(), getEndDate(), getFactEndDate(), getStaff(), getBook(), getUser());
+        return Objects.hash(getStartDate(), getEndDate(), getFactEndDate(), getStaff(), getBook(), getLibraryUser());
     }
 
     @Override
@@ -150,7 +130,7 @@ public class Rent {
                 ", factEndDate=" + factEndDate +
                 ", staff=" + staff +
                 ", book=" + book +
-                ", user=" + user +
+                ", user=" + libraryUser +
                 '}';
     }
 }

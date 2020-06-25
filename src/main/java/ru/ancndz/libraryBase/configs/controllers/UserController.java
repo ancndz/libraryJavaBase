@@ -4,13 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.ancndz.libraryBase.configs.services.RentService;
 import ru.ancndz.libraryBase.configs.services.UserService;
-import ru.ancndz.libraryBase.content.entity.User;
+import ru.ancndz.libraryBase.content.entity.LibraryUser;
 import ru.ancndz.libraryBase.content.operations.Rent;
 
-import javax.jws.WebParam;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -32,16 +34,16 @@ public class UserController {
 
     @GetMapping("")
     public String usersHome(Model model) {
-        List<User> userList = userService.getAll();
-        if (!userList.isEmpty()) {
-            model.addAttribute("userList", userList);
+        List<LibraryUser> libraryUserList = userService.getAll();
+        if (!libraryUserList.isEmpty()) {
+            model.addAttribute("libraryUserList", libraryUserList);
         }
         model.addAttribute("listName", "Все участники");
         return "users/user";
     }
 
     @GetMapping("/new")
-    public String newClientForm(User user) {
+    public String newClientForm(LibraryUser libraryUser) {
         /*user.setUserExtras(new UserExtras());
         user.getUserExtras().setDateReg(LocalDateTime.now());
         return "/users/add_user";*/
@@ -49,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String saveClient(@Valid User user, BindingResult result, Model model) {
+    public String saveClient(@Valid LibraryUser libraryUser, BindingResult result, Model model) {
         /*if (result.hasErrors()) {
             String errorText = result.toString();
             model.addAttribute("errorText", errorText);
@@ -67,17 +69,17 @@ public class UserController {
     @GetMapping("/reading_now")
     public String readingNow(@RequestParam(value = "name") String name, @RequestParam(value = "author") String author, Model model) {
         List<Rent> rents = this.rentService.getAllActiveByBook(author, name);
-        List<User> users = new ArrayList<>();
-        rents.forEach(rent -> users.add(rent.getUser()));
-        model.addAttribute("userList", users);
+        List<LibraryUser> libraryUsers = new ArrayList<>();
+        rents.forEach(rent -> libraryUsers.add(rent.getLibraryUser()));
+        model.addAttribute("libraryUserList", libraryUsers);
         model.addAttribute("listName", "Читатели " + author + ", " + name);
         return "users/user";
     }
 
     @GetMapping("/edit")
     public String editClientForm(@RequestParam Integer id, Model model) {
-        User user = this.userService.get(id);
-        model.addAttribute("user", user);
+        LibraryUser libraryUser = this.userService.get(id);
+        model.addAttribute("userLibrary", libraryUser);
         return "users/edit_user";
     }
 
@@ -91,29 +93,33 @@ public class UserController {
     public String findLostClients(@RequestParam(value = "date") String dateString, Model model) {
         ChronoUnit chronoUnit;
         switch (dateString) {
-            case "week": chronoUnit = ChronoUnit.WEEKS;
+            case "week":
+                chronoUnit = ChronoUnit.WEEKS;
                 break;
-            case "month": chronoUnit = ChronoUnit.MONTHS;
+            case "month":
+                chronoUnit = ChronoUnit.MONTHS;
                 break;
-            case "year": chronoUnit = ChronoUnit.YEARS;
+            case "year":
+                chronoUnit = ChronoUnit.YEARS;
                 break;
-            default: chronoUnit = ChronoUnit.MINUTES;
+            default:
+                chronoUnit = ChronoUnit.MINUTES;
                 break;
         }
-        List<User> allUsers = this.userService.getAll();
-        List<User> lostUser = new ArrayList<>();
-        for (User user: allUsers) {
-            Rent lastRent = this.rentService.getLastRentByUserId(user.getId());
+        List<LibraryUser> allLibraryUsers = this.userService.getAll();
+        List<LibraryUser> lostLibraryUser = new ArrayList<>();
+        for (LibraryUser libraryUser : allLibraryUsers) {
+            Rent lastRent = this.rentService.getLastRentByUserId(libraryUser.getId());
             if (lastRent != null) {
                 if (lastRent.getFactEndDate() != null &&
                         lastRent.getStartDate().plus(1, chronoUnit).isBefore(LocalDateTime.now())) {
-                    lostUser.add(user);
+                    lostLibraryUser.add(libraryUser);
                 }
             } else {
-                lostUser.add(user);
+                lostLibraryUser.add(libraryUser);
             }
         }
-        model.addAttribute("userList", lostUser);
+        model.addAttribute("libraryUserList", lostLibraryUser);
         model.addAttribute("listName", "Неактивные участники");
         return "users/user";
     }

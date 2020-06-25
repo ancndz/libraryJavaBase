@@ -6,11 +6,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.ancndz.libraryBase.configs.services.*;
-import ru.ancndz.libraryBase.content.entity.User;
+import ru.ancndz.libraryBase.content.entity.LibraryUser;
+import ru.ancndz.libraryBase.content.entity.Staff;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Book;
-import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
 import ru.ancndz.libraryBase.content.operations.Penalty;
 import ru.ancndz.libraryBase.content.operations.Rent;
 
@@ -53,9 +56,9 @@ public class RentController {
                 }
                 UserDetails userDetails = this.loginService.loadUserByUsername(userEmail);
                 if (userDetails != null) {
-                    if (userDetails instanceof User) {
-                        rents = this.rentService.getAllByUserId(((User) userDetails).getId());
-                        penalties = this.penaltyService.getAllByUserId(((User) userDetails).getId());
+                    if (userDetails instanceof LibraryUser) {
+                        rents = this.rentService.getAllByUserId(((LibraryUser) userDetails).getId());
+                        penalties = this.penaltyService.getAllByUserId(((LibraryUser) userDetails).getId());
                     } else if (userDetails instanceof Staff) {
                         rents = this.rentService.rentList();
                         penalties = this.penaltyService.penaltyList();
@@ -79,18 +82,18 @@ public class RentController {
                 String userEmail;
                 Rent rent = new Rent();
                 if (authentication.getPrincipal() instanceof UserDetails) {
-                    userEmail = ((UserDetails)authentication.getPrincipal()).getUsername();
+                    userEmail = ((UserDetails) authentication.getPrincipal()).getUsername();
                 } else {
                     userEmail = authentication.getPrincipal().toString();
                 }
                 UserDetails userDetails = this.loginService.loadUserByUsername(userEmail);
-                if (userDetails instanceof User) {
-                    rent.setUser((User) userDetails);
-                    rent.setStaff((Staff)this.loginService.loadUserByUsername("email"));
+                if (userDetails instanceof LibraryUser) {
+                    rent.setLibraryUser((LibraryUser) userDetails);
+                    rent.setStaff((Staff) this.loginService.loadUserByUsername("email"));
                 } else if (userDetails instanceof Staff) {
                     System.out.println(userDetails);
                     rent.setStaff((Staff) userDetails);
-                    rent.setUser(new User());
+                    rent.setLibraryUser(new LibraryUser());
                 }
                 rent.setBook(this.bookService.get(book_id));
                 model.addAttribute("rent", rent);
@@ -103,9 +106,9 @@ public class RentController {
 
     @PostMapping("/save")
     public String save(@Valid Rent rent, BindingResult result, Model model) {
-        UserDetails userDetails = this.loginService.loadUserByUsername(rent.getUser().getEmail());
+        UserDetails userDetails = this.loginService.loadUserByUsername(rent.getLibraryUser().getEmail());
         if (userDetails != null) {
-            rent.setUser((User)userDetails);
+            rent.setLibraryUser((LibraryUser) userDetails);
             rent.setStartDate(LocalDateTime.now());
             //rent.setEndDate(LocalDateTime.now().plusMonths(1));
             //todo change to 1 month

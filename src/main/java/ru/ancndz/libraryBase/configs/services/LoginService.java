@@ -6,48 +6,36 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.ancndz.libraryBase.configs.repos.StaffRepository;
 import ru.ancndz.libraryBase.configs.repos.UserRepository;
-import ru.ancndz.libraryBase.content.entity.User;
-import ru.ancndz.libraryBase.content.entity.UserExtras;
-import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
+import ru.ancndz.libraryBase.content.entity.LibraryUser;
 
 @Service
 public class LoginService implements UserDetailsService {
-    private final StaffRepository staffRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public LoginService(StaffRepository staffRepository, UserRepository userRepository) {
-        this.staffRepository = staffRepository;
+    public LoginService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     /** by email actualy **/
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = this.userRepository.findByEmail(s);
-        if (user == null) {
-            Staff staff = this.staffRepository.findByEmail(s);
-            if (staff == null) {
-                throw new UsernameNotFoundException("User not found");
-            } else {
-                return staff;
-            }
+        LibraryUser libraryUser = this.userRepository.findByEmail(s);
+        if (libraryUser == null) {
+            throw new UsernameNotFoundException("User not found");
         } else {
-            return user;
+            return libraryUser;
         }
     }
 
-    public <T extends UserDetails> T loadByAuth(Authentication authentication) throws UsernameNotFoundException{
+    public LibraryUser loadByAuth(Authentication authentication) throws UsernameNotFoundException {
         String username = "Stranger";
         if (authentication != null) {
             if (authentication.isAuthenticated()) {
                 UserDetails userDetails = loadUserByUsername(authentication.getName());
-                if (userDetails instanceof User) {
-                    return (T) userDetails;
-                } else if (userDetails instanceof Staff) {
-                    return (T) userDetails;
+                if (userDetails instanceof LibraryUser) {
+                    return (LibraryUser) userDetails;
                 } else {
                     return null;
                 }

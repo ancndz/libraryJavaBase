@@ -1,57 +1,39 @@
 package ru.ancndz.libraryBase.content.operations;
 
-import ru.ancndz.libraryBase.content.entity.User;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 
 @Entity
-@Table(name = "penalty")
+@Table
 public class Penalty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private int id;
 
-    @Column(name = "reason")
+    @Column
     private String reason;
 
-    @Column(name = "date")
+    @Column
     private LocalDateTime date;
 
-    @Column(name = "pay_date")
+    @Column
     private LocalDateTime payDate;
 
-    @Column(name = "amount")
+    @Column
     private int amount;
 
-    @Column(name = "amount_complete")
+    @Column
     private int completeAmount;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "rent_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Rent rent;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
     public Penalty() {
-    }
-
-    public Penalty(int id, String reason, LocalDateTime date, LocalDateTime payDate,
-                   int amount, int completeAmount, Rent rent, User user) {
-        this.id = id;
-        this.reason = reason;
-        this.date = date;
-        this.payDate = payDate;
-        this.amount = amount;
-        this.completeAmount = completeAmount;
-        this.rent = rent;
-        this.user = user;
     }
 
     public int getId() {
@@ -110,13 +92,6 @@ public class Penalty {
         this.rent = rent;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -128,13 +103,12 @@ public class Penalty {
                 Objects.equals(getReason(), penalty.getReason()) &&
                 getDate().equals(penalty.getDate()) &&
                 Objects.equals(getPayDate(), penalty.getPayDate()) &&
-                getRent().equals(penalty.getRent()) &&
-                getUser().equals(penalty.getUser());
+                getRent().equals(penalty.getRent());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getReason(), getDate(), getPayDate(), getAmount(), getCompleteAmount(), getRent(), getUser());
+        return Objects.hash(getReason(), getDate(), getPayDate(), getAmount(), getCompleteAmount(), getRent());
     }
 
     @Override
@@ -147,7 +121,6 @@ public class Penalty {
                 ", amount=" + amount +
                 ", completeAmount=" + completeAmount +
                 ", rent=" + rent +
-                ", user=" + user +
                 '}';
     }
 }

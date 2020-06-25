@@ -7,8 +7,8 @@
 </head>
 <body>
 <div th:insert="fragments/header :: header"></div>
-<div th:switch="${userList}" align="center">
-    <h2 th:case="null">No users found!</h2>
+<div th:switch="${libraryUserList}" align="center">
+    <h2 th:case="null">No libraryUsers found!</h2>
     <div th:case="*">
         <h3><span th:text="${listName}"></span></h3>
         <br>
@@ -24,20 +24,20 @@
             </tr>
             </thead>
             <tbody>
-            <!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.User"*/-->
-            <tr th:each="user : ${userList}">
+            <!--/*@thymesVar id="libraryUser" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
+            <tr th:each="libraryUser : ${libraryUserList}">
                 <!--/*@thymesVar id="userExtras" type="ru.ancndz.libraryBase.content.entity.UserExtras"*/-->
-                <td th:text="${user.id}"></td>
-                <td th:text="${user.userExtras.firstName} + ' ' + ${user.userExtras.lastName}"></td>
-                <td th:text="${user.email}"></td>
-                <td th:text="${user.userExtras.status}"></td>
-                <td th:text="${#temporals.format(user.userExtras.dateReg, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${libraryUser.id}"></td>
+                <td th:text="${libraryUser.userExtras.firstName} + ' ' + ${libraryUser.userExtras.lastName}"></td>
+                <td th:text="${libraryUser.email}"></td>
+                <td th:text="${libraryUser.userExtras.status}"></td>
+                <td th:text="${#temporals.format(libraryUser.userExtras.dateReg, 'dd-MM-yyyy HH:mm')}"></td>
                 <td sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/users/edit(id=${user.id})}">
+                    <a th:href="@{/libraryUsers/edit(id=${libraryUser.id})}">
                         <span>Edit</span>
                     </a>
                     <br>
-                    <a th:href="@{/users/delete(id=${user.id})}">
+                    <a th:href="@{/libraryUsers/delete(id=${libraryUser.id})}">
                         <span>Delete</span>
                     </a>
                 </td>
@@ -46,12 +46,12 @@
         </table>
     </div>
     <br>
-    <a th:href="@{/users/new}">
+    <a th:href="@{/libraryUsers/new}">
         <span>Add User</span>
     </a>
     <br>
     <div th:border="5">
-        <form th:action="@{/users/lost}" method="get">
+        <form th:action="@{/libraryUsers/lost}" method="get">
             <h5>Показать неактивных читателей за указанный период</h5>
             <select name="date">
                 <option value="week">Неделя</option>
@@ -64,7 +64,7 @@
     </div>
     <br>
     <div th:border="5">
-        <form th:action="@{/users/reading_now}" method="get">
+        <form th:action="@{/libraryUsers/reading_now}" method="get">
             <h5>Показать читателей данной книги:</h5>
             <input type="text" name="author" placeholder="Author">
             <input type="text" name="name" placeholder="Title">

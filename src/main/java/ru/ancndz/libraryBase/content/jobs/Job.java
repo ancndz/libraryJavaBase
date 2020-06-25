@@ -7,17 +7,17 @@ import java.util.Objects;
  * Класс дефолтной должности, сотрудник общего назначения
  */
 @Entity
-@Table(name = "jobs")
+@Table
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     protected int id;
 
-    @Column(name = "name")
+    @Column
     protected String name;
 
-    @Column(name = "pay")
+    @Column
     protected int pay;
 
     public Job(){}

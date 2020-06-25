@@ -7,7 +7,6 @@ import ru.ancndz.libraryBase.configs.repos.RentRepos;
 import ru.ancndz.libraryBase.content.operations.Penalty;
 import ru.ancndz.libraryBase.content.operations.Rent;
 
-import javax.management.remote.rmi._RMIConnection_Stub;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +23,7 @@ public class RentService {
     }
 
     public boolean save(Rent rent) {
-        if (this.penaltyRepository.existsAllByUser_IdAndPayDateIsNull(rent.getUser().getId())) {
+        if (this.penaltyRepository.existsAllByRent_LibraryUser_IdAndPayDateIsNull(rent.getLibraryUser().getId())) {
             return false;
         } else {
             this.rentRepos.save(rent);
@@ -45,7 +44,7 @@ public class RentService {
     }
 
     public List<Rent> getAllByUserId(int id) {
-        return this.rentRepos.findAllByUser_Id(id);
+        return this.rentRepos.findAllByLibraryUser_Id(id);
     }
 
     public List<Rent> getAllByStaffId(int id) {
@@ -53,7 +52,7 @@ public class RentService {
     }
 
     public Rent getLastRentByUserId(int id) {
-        return this.rentRepos.getFirstByUser_Id(id);
+        return this.rentRepos.getFirstByLibraryUser_Id(id);
     }
 
     public List<Rent> getActiveByLibId(int id) {
@@ -89,7 +88,6 @@ public class RentService {
                 penalty = new Penalty();
                 penalty.setReason("_rent_expired");
                 penalty.setRent(each);
-                penalty.setUser(each.getUser());
                 penalty.setAmount(amount);
                 penalty.setDate(LocalDateTime.now());
             } else {

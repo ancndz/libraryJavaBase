@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.springframework.org/security/tags">
+>
 <head>
     <meta charset="UTF-8">
     <title>Staff</title>
@@ -38,7 +38,7 @@
             </thead>
             <tbody>
                 <td th:text="${staff.id}"></td>
-                <td th:text="${staff.firstName} + ' ' + ${staff.lastName}"></td>
+                <td th:text="${staff.userExtras.firstName} + ' ' + ${staff.userExtras.lastName}"></td>
                 <td th:text="${staff.address}"></td>
                 <td th:text="${staff.number}"></td>
                 <td th:text="${staff.job.name}"></td>
@@ -50,7 +50,7 @@
 </div>
 <br>
 <div th:switch="${works}" align="center">
-    <h2 th:case="0">No users found!</h2>
+    <h2 th:case="0">No libraryUsers found!</h2>
     <div th:case="*">
         <h3>Список Клиентов</h3>
         <br>
@@ -65,14 +65,14 @@
             </tr>
             </thead>
             <tbody>
-            <!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.User"*/-->
-            <tr th:each="user : ${staffUsers}">
+            <!--/*@thymesVar id="libraryUser" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
+            <tr th:each="libraryUser : ${staffUsers}">
                 <!--/*@thymesVar id="userExtras" type="ru.ancndz.libraryBase.content.entity.UserExtras"*/-->
-                <td th:text="${user.id}"></td>
-                <td th:text="${user.userExtras.firstName} + ' ' + ${user.userExtras.lastName}"></td>
-                <td th:text="${user.email}"></td>
-                <td th:text="${user.userExtras.status}"></td>
-                <td th:text="${#temporals.format(user.userExtras.dateReg, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${libraryUser.id}"></td>
+                <td th:text="${libraryUser.userExtras.firstName} + ' ' + ${libraryUser.userExtras.lastName}"></td>
+                <td th:text="${libraryUser.email}"></td>
+                <td th:text="${libraryUser.userExtras.status}"></td>
+                <td th:text="${#temporals.format(libraryUser.userExtras.dateReg, 'dd-MM-yyyy HH:mm')}"></td>
             </tr>
             </tbody>
         </table>

@@ -7,23 +7,23 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "user_extras")
+@Table
 public class UserExtras {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private int id;
 
-    @Column(name = "first_name")
+    @Column
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column
     private String lastName;
 
-    @Column(name = "date_reg")
+    @Column
     private LocalDateTime dateReg;
 
-    @Column(name = "status")
+    @Column
     private String status;
 
     public UserExtras(){

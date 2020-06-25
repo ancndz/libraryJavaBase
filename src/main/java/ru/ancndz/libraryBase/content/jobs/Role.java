@@ -1,30 +1,29 @@
 package ru.ancndz.libraryBase.content.jobs;
 
 import org.springframework.security.core.GrantedAuthority;
-import ru.ancndz.libraryBase.content.entity.User;
-import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
+import ru.ancndz.libraryBase.content.entity.LibraryUser;
+import ru.ancndz.libraryBase.content.entity.Staff;
 
 import javax.persistence.*;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "roles")
+@Table
 public class Role implements GrantedAuthority {
 
     @Id
-    @Column(name = "id")
+    @Column
     private int id;
-    @Column(name = "name")
+    @Column
     private String name;
 
     @Transient
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    @ManyToMany
+    private Set<LibraryUser> libraryUsers;
 
     @Transient
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany
     private Set<Staff> staff;
 
     @Override
@@ -60,12 +59,12 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Set<LibraryUser> getLibraryUsers() {
+        return libraryUsers;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setLibraryUsers(Set<LibraryUser> libraryUsers) {
+        this.libraryUsers = libraryUsers;
     }
 
     public Set<Staff> getStaff() {

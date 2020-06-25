@@ -10,24 +10,22 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
-public class User implements UserDetails {
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table
+public class LibraryUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "password")
     private String password;
 
     @Transient
     private String passwordConfirm;
 
-    @Column(name = "email")
     private String email;
 
     @OneToOne(fetch = FetchType.LAZY, targetEntity = UserExtras.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_extras_id", unique = true, nullable = false)
+    @JoinColumn(unique = true, nullable = false)
     private UserExtras userExtras;
 
     @Transient
@@ -35,19 +33,14 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "roles_has_user",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+            joinColumns = @JoinColumn,
+            inverseJoinColumns = @JoinColumn)
     private Set<Role> roles;
 
-    @Transient
-    private int library_id;
-
-
-    public User() {
+    public LibraryUser() {
     }
 
-    public User(int id, String password, UserExtras userExtras) {
+    public LibraryUser(int id, String password, UserExtras userExtras) {
         this.id = id;
         this.password = password;
         this.userExtras = userExtras;
@@ -61,6 +54,9 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    /**
+     * @return true if equals
+     */
     public boolean passwordsCheck() {
         return this.password.equals(this.passwordConfirm);
     }
@@ -113,10 +109,10 @@ public class User implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return getPassword().equals(user.getPassword()) &&
-                email.equals(user.email) &&
-                getUserExtras().equals(user.getUserExtras());
+        LibraryUser libraryUser = (LibraryUser) o;
+        return getPassword().equals(libraryUser.getPassword()) &&
+                email.equals(libraryUser.email) &&
+                getUserExtras().equals(libraryUser.getUserExtras());
     }
 
     @Override

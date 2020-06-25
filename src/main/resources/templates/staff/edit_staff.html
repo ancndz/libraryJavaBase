@@ -5,7 +5,7 @@
 </head>
 <body>
 <div th:insert="fragments/header :: header"></div>
-<!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.User"*/-->
+<!--/*@thymesVar id="libraryUser" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
 <form action="#" th:action="@{/staff/save}" th:object="${staff}" method="post" align="center">
     <table border="1" cellpadding="5" align="center">
         <thead>
@@ -15,8 +15,8 @@
         </tr>
         </thead>
         <tbody>
-        <td><input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name"></td>
-        <td><input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name"></td>
+        <td><input type="text" th:field="*{userExtras.firstName}" id="firstName" placeholder="First Name"></td>
+        <td><input type="text" th:field="*{userExtras.lastName}" id="lastName" placeholder="Last Name"></td>
         </tbody>
     </table>
     <br>

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.springframework.org/security/tags">
+>
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
 <body>
 <div th:insert="fragments/header :: header"></div>
-<!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.libraryEnvironment.Staff"*/-->
+<!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.entity.Staff"*/-->
 <div align="center">
     <form method="POST" th:action="@{/login}">
         <table border="1" cellpadding="5" align="center">

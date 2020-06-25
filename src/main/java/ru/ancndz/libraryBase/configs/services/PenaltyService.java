@@ -48,6 +48,6 @@ public class PenaltyService {
     }
 
     public List<Penalty> getAllByUserId(int id) {
-        return this.penaltyRepository.findAllByUser_IdAndPayDateIsNull(id);
+        return this.penaltyRepository.findAllByRent_LibraryUser_IdAndPayDateIsNull(id);
     }
 }

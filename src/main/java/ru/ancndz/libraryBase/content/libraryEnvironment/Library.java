@@ -2,42 +2,29 @@ package ru.ancndz.libraryBase.content.libraryEnvironment;
 
 
 import javax.persistence.*;
-
 import java.util.Objects;
 
 @Entity
-@Table(name = "library")
+@Table
 public class Library {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private  int id;
 
-    @Column(name = "name")
+    @Column
     private  String name;
 
-    @Column(name = "address")
+    @Column
     private  String address;
 
-    /**
-     * класс "библиотека"
-     * @param id айди библиотеки
-     * @param name название библиотеки
-     * @param address адрес библиотеки
-     */
-    public Library(int id,String name,String address) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
+    public Library() {
     }
 
     public Library(String name, String address) {
         this.name = name;
         this.address = address;
-    }
-
-    public Library() {
     }
 
     public int getId() {

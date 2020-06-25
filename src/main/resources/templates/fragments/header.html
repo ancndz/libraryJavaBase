@@ -10,7 +10,8 @@
     <div th:fragment="header">
         <div align="center">
             <div sec:authorize="hasRole('ADMIN')">
-                <h2><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a th:href="@{/users/}">Users</a>
+                <h2><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a
+                        th:href="@{/libraryUsers/}">Users</a>
                 </h2>
             </div>
             <h2><a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> <span sec:authorize="isAuthenticated()"> | <a th:href="@{/rents/}">Rents&Penalties</a></span>  </h2>

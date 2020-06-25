@@ -33,12 +33,14 @@
                 <td th:text="${#temporals.format(rent.startDate, 'dd-MM-yyyy HH:mm')}"></td>
                 <td th:text="${#temporals.format(rent.endDate, 'dd-MM-yyyy HH:mm')}"></td>
                 <td th:text="${#temporals.format(rent.factEndDate, 'dd-MM-yyyy HH:mm')}"></td>
-                <td th:text="${rent.staff.firstName} + ' ' + ${rent.staff.lastName}" sec:authorize="hasRole('ADMIN')"></td>
+                <td th:text="${rent.staff.userExtras.firstName} + ' ' + ${rent.staff.userExtras.lastName}"
+                    sec:authorize="hasRole('ADMIN')"></td>
                 <td th:text="${rent.book.name} + ' in ' + ${rent.book.library.name} + ' at ' + ${rent.book.library.address}"></td>
-                <td th:text="${rent.user.userExtras.firstName} + ' ' + ${rent.user.userExtras.lastName}" sec:authorize="hasRole('ADMIN')"></td>
+                <td th:text="${rent.libraryUser.userExtras.firstName} + ' ' + ${rent.libraryUser.userExtras.lastName}"
+                    sec:authorize="hasRole('ADMIN')"></td>
                 <td sec:authorize="hasRole('ADMIN')">
                     <div th:if="${rent.factEndDate == null}">
-                        <form action="#" th:action="@{/rents/close}"  method="post" align="center">
+                        <form action="#" th:action="@{/rents/close}" method="post" align="center">
                             <input readonly hidden type="text" th:value="${rent.id}" name="id">
                             <input type="submit" value="Close">
                         </form>
@@ -73,7 +75,8 @@
                 <tr th:each="penalty : ${penalties}">
                     <td th:text="${penalty.id}" sec:authorize="hasRole('ADMIN')"></td>
                     <td th:text="${penalty.rent.id}" sec:authorize="hasRole('ADMIN')"></td>
-                    <td th:text="${penalty.user.userExtras.firstName} + ' ' + ${penalty.user.userExtras.lastName}" sec:authorize="hasRole('ADMIN')"></td>
+                    <td th:text="${penalty.rent.libraryUser.userExtras.firstName} + ' ' + ${penalty.rent.libraryUser.userExtras.lastName}"
+                        sec:authorize="hasRole('ADMIN')"></td>
                     <td>
                         <div th:if="${penalty.reason} == '_rent_expired'">
                             <span>Аренда просрочена</span>
