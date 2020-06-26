@@ -51,4 +51,18 @@ public class MainController {
     public String loginPage() {
         return "login";
     }
+
+    /************************TEST********************************/
+    @GetMapping("test/index")
+    public String indexPage() {
+        return "test/index";
+    }
+
+    /************************TEST********************************/
+    @GetMapping("fragments/header")
+    public String headerPage() {
+        return "fragments/header";
+    }
+
+
 }
