@@ -31,7 +31,7 @@ public class Staff extends LibraryUser {
      * должность
      */
     @ManyToOne(targetEntity = Job.class)
-    @JoinColumn(unique = true, nullable = false)
+    @JoinColumn(nullable = false)
     private Job job;
 
     @Transient
@@ -41,7 +41,7 @@ public class Staff extends LibraryUser {
      * библиотека, в которой сотрудник работает
      */
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Library.class)
-    @JoinColumn
+    @JoinColumn(nullable = false)
     private Library library;
 
     @Transient

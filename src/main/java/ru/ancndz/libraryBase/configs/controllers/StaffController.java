@@ -3,7 +3,6 @@ package ru.ancndz.libraryBase.configs.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,6 @@ import ru.ancndz.libraryBase.content.entity.LibraryUser;
 import ru.ancndz.libraryBase.content.entity.Staff;
 import ru.ancndz.libraryBase.content.operations.Rent;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
@@ -94,22 +92,6 @@ public class StaffController {
         model.addAttribute("works", countRents);
         model.addAttribute("staffUsers", staffLibraryUsers);
         return "staff/works";
-    }
-
-    @PostMapping("/save")
-    public String saveStaff(@Valid Staff staff, BindingResult result, Model model) {
-        /*if (result.hasErrors()) {
-            model.addAttribute("error", result.toString());
-            return "/staff/add_staff";
-        } else if (!staff.passwordConfirms()) {
-            model.addAttribute("error", "password not equals!");
-            return "/staff/add_staff";
-        }
-        staff.setJob(this.jobService.get(staff.getJob_id()));
-        staff.setLibrary(this.libraryService.get(staff.getLibrary_id()));
-        this.staffService.save(staff);
-        return "redirect:/staff/";*/
-        return "redirect:/registration/staff/save";
     }
 
     @PostMapping("/delete")

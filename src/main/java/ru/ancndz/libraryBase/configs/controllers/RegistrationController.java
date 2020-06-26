@@ -69,17 +69,7 @@ public class RegistrationController {
         staff.setUserExtras(new UserExtras());
         staff.getUserExtras().setDateReg(LocalDateTime.now());
         List<Library> libraryList = this.libraryService.libraryList();
-        /*if (libraryList.isEmpty()) {
-            Library lib = new Library("none", "none");
-            this.libraryService.save(lib);
-            staff.setLibrary(lib);
-        }*/
         List<Job> jobList = this.jobService.jobList();
-        /*if (jobList.isEmpty()) {
-            Job job = new Job("none", 0);
-            this.jobService.save(job);
-            staff.setJob(job);
-        }*/
         model.addAttribute("libraries", libraryList);
         model.addAttribute("jobs", jobList);
         model.addAttribute("staff", staff);
@@ -100,7 +90,7 @@ public class RegistrationController {
         if (bindingResult.hasErrors()) {
             return "users/add_user";
         }
-        if (libraryUser.passwordsCheck()) {
+        if (!libraryUser.passwordsCheck()) {
             model.addAttribute("errorText", "Пароли не совпадают");
             return "users/add_user";
         }
@@ -113,11 +103,11 @@ public class RegistrationController {
 
     @PostMapping("/staff/save")
     public String addStaff(@Valid Staff staff, BindingResult bindingResult, Model model) {
-
+        staff.getUserExtras().setStatus("Сотрудник библиотеки");
         if (bindingResult.hasErrors()) {
             return "staff/add_staff";
         }
-        if (staff.passwordsCheck()) {
+        if (!staff.passwordsCheck()) {
             model.addAttribute("errorText", "Пароли не совпадают");
             return "staff/add_staff";
         }
