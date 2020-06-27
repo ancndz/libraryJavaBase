@@ -2,9 +2,9 @@ package ru.ancndz.libraryBase.content.jobs;
 
 import org.springframework.security.core.GrantedAuthority;
 import ru.ancndz.libraryBase.content.entity.LibraryUser;
-import ru.ancndz.libraryBase.content.entity.Staff;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,16 +15,15 @@ public class Role implements GrantedAuthority {
     @Id
     @Column
     private int id;
+
     @Column
+    @NotBlank
     private String name;
 
     @Transient
     @ManyToMany
     private Set<LibraryUser> libraryUsers;
 
-    @Transient
-    @ManyToMany
-    private Set<Staff> staff;
 
     @Override
     public String getAuthority() {
@@ -65,14 +64,6 @@ public class Role implements GrantedAuthority {
 
     public void setLibraryUsers(Set<LibraryUser> libraryUsers) {
         this.libraryUsers = libraryUsers;
-    }
-
-    public Set<Staff> getStaff() {
-        return staff;
-    }
-
-    public void setStaff(Set<Staff> staff) {
-        this.staff = staff;
     }
 
     @Override

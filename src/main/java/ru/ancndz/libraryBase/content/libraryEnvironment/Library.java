@@ -2,6 +2,7 @@ package ru.ancndz.libraryBase.content.libraryEnvironment;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Entity
@@ -14,9 +15,11 @@ public class Library {
     private  int id;
 
     @Column
+    @NotBlank
     private  String name;
 
     @Column
+    @NotBlank
     private  String address;
 
     public Library() {

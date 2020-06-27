@@ -2,6 +2,9 @@ package ru.ancndz.libraryBase.content.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -15,15 +18,19 @@ public class UserExtras {
     private int id;
 
     @Column
+    @Size(min = 1)
     private String firstName;
 
     @Column
+    @Size(min = 1)
     private String lastName;
 
     @Column
+    @PastOrPresent
     private LocalDateTime dateReg;
 
     @Column
+    @NotBlank
     private String status;
 
     public UserExtras(){

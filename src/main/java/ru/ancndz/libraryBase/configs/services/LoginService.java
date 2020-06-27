@@ -21,12 +21,12 @@ public class LoginService implements UserDetailsService {
     /** by email actualy **/
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        LibraryUser libraryUser = this.userRepository.findByEmail(s);
-        if (libraryUser == null) {
+        /*if (libraryUser == null) {
             throw new UsernameNotFoundException("User not found");
         } else {
             return libraryUser;
-        }
+        }*/
+        return this.userRepository.findByEmail(s);
     }
 
     public LibraryUser loadByAuth(Authentication authentication) throws UsernameNotFoundException {

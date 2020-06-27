@@ -41,11 +41,11 @@ public class StaffService {
             userExtras.setFirstName("Admin");
             userExtras.setLastName("Local");
             userExtras.setId(1);
-            userExtras.setStatus("main admin");
+            userExtras.setStatus("Main Default Admin");
             staff.setUserExtras(userExtras);
             staff.setEmail("admin@admin.com");
             staff.setAddress("localhost");
-            staff.setNumber(192168);
+            staff.setNumber(19216810010L);
             staff.setPassword("12345");
             staff.setPasswordConfirm("12345");
             staff.setId(1);

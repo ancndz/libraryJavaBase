@@ -2,6 +2,9 @@ package ru.ancndz.libraryBase.content.libraryEnvironment;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 @Entity
@@ -16,27 +19,35 @@ public class Book {
     private int id;
 
     @Column
+    @NotBlank
     private String bookType;
 
     @Column
+    @NotBlank
     private String name;
 
     @Column
+    @NotBlank
     private String author;
 
     @Column
+    @NotBlank
     private String edition;
 
     @Column
+    @NotBlank
     private String editionNum;
 
     @Column
+    @Max(2021)
     private int pubYear;
 
     @Column
+    @NotBlank
     private String genre;
 
     @Column
+    @PositiveOrZero
     private int count;
 
     @Column

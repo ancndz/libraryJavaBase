@@ -5,6 +5,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ru.ancndz.libraryBase.content.jobs.Role;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
@@ -17,15 +20,19 @@ public class LibraryUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Size(min = 3, max = 20)
     private String password;
 
     @Transient
+    @Size(min = 3, max = 20)
     private String passwordConfirm;
 
+    @Email
     private String email;
 
     @OneToOne(fetch = FetchType.LAZY, targetEntity = UserExtras.class, cascade = CascadeType.ALL)
     @JoinColumn(unique = true, nullable = false)
+    @NotNull
     private UserExtras userExtras;
 
     @Transient

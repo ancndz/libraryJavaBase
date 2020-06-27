@@ -1,6 +1,9 @@
 package ru.ancndz.libraryBase.content.jobs;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 /**
@@ -15,9 +18,12 @@ public class Job {
     protected int id;
 
     @Column
+    @NotBlank
     protected String name;
 
     @Column
+    @PositiveOrZero
+    @NotNull
     protected int pay;
 
     public Job(){}

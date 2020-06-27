@@ -5,6 +5,9 @@ import ru.ancndz.libraryBase.content.jobs.Job;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Library;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -21,12 +24,15 @@ public class Staff extends LibraryUser {
      * адрес проживания
      */
     @Column
+    @NotBlank
     private String address;
     /**
      * тел. номер (без +)
      */
     @Column
-    private int number;
+    @Size(min = 11, max = 11)
+    @Positive
+    private long number;
     /**
      * должность
      */
@@ -84,11 +90,11 @@ public class Staff extends LibraryUser {
         this.address = address;
     }
 
-    public int getNumber() {
+    public long getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(long number) {
         this.number = number;
     }
 

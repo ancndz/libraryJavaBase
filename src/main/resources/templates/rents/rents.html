@@ -45,6 +45,12 @@
                             <input type="submit" value="Close">
                         </form>
                     </div>
+                    <div>
+                        <form action="#" th:action="@{/rents/add_penalty}" method="get" align="center">
+                            <input readonly hidden type="text" th:value="${rent.id}" name="id">
+                            <input type="submit" value="Add Penalty">
+                        </form>
+                    </div>
                 </td>
             </tr>
             </tbody>
