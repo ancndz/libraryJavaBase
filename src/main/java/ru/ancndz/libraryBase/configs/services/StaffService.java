@@ -45,7 +45,7 @@ public class StaffService {
             staff.setUserExtras(userExtras);
             staff.setEmail("admin@admin.com");
             staff.setAddress("localhost");
-            staff.setNumber(19216810010L);
+            staff.setNumber("19216810010");
             staff.setPassword("12345");
             staff.setPasswordConfirm("12345");
             staff.setId(1);

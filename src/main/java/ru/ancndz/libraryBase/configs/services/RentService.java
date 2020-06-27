@@ -80,7 +80,7 @@ public class RentService {
             Duration duration = Duration.between(LocalDateTime.now(), each.getEndDate());
             //int amount = (int) duration.toDays() * 30;
             //todo change back to days
-            int amount = (int) duration.toMinutes() * 6;
+            int amount = (int) duration.toMinutes() * 3;
             amount = Math.abs(amount);
             Penalty penalty = this.penaltyRepository.
                     findByRent_IdAndReasonEqualsAndPayDateIsNull(each.getId(), "_rent_expired");

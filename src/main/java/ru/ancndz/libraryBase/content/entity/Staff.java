@@ -6,7 +6,6 @@ import ru.ancndz.libraryBase.content.libraryEnvironment.Library;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Objects;
@@ -31,8 +30,7 @@ public class Staff extends LibraryUser {
      */
     @Column
     @Size(min = 11, max = 11)
-    @Positive
-    private long number;
+    private String number;
     /**
      * должность
      */
@@ -90,11 +88,11 @@ public class Staff extends LibraryUser {
         this.address = address;
     }
 
-    public long getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(long number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

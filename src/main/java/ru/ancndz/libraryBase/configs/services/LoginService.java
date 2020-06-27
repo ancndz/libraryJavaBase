@@ -30,7 +30,6 @@ public class LoginService implements UserDetailsService {
     }
 
     public LibraryUser loadByAuth(Authentication authentication) throws UsernameNotFoundException {
-        String username = "Stranger";
         if (authentication != null) {
             if (authentication.isAuthenticated()) {
                 UserDetails userDetails = loadUserByUsername(authentication.getName());

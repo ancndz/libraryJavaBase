@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.ancndz.libraryBase.configs.services.*;
+import ru.ancndz.libraryBase.configs.services.BookService;
+import ru.ancndz.libraryBase.configs.services.LoginService;
+import ru.ancndz.libraryBase.configs.services.PenaltyService;
+import ru.ancndz.libraryBase.configs.services.RentService;
 import ru.ancndz.libraryBase.content.entity.LibraryUser;
 import ru.ancndz.libraryBase.content.entity.Staff;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Book;
@@ -32,15 +35,13 @@ public class RentController {
     private final LoginService loginService;
 
     private final BookService bookService;
-    private final LibraryService libraryService;
 
     @Autowired
-    public RentController(RentService rentService, PenaltyService penaltyService, LoginService loginService, BookService bookService, LibraryService libraryService) {
+    public RentController(RentService rentService, PenaltyService penaltyService, LoginService loginService, BookService bookService) {
         this.rentService = rentService;
         this.penaltyService = penaltyService;
         this.loginService = loginService;
         this.bookService = bookService;
-        this.libraryService = libraryService;
     }
 
     @GetMapping("")
@@ -100,7 +101,7 @@ public class RentController {
             rent.setStartDate(LocalDateTime.now());
             //rent.setEndDate(LocalDateTime.now().plusMonths(1));
             //todo change to 1 month
-            rent.setEndDate(LocalDateTime.now().plusSeconds(5));
+            rent.setEndDate(LocalDateTime.now().plusSeconds(15));
             Book book = this.bookService.get(rent.getBook().getId());
             if (book.getCount() - 1 >= 0) {
                 rent.setBook(book);
@@ -149,6 +150,10 @@ public class RentController {
 
     @PostMapping("/add_penalty")
     public String saveNewPenalty(@Valid Penalty penalty, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("error", bindingResult.getAllErrors());
+            return "rents/new_penalty";
+        }
         this.penaltyService.save(penalty);
         return "redirect:/rents/";
     }
