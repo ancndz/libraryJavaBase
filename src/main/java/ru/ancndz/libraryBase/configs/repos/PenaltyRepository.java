@@ -8,9 +8,9 @@ import java.util.List;
 
 @Repository
 public interface PenaltyRepository extends JpaRepository<Penalty, Integer> {
-    List<Penalty> findAllByUser_IdAndPayDateIsNull(int id);
+    List<Penalty> findAllByRent_LibraryUser_IdAndPayDateIsNull(int id);
 
-    boolean existsAllByUser_IdAndPayDateIsNull(int id);
+    boolean existsAllByRent_LibraryUser_IdAndPayDateIsNull(int id);
 
     Penalty findByRent_IdAndReasonEquals(int id, String reason);
 

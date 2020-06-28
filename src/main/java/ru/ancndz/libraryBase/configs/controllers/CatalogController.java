@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.ancndz.libraryBase.configs.services.BookService;
 import ru.ancndz.libraryBase.configs.services.LibraryService;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Book;
@@ -12,7 +15,6 @@ import ru.ancndz.libraryBase.content.libraryEnvironment.Library;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/books")
@@ -36,14 +38,6 @@ public class CatalogController {
         return "books/catalog";
     }
 
-    /*@GetMapping("/filter")
-    public String homeByLibId(@RequestParam(value = "id") int id, Model model) {
-        List<Book> bookList = bookService.booksByLibrary(id);
-        if (!bookList.isEmpty()) {
-            model.addAttribute("bookList", bookList);
-        }
-        return "books/catalog";
-    }*/
 
     @GetMapping("/filter")
     public String homeByAuthor(@RequestParam(value = "name", required = false) String name,

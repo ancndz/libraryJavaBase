@@ -3,20 +3,23 @@ package ru.ancndz.libraryBase.configs.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.ancndz.libraryBase.configs.services.JobService;
 import ru.ancndz.libraryBase.configs.services.LibraryService;
 import ru.ancndz.libraryBase.configs.services.RentService;
 import ru.ancndz.libraryBase.configs.services.StaffService;
-import ru.ancndz.libraryBase.content.entity.User;
-import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
+import ru.ancndz.libraryBase.content.entity.LibraryUser;
+import ru.ancndz.libraryBase.content.entity.Staff;
 import ru.ancndz.libraryBase.content.operations.Rent;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/staff")
@@ -71,7 +74,7 @@ public class StaffController {
         Staff staff = this.staffService.get(id);
         List<Rent> allRents;
         //Map<Staff, Integer> allStaffWithWorks = new HashMap<>();
-        Set<User> staffUsers = new HashSet<>();
+        Set<LibraryUser> staffLibraryUsers = new HashSet<>();
         //for (Staff staff: allStaff) {
             int countRents = 0;
             allRents = this.rentService.getAllByStaffId(staff.getId());
@@ -79,7 +82,7 @@ public class StaffController {
                 for (Rent rent: allRents) {
                     if (rent.getStartDate().plus(1, chronoUnit).isAfter(LocalDateTime.now())) {
                         countRents += 1;
-                        staffUsers.add(rent.getUser());
+                        staffLibraryUsers.add(rent.getLibraryUser());
                     }
                 }
             }
@@ -87,24 +90,8 @@ public class StaffController {
         //}
         model.addAttribute("staff", staff);
         model.addAttribute("works", countRents);
-        model.addAttribute("staffUsers", staffUsers);
+        model.addAttribute("staffUsers", staffLibraryUsers);
         return "staff/works";
-    }
-
-    @PostMapping("/save")
-    public String saveStaff(@Valid Staff staff, BindingResult result, Model model) {
-        /*if (result.hasErrors()) {
-            model.addAttribute("error", result.toString());
-            return "/staff/add_staff";
-        } else if (!staff.passwordConfirms()) {
-            model.addAttribute("error", "password not equals!");
-            return "/staff/add_staff";
-        }
-        staff.setJob(this.jobService.get(staff.getJob_id()));
-        staff.setLibrary(this.libraryService.get(staff.getLibrary_id()));
-        this.staffService.save(staff);
-        return "redirect:/staff/";*/
-        return "redirect:/registration/staff/save";
     }
 
     @PostMapping("/delete")

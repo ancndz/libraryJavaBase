@@ -1,12 +1,12 @@
 package ru.ancndz.libraryBase.configs.repos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.ancndz.libraryBase.content.entity.User;
+import ru.ancndz.libraryBase.content.entity.LibraryUser;
 
-import java.util.List;
+public interface UserRepository extends JpaRepository<LibraryUser, Integer> {
+    LibraryUser getByUserExtras_Id(int id);
 
-public interface UserRepository extends JpaRepository<User, Integer> {
-    User getByUserExtras_Id(int id);
     void deleteByUserExtras_Id(int id);
-    User findByEmail(String email);
+
+    LibraryUser findByEmail(String email);
 }

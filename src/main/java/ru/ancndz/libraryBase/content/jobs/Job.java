@@ -1,23 +1,29 @@
 package ru.ancndz.libraryBase.content.jobs;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 /**
  * Класс дефолтной должности, сотрудник общего назначения
  */
 @Entity
-@Table(name = "jobs")
+@Table
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     protected int id;
 
-    @Column(name = "name")
+    @Column
+    @NotBlank
     protected String name;
 
-    @Column(name = "pay")
+    @Column
+    @PositiveOrZero
+    @NotNull
     protected int pay;
 
     public Job(){}

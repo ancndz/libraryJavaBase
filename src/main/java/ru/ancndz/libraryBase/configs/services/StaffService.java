@@ -5,8 +5,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.ancndz.libraryBase.configs.repos.StaffRepository;
 import ru.ancndz.libraryBase.configs.repos.UserRepository;
-import ru.ancndz.libraryBase.content.libraryEnvironment.Staff;
+import ru.ancndz.libraryBase.content.entity.Staff;
+import ru.ancndz.libraryBase.content.entity.UserExtras;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
@@ -34,11 +36,16 @@ public class StaffService {
     public void checkEmpty() {
         if (staffRepository.findAll().isEmpty()) {
             Staff staff = new Staff();
+            UserExtras userExtras = new UserExtras();
+            userExtras.setDateReg(LocalDateTime.now());
+            userExtras.setFirstName("Admin");
+            userExtras.setLastName("Local");
+            userExtras.setId(1);
+            userExtras.setStatus("Main Default Admin");
+            staff.setUserExtras(userExtras);
             staff.setEmail("admin@admin.com");
-            staff.setFirstName("Admin");
-            staff.setLastName("Local");
             staff.setAddress("localhost");
-            staff.setNumber(192168);
+            staff.setNumber("19216810010");
             staff.setPassword("12345");
             staff.setPasswordConfirm("12345");
             staff.setId(1);
@@ -51,13 +58,9 @@ public class StaffService {
     }
 
     public boolean save(Staff staff) {
-        if (this.staffRepository.findByEmail(staff.getEmail()) != null &&
-                this.staffRepository.findByEmail(staff.getEmail()).getId() != staff.getId()) {
-            return false;
-        } else if (this.userRepository.findByEmail(staff.getEmail()) != null) {
+        if (this.userRepository.findByEmail(staff.getEmail()) != null) {
             return false;
         }
-
         staff.setRoles(new HashSet<>(this.roleService.findAll()));
         staff.setPassword(bCryptPasswordEncoder.encode(staff.getPassword()));
         staff.setPasswordConfirm(bCryptPasswordEncoder.encode(staff.getPassword()));
@@ -75,11 +78,7 @@ public class StaffService {
 
     public List<Staff> staffList() {
         checkEmpty();
-        return (List<Staff>) this.staffRepository.findAll();
-    }
-
-    public List<String> staffListByLibrary(int id) {
-        return this.staffListByLibrary(id);
+        return this.staffRepository.findAll();
     }
 
 }

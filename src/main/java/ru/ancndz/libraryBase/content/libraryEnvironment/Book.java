@@ -2,39 +2,59 @@ package ru.ancndz.libraryBase.content.libraryEnvironment;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 @Entity
-@Table(name = "book")
+@Table
 public class Book {
     /**
      * айди книги
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private int id;
-    @Column(name = "book_type")
+
+    @Column
+    @NotBlank
     private String bookType;
-    @Column(name = "name")
+
+    @Column
+    @NotBlank
     private String name;
-    @Column(name = "author")
+
+    @Column
+    @NotBlank
     private String author;
-    @Column(name = "edition")
+
+    @Column
+    @NotBlank
     private String edition;
-    @Column(name = "edition_num")
+
+    @Column
+    @NotBlank
     private String editionNum;
-    @Column(name = "pub_year")
+
+    @Column
+    @Max(2021)
     private int pubYear;
-    @Column(name = "genre")
+
+    @Column
+    @NotBlank
     private String genre;
-    @Column(name = "count")
+
+    @Column
+    @PositiveOrZero
     private int count;
-    @Column(name = "extra")
+
+    @Column
     private String extra;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH, targetEntity = Library.class)
-    @JoinColumn(name = "library_id")
+    @JoinColumn
     private Library library;
 
     @Transient
@@ -43,22 +63,6 @@ public class Book {
     public Book() {
     }
 
-    public Book(int id, String bookType, String name, String author,
-                String edition, String editionNum, int pubYear, String genre,
-                int count, String extra, Library library) {
-        this.id = id;
-        this.bookType = bookType;
-        this.name = name;
-        this.author = author;
-        this.edition = edition;
-        this.editionNum = editionNum;
-        this.pubYear = pubYear;
-        this.genre = genre;
-        this.count = count;
-        this.extra = extra;
-        this.library = library;
-        this.libraryId = library.getId();
-    }
 
     public int getId() {
         return id;

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+<meta charset="UTF-8">
+<title>Pay Penalty</title>
+</head>
+<body>
+<div th:insert="fragments/header :: header"></div>
+<div align="center">
+    <form action="#" th:action="@{/rents/add_penalty}" th:object="${penalty}" method="post" align="center">
+        <table border="1" cellpadding="5" align="center">
+            <thead>
+            <tr>
+                <th>Client</th>
+                <th>Reason</th>
+                <th>Date</th>
+                <th>Amount to pay</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${penalty.rent.libraryUser.userExtras.firstName} + ' ' + ${penalty.rent.libraryUser.userExtras.lastName}">
+                    <input readonly hidden th:field="${penalty.rent}">
+                    <input readonly hidden th:value="${penalty.date}">
+                    <input readonly hidden th:value="${penalty.completeAmount}">
+                </td>
+                <td th:text="${penalty.reason}">
+                    <input type="text" th:field="${penalty.reason}" placeholder="Reason">
+                </td>
+                <td th:text="${penalty.date}"></td>
+                <td th:text="${penalty.amount}">
+                    <input type="number" th:field="${penalty.amount}" placeholder="Amount">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <input type="submit" value="Add" onclick="alert('Подтвердите штраф:')">
+    </form>
+</div>
+<div th:insert="fragments/header :: login"></div>
+</body>
+</html>

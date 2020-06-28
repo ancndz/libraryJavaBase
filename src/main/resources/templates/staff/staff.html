@@ -26,7 +26,7 @@
             <tbody>
             <tr th:each="staff : ${staffList}">
                 <td th:text="${staff.id}"></td>
-                <td th:text="${staff.firstName} + ' ' + ${staff.lastName}"></td>
+                <td th:text="${staff.userExtras.firstName} + ' ' + ${staff.userExtras.lastName}"></td>
                 <td th:text="${staff.address}"></td>
                 <td th:text="${staff.number}"></td>
                 <td th:text="${staff.job.name}"></td>

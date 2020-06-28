@@ -2,28 +2,35 @@ package ru.ancndz.libraryBase.content.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 
 @Entity
-@Table(name = "user_extras")
+@Table
 public class UserExtras {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private int id;
 
-    @Column(name = "first_name")
+    @Column
+    @Size(min = 1)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column
+    @Size(min = 1)
     private String lastName;
 
-    @Column(name = "date_reg")
+    @Column
+    @PastOrPresent
     private LocalDateTime dateReg;
 
-    @Column(name = "status")
+    @Column
+    @NotBlank
     private String status;
 
     public UserExtras(){

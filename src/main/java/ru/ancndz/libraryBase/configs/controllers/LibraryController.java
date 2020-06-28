@@ -6,14 +6,18 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.ancndz.libraryBase.configs.services.BookService;
 import ru.ancndz.libraryBase.configs.services.LibraryService;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Book;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Library;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/libs")
@@ -69,24 +73,32 @@ public class LibraryController {
     public String showShelves(@RequestParam Integer id, Model model) {
         List<Book> allLibBooks = this.bookService.booksByLibrary(id);
         MultiValueMap<String, Book> booksOnShelves = new LinkedMultiValueMap<>();
-        String letter;
+
+        /*String letter;
         for (Book book: allLibBooks) {
             letter = getTitleFirstLetter(book);
             booksOnShelves.add(letter, book);
-        }
+        }*/
+
+        allLibBooks.forEach(book -> booksOnShelves.add(getTitleFirstLetter(book), book));
+
         Object[] sortedLetters = booksOnShelves.keySet().toArray();
         Arrays.sort(sortedLetters);
+
         model.addAttribute("letters", sortedLetters);
         model.addAttribute("shelf", booksOnShelves);
         model.addAttribute("lib_id", id);
         return "libs/shelves";
     }
 
+    /**
+     * get first letter of book's title (exclude "the")
+     *
+     * @param book
+     * @return letter in upper case
+     */
     private String getTitleFirstLetter(Book book) {
-        String letter = book.getName();
-        letter = letter.toLowerCase().replaceFirst("the ", "");
-        letter = letter.substring(0, 1).toUpperCase();
-        return letter;
+        return book.getName().toUpperCase().replaceFirst("THE ", "").substring(0, 1);
     }
 }
 
