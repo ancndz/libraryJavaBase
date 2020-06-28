@@ -165,7 +165,6 @@ input.upload {
 			<div th:switch="${errorText}">
 				<p th:case="null"></p>
 				<p th:case="*" th:text="${errorText}"></p></div>
-			<!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.User"*/-->
 		<form action="#" th:action="@{/registration/save}" th:object="${user}" method="post" align="center">
 
 		  <div class="form-group">

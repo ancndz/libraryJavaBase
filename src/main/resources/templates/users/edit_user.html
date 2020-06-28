@@ -169,8 +169,8 @@ input.upload {
   <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
 </a>
   </br>
-	<!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.User"*/-->
-	<form action="#" th:action="@{/users/save}" th:object="${user}" method="post" align="center">
+        <!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
+        <form action="#" th:action="@{/users/save}" th:object="${user}" method="post" align="center">
 	
 	<!-- readonly type + placeholder -->
 	<div class="form-group">
