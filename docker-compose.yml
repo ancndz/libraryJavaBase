@@ -3,10 +3,6 @@ version: '3'
 volumes:
   dbdata:
     driver: local
-  dblogs:
-    driver: local
-  dbfiles:
-    driver: local
 
 networks:
   lib-net:
