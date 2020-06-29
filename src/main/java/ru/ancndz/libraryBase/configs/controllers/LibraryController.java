@@ -43,7 +43,7 @@ public class LibraryController {
 
     @GetMapping("/new")
     public String newLibForm(Library library) {
-        return "/libs/add_lib";
+        return "libs/add_lib";
     }
 
     @PostMapping("/save")
