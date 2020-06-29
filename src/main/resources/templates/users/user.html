@@ -46,12 +46,12 @@
         </table>
     </div>
     <br>
-    <a th:href="@{/libraryUsers/new}">
+    <a th:href="@{/users/new}">
         <span>Add User</span>
     </a>
     <br>
     <div th:border="5">
-        <form th:action="@{/libraryUsers/lost}" method="get">
+        <form th:action="@{/users/lost}" method="get">
             <h5>Показать неактивных читателей за указанный период</h5>
             <select name="date">
                 <option value="week">Неделя</option>
@@ -64,7 +64,7 @@
     </div>
     <br>
     <div th:border="5">
-        <form th:action="@{/libraryUsers/reading_now}" method="get">
+        <form th:action="@{/users/reading_now}" method="get">
             <h5>Показать читателей данной книги:</h5>
             <input type="text" name="author" placeholder="Author">
             <input type="text" name="name" placeholder="Title">

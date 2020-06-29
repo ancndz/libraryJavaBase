@@ -25,6 +25,11 @@ public class JobService {
         return this.jobRepository.findAll();
     }
 
+    public List<Job> jobListBusiness() {
+        checkEmpty();
+        return this.jobRepository.findAllByIdIsNot(1);
+    }
+
     private void checkEmpty() {
         if (this.jobRepository.findAll().isEmpty()) {
             Job job = new Job();

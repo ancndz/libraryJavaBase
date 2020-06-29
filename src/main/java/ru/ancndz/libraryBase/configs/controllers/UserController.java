@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
@@ -92,36 +93,50 @@ public class UserController {
     @GetMapping("/lost")
     public String findLostClients(@RequestParam(value = "date") String dateString, Model model) {
         ChronoUnit chronoUnit;
+        String chronoString;
         switch (dateString) {
             case "week":
                 chronoUnit = ChronoUnit.WEEKS;
+                chronoString = "неделя";
                 break;
             case "month":
                 chronoUnit = ChronoUnit.MONTHS;
+                chronoString = "месяц";
                 break;
             case "year":
                 chronoUnit = ChronoUnit.YEARS;
+                chronoString = "год";
                 break;
             default:
                 chronoUnit = ChronoUnit.MINUTES;
+                chronoString = "минута";
                 break;
         }
-        List<LibraryUser> allLibraryUsers = this.userService.getAll();
-        List<LibraryUser> lostLibraryUser = new ArrayList<>();
-        for (LibraryUser libraryUser : allLibraryUsers) {
-            Rent lastRent = this.rentService.getLastRentByUserId(libraryUser.getId());
-            if (lastRent != null) {
-                if (lastRent.getFactEndDate() != null &&
-                        lastRent.getStartDate().plus(1, chronoUnit).isBefore(LocalDateTime.now())) {
-                    lostLibraryUser.add(libraryUser);
-                }
-            } else {
-                lostLibraryUser.add(libraryUser);
-            }
-        }
+
+        List<LibraryUser> lostLibraryUser = this.userService
+                .getAll()
+                .stream()
+                .filter(user -> checkLostUser(user, chronoUnit))
+                .collect(Collectors.toList());
+
         model.addAttribute("libraryUserList", lostLibraryUser);
-        model.addAttribute("listName", "Неактивные участники");
+        model.addAttribute("listName", "Неактивные участники, " + chronoString);
         return "users/user";
+    }
+
+    /**
+     * @param user       checking user
+     * @param chronoUnit time period
+     * @return true if client lost
+     */
+    private boolean checkLostUser(LibraryUser user, ChronoUnit chronoUnit) {
+        Rent lastRent = this.rentService.getLastRentByUserId(user.getId());
+        if (lastRent != null) {
+            return lastRent.getFactEndDate() != null &&
+                    lastRent.getStartDate().plus(1, chronoUnit).isBefore(LocalDateTime.now());
+        } else {
+            return true;
+        }
     }
 
 }

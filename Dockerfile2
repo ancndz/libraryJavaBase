@@ -27,6 +27,6 @@ WORKDIR $APP_HOME
 
 MAINTAINER ancndz
 EXPOSE 8080
-COPY --from=builder ./bulid/target/libraryJavaBase.jar libraryJavaBase.jar
+COPY --from=builder ./build/target/libraryJavaBase.jar libraryJavaBase.jar
 
 CMD ["java","-jar","libraryJavaBase.jar"]
