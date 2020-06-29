@@ -9,7 +9,7 @@ RUN mvn -B dependency:resolve dependency:resolve-plugins
 #Copy source code
 COPY src /build/src
 # Build application
-RUN mvn package
+RUN mvn clean package
 
 FROM java:8 as runtime
 #Set app home folder

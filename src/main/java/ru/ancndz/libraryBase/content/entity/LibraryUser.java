@@ -20,11 +20,11 @@ public class LibraryUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Size(min = 3, max = 20)
+    /*@Size(min = 3, max = 20)*/
     private String password;
 
     @Transient
-    @Size(min = 3, max = 20)
+    /*@Size(min = 3, max = 20)*/
     private String passwordConfirm;
 
     @Email

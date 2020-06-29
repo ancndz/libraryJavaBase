@@ -27,42 +27,43 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                    //Доступ только для не зарегистрированных пользователей
-                    //.antMatchers("/registration/**").not().fullyAuthenticated()
-                    //.antMatchers("/registration/save/**").not().fullyAuthenticated()
-                    //Доступ только для пользователей с ролью Администратор
-                    .antMatchers("/registration/staff/**").hasRole("ADMIN")
-                    .antMatchers("/registration/staff/save/**").hasRole("ADMIN")
-                    .antMatchers("/staff/edit/**").hasRole("ADMIN")
-                    .antMatchers("/staff/delete/**").hasRole("ADMIN")
-                    .antMatchers("/staff/save/**").hasRole("ADMIN")
-                    .antMatchers("/jobs/edit/**").hasRole("ADMIN")
-                    .antMatchers("/jobs/delete/**").hasRole("ADMIN")
-                    .antMatchers("/jobs/save/**").hasRole("ADMIN")
-                    .antMatchers("/jobs/**").hasRole("ADMIN")
-                    .antMatchers("/libs/edit/**").hasRole("ADMIN")
-                    .antMatchers("/libs/delete/**").hasRole("ADMIN")
-                    .antMatchers("/libs/new/**").hasRole("ADMIN")
-                    .antMatchers("/libs/save/**").hasRole("ADMIN")
-                    //Для пользователей
-                    .antMatchers("/books/").hasRole("USER")
-                    //Доступ разрешен всем пользователей
-                    .antMatchers("/books/", "/libs/", "/books/filter","/test/index","/fragments/header").permitAll()
-                    .antMatchers("/registration/**").permitAll()
-                    .antMatchers("/registration/save/**").permitAll()
+                //Доступ только для не зарегистрированных пользователей
+                //.antMatchers("/registration/**").not().fullyAuthenticated()
+                //.antMatchers("/registration/save/**").not().fullyAuthenticated()
+                //Доступ только для пользователей с ролью Администратор
+                .antMatchers("/registration/staff/**").hasRole("ADMIN")
+                .antMatchers("/registration/staff/save/**").hasRole("ADMIN")
+                .antMatchers("/staff/edit/**").hasRole("ADMIN")
+                .antMatchers("/staff/delete/**").hasRole("ADMIN")
+                .antMatchers("/staff/save/**").hasRole("ADMIN")
+                .antMatchers("/jobs/edit/**").hasRole("ADMIN")
+                .antMatchers("/jobs/delete/**").hasRole("ADMIN")
+                .antMatchers("/jobs/save/**").hasRole("ADMIN")
+                .antMatchers("/jobs/**").hasRole("ADMIN")
+                .antMatchers("/libs/edit/**").hasRole("ADMIN")
+                .antMatchers("/libs/delete/**").hasRole("ADMIN")
+                .antMatchers("/libs/new/**").hasRole("ADMIN")
+                .antMatchers("/libs/save/**").hasRole("ADMIN")
+                //Для пользователей
+                .antMatchers("/books/").hasRole("USER")
+                //Доступ разрешен всем пользователей
+                .antMatchers("/books/", "/libs/", "/books/filter").permitAll()
+                .antMatchers("/registration/**").permitAll()
+                .antMatchers("/registration/save/**").permitAll()
+                .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
                 .and()
-                    //Настройка для входа в систему
-                    .formLogin()
-                    .loginPage("/login")
-                    //Перенарпавление на главную страницу после успешного входа
-                    .defaultSuccessUrl("/")
-                    .permitAll()
+                //Настройка для входа в систему
+                .formLogin()
+                .loginPage("/login")
+                //Перенарпавление на главную страницу после успешного входа
+                .defaultSuccessUrl("/")
+                .permitAll()
                 .and()
-                    .logout()
-                    .permitAll()
-                    .logoutSuccessUrl("/").and()
+                .logout()
+                .permitAll()
+                .logoutSuccessUrl("/").and()
                 .csrf()
                 .disable();
     }
@@ -71,4 +72,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(loginService).passwordEncoder(bCryptPasswordEncoder());
     }
+
+       /*public void configure(WebConfig web) throws Exception {
+        //Web resources
+        web.ignoring().antMatchers("/css/**");
+        web.ignoring().antMatchers("/scripts/**");
+        web.ignoring().antMatchers("/images/**");
+    }*/
 }

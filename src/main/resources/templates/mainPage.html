@@ -7,147 +7,17 @@
 	<meta name="description" content="">
 	<title>Main page</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Bootstrap core CSS -->
-	<style>
-
-		<!--Header-->
-		.navbar-brand { position: relative; z-index: 2; }
-
-		.navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; }
-
-		.navbar .navbar-collapse { position: relative; }
-		.navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 22px; }
-
-		.navbar .nav-collapse { position: absolute; z-index: 1; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding-right: 120px; padding-left: 80px; width: 100%; }
-		.navbar.navbar-default .nav-collapse { background-color: #f8f8f8; }
-		.navbar.navbar-inverse .nav-collapse { background-color: #222; }
-		.navbar .nav-collapse .navbar-form { border-width: 0; box-shadow: none; }
-		.nav-collapse>li { float: right; }
-
-		.btn.btn-circle { border-radius: 50px; }
-		.btn.btn-outline { background-color: transparent; }
+<!--	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="cover.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" src="/cover.min.css">
+	<link href="https://drive.google.com/file/d/1kvoTF9v5DIjPtCfWgrDJBTLIvka8x1br/view?usp=sharing" rel="stylesheet" media="screen" />
+	<link href="https://github.com/luifuooj/styles/blob/gh-pages/css/cover.min.css" rel="stylesheet" />-->
 
 
-		.navbar-nav.navbar-right .btn:not(.collapsed) {
-			background-color: rgb(111, 84, 153);
-			border-color: rgb(111, 84, 153);
-			color: rgb(255, 255, 255);
-		}
+	<link th:href="@{/css/cover.min.css}" rel="stylesheet" />
 
+		<!-- Bootstrap core CSS -->
 
-		@media screen and (max-width: 767px) {
-			.navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 15px; padding-right: 15px; }
-
-			.navbar .nav-collapse { margin: 7.5px auto; padding: 0; }
-			.navbar .nav-collapse .navbar-form { margin: 0; }
-			.nav-collapse>li { float: none; }
-		}
-
-		a,
-		a:focus,
-		a:hover {
-			color: #fff;
-		}
-
-		/* Custom default button */
-		.btn-secondary,
-		.btn-secondary:hover,
-		.btn-secondary:focus {
-			color: #333;
-			text-shadow: none; /* Prevent inheritance from `body` */
-			background-color: #fff;
-			border: .05rem solid #fff;
-		}
-
-
-		/*
-         * Base structure
-         */
-
-		html,
-		body {
-			height: 100%;
-			background-color: #333;
-		}
-
-		body {
-			display: -ms-flexbox;
-			display: flex;
-			color: #fff;
-			text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-			box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
-		}
-
-		.cover-container {
-			max-width: 42em;
-		}
-
-
-		/*
-         * Header
-         */
-		.masthead {
-			margin-bottom: 2rem;
-		}
-
-		.masthead-brand {
-			margin-bottom: 0;
-		}
-
-		.nav-masthead .nav-link {
-			padding: .25rem 0;
-			font-weight: 700;
-			color: rgba(255, 255, 255, .5);
-			background-color: transparent;
-			border-bottom: .25rem solid transparent;
-		}
-
-		.nav-masthead .nav-link:hover,
-		.nav-masthead .nav-link:focus {
-			border-bottom-color: rgba(255, 255, 255, .25);
-		}
-
-		.nav-masthead .nav-link + .nav-link {
-			margin-left: 1rem;
-		}
-
-		.nav-masthead .active {
-			color: #fff;
-			border-bottom-color: #fff;
-		}
-
-		@media (min-width: 48em) {
-			.masthead-brand {
-				float: left;
-			}
-			.nav-masthead {
-				float: right;
-			}
-		}
-
-
-		/*
-         * Cover
-         */
-		.cover {
-			padding: 0 1.5rem;
-		}
-		.cover .btn-lg {
-			padding: .75rem 1.25rem;
-			font-weight: 700;
-		}
-
-
-		/*
-         * Footer
-         */
-		.mastfoot {
-			color: rgba(255, 255, 255, .5);
-		}
-
-			
-	</style>
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </head>
@@ -155,7 +25,11 @@
 
 <body class="text-center">
 
-<div th:insert="fragments/header :: header"></div>
+<div class="column small-12 left_panel" >
+	<header data-equalizer-watch>
+		<div th:insert="fragments/header :: header"></div>
+	</header>
+</div>
 	<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 		<main role="main" class="inner cover">
 			<h1 class="cover-heading">Hello, <span th:text="${name} + '!'"> Stranger!</span></h1>
