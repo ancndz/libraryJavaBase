@@ -43,7 +43,7 @@ public class LibraryController {
 
     @GetMapping("/new")
     public String newLibForm(Library library) {
-        return "/libs/add_lib";
+        return "libs/add_lib";
     }
 
     @PostMapping("/save")
@@ -94,7 +94,7 @@ public class LibraryController {
     /**
      * get first letter of book's title (exclude "the")
      *
-     * @param book
+     * @param book inspected book
      * @return letter in upper case
      */
     private String getTitleFirstLetter(Book book) {

@@ -40,6 +40,9 @@ services:
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
+      database_user: '${database_user}'
+      database_pass: '${database_pass}'
+      database_host: '${database_host}'
     depends_on:
       - database
     ports:
