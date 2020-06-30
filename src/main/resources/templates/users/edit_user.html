@@ -5,248 +5,115 @@ xmlns:th="http://www.thymeleaf.org">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <title>Edit User</title>
+    <title>Create User</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/floating-labels/">
 	<link rel="stylesheet/less" type="text/css" href="styles.less" />
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<link th:href="@{/css/floating-labels.css}" rel="stylesheet" />
 
-
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
-
-        body {
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-align: center;
-            align-items: center;
-            padding-top: 40px;
-            padding-bottom: 40px;
-            background-color: #f5f5f5;
-        }
-
-        .form-signin {
-            width: 100%;
-            max-width: 420px;
-            padding: 15px;
-            margin: auto;
-        }
-
-        .form-label-group {
-            position: relative;
-            margin-bottom: 1rem;
-        }
-
-        .form-label-group > input,
-        .form-label-group > label {
-            height: 3.125rem;
-            padding: .75rem;
-        }
-
-        .form-label-group > label {
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: block;
-            width: 100%;
-            margin-bottom: 0; /* Override default `<label>` margin */
-            line-height: 1.5;
-            color: #495057;
-            pointer-events: none;
-            cursor: text; /* Match the input under the label */
-            border: 1px solid transparent;
-            border-radius: .25rem;
-            transition: all .1s ease-in-out;
-        }
-
-        .form-label-group input::-webkit-input-placeholder {
-            color: transparent;
-        }
-
-        .form-label-group input:-ms-input-placeholder {
-            color: transparent;
-        }
-
-        .form-label-group input::-ms-input-placeholder {
-            color: transparent;
-        }
-
-        .form-label-group input::-moz-placeholder {
-            color: transparent;
-        }
-
-        .form-label-group input::placeholder {
-            color: transparent;
-        }
-
-        .form-label-group input:not(:placeholder-shown) {
-            padding-top: 1.25rem;
-            padding-bottom: .25rem;
-        }
-
-        .form-label-group input:not(:placeholder-shown) ~ label {
-            padding-top: .25rem;
-            padding-bottom: .25rem;
-            font-size: 12px;
-            color: #777;
-        }
-
-        /* Fallback for Edge
-        -------------------------------------------------- */
-        @supports (-ms-ime-align: auto) {
-            .form-label-group > label {
-                display: none;
-            }
-            .form-label-group input::-ms-input-placeholder {
-                color: #777;
-            }
-        }
-
-        /* Fallback for IE
-        -------------------------------------------------- */
-        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-            .form-label-group > label {
-                display: none;
-            }
-            .form-label-group input:-ms-input-placeholder {
-                color: #777;
-            }
-        }
-
-        @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700);
-	@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700);
-
-input.upload {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 12px;
-    cursor: pointer;
-    opacity: 1;
-    filter: alpha(opacity=1);    
-}
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-	  
-    </style>
-    <!-- Custom styles for this template -->
+    <!-- Custom styles for this template <head th:insert="fragments/header :: header" ></head> -->
+	   <!--DON'T WORK-->
   </head>
   <body>
-  
-    <form class="form-signin">
-  <div th:insert="fragments/header :: header" class="text-center mb-4"></div>
-  
- <svg class="bi bi-person-fill" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-</svg>
-  
-    <svg class="bi bi-gear-wide-connected" width="2.5em" height="2.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434L8.932.727zM8 12.997a4.998 4.998 0 1 0 0-9.995 4.998 4.998 0 0 0 0 9.996z"/>
-  <path fill-rule="evenodd" d="M7.375 8L4.602 4.302l.8-.6L8.25 7.5h4.748v1H8.25L5.4 12.298l-.8-.6L7.376 8z"/>
-</svg>
-    <h1 class="h3 mb-3 font-weight-normal">Edit User</h1>
 
-   
- <a type="button" href="change_password.html" class="btn btn-default btn-lg btn-block">
-  <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
-</a>
-  </br>
-        <!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
-        <form action="#" th:action="@{/users/save}" th:object="${user}" method="post" align="center">
-	
-	<!-- readonly type + placeholder -->
-	<div class="form-group">
-		 <label for="id">ID</label>
-		<input readonly type="number" th:field="*{id}" id="id" placeholder="ID" class="form-control">
-	</div>
-	
-  <div class="form-group">
-     <label for="firstName">First name</label>
-    <input type="text" th:field="*{userExtras.firstName}" id="firstName" placeholder="Enter Your First Name" class="form-control">
-  </div>
-  
-	<div class="form-group">
-		<label for="lastName">Last name</label>
-		<input type="text" th:field="*{userExtras.lastName}" id="lastName" placeholder="Enter Your Last Name" class="form-control">
-  </div>
-  
-	<div class="form-group">
-		<label for="email">Email address</label>
-		<input type="text" th:field="*{email}" id="email" placeholder="Enter Your Email Address" class="form-control">
- </div>
-  
-	<div th:field="*{userExtras.status}" id="status" class="form-group">
-		<label for="exampleFormControlSelect1">Status</label>
-
-		<select class="form-control" id="exampleFormControlSelect1">
-		  <option>Student </option>
-		  <option>Research fellow</option>
-		  <option>Сulture personality</option>
-		  <option>Lecturer </option>
-		  <option>Reader</option>
-		</select>
-	</div>
-  
-<!--     <div class="form-group">
-     <label for="code">Current Password</label>
-	 <div class="input-group">
-		 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-		 <input type="password" th:field="*{password}" id="code" class="form-control" placeholder="Enter Your Current Password" required> 
-	</div>	
- </div>
-  
-	<div class="form-group">
-		<label for="codenew">New Password</label>
-			<div class="input-group">
-				<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-				<input type="password" th:field="*{passwordNew}" class="form-control" id="codenew" placeholder="Enter New Password" />
-				</br>
+	<div class="form-signin" >
+		  <div class="text-center mb-4">
+				<svg class="bi bi-person-fill" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="	http://www.w3.org/2000/svg">
+				  <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+					</svg>
+				<svg class="bi bi-gear-wide-connected" width="2.5em" height="2.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					  <path fill-rule="evenodd" d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434L8.932.727zM8 12.997a4.998 4.998 0 1 0 0-9.995 4.998 4.998 0 0 0 0 9.996z"/>
+					  <path fill-rule="evenodd" d="M7.375 8L4.602 4.302l.8-.6L8.25 7.5h4.748v1H8.25L5.4 12.298l-.8-.6L7.376 8z"/>
+				</svg>
+				<h1 class="h3 mb-3 font-weight-normal">Edit user</h1>
 				
+		  </div>
+			<!--href="change_password.html"-->
+			<a type="button"  th:href="@{/users/change_password}"    class="btn btn-default btn-lg btn-block">
+			  <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
+			</a>
+			  </br>
+			  
+			<!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
+        <form th:action="@{/users/save}" th:object="${user}" method="post"> <!--action="#"-->
+		
+		<!-- readonly type + placeholder -->
+			<div class="form-group">
+				 <label for="id">ID</label>
+				<input readonly type="number" th:field="*{id}" id="id" placeholder="ID" class="form-control">
 			</div>
-			<small id="passwordHelpBlock" class="form-text text-muted">
-				  The password must be 5-15 chars
-				</small>
-    </div>
-  
-  
-  	<div class="form-group">
-		 <label for="codeconf">Confirm New Password</label>
-			 <div class="input-group">
-				 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-				 <input type="password" th:field="*{passwordConfirm}" id="codeconf" class="form-control" placeholder="Confirm Your New Password">
-			</div>	
-	</div>
-	
 
- -->
-<input type="text" hidden th:field="*{userExtras.dateReg}">
-<input type="text" hidden th:field="*{userExtras.id}">
-</br>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
-</form>
-    </form>
-<div th:insert="fragments/header :: login"></div>
-<script type="text/javascript"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-</body>
+		  <div class="form-group">
+			 <label for="firstName">First name</label>
+			<input type="text" th:field="*{userExtras.firstName}" id="firstName" placeholder="Enter Your First Name" class="form-control">
+		  </div>
+
+			<div class="form-group">
+				<label for="lastName">Last name</label>
+				<input type="text" th:field="*{userExtras.lastName}" id="lastName" placeholder="Enter Your Last Name" class="form-control">
+		  </div>
+
+			<div class="form-group">
+				<label for="email">Email address</label>
+				<input type="text" th:field="*{email}" id="email" placeholder="Enter Your Email Address" class="form-control" required>
+		 </div>
+
+			<label>Status</label>
+			<div class="d-block my-3">
+			<div  class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status1" value="Student" checked>
+				<label class="custom-control-label" for="status1">
+					Student
+				</label>
+			</div>
+
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status2"  value="Research fellow">
+				<label class="custom-control-label" for="status2">
+					Research fellow
+				</label>
+			</div>
+
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status3"  value="Сulture personality">
+				<label class="custom-control-label" for="status3">
+					Сulture personality
+				</label>
+			</div>
+
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status4"  value="Lecturer">
+				<label class="custom-control-label" for="status4">
+					Lecturer
+				</label>
+			</div>
+
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status5"  value="Reader">
+				<label class="custom-control-label" for="status5">
+					Reader
+				</label>
+			</div>
+
+			</div>
+			<br/>
+
+			<!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+			<input type="text" hidden th:field="*{userExtras.dateReg}">
+			<input type="text" hidden th:field="*{userExtras.id}">
+			</br>
+
+
+		  <button class="btn btn-lg btn-primary btn-block" type="submit" >Save</button> <!--value-->
+		</form>
+	</div>
+	<script type="text/javascript"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+  </body>
 </html>

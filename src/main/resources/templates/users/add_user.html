@@ -12,7 +12,6 @@ xmlns:th="http://www.thymeleaf.org">
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
 	<link th:href="@{/css/floating-labels.css}" rel="stylesheet" />
-	  <link th:href="@{/css/floating-labels.css}" rel="stylesheet" />
 
     <!-- Custom styles for this template <head th:insert="fragments/header :: header" ></head> -->
 	   <!--DON'T WORK-->
@@ -56,18 +55,38 @@ xmlns:th="http://www.thymeleaf.org">
 			<label>Status</label>
 			<div class="d-block my-3">
 			<div  class="custom-control custom-radio">
-				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status1" value="option1" checked>
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status1" value="Student" checked>
 				<label class="custom-control-label" for="status1">
 					Student
 				</label>
 			</div>
 
 			<div class="custom-control custom-radio">
-				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status2"  value="option2">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status2"  value="Research fellow">
 				<label class="custom-control-label" for="status2">
 					Research fellow
 				</label>
+			</div>
 
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status3"  value="Сulture personality">
+				<label class="custom-control-label" for="status3">
+					Сulture personality
+				</label>
+			</div>
+
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status4"  value="Lecturer">
+				<label class="custom-control-label" for="status4">
+					Lecturer
+				</label>
+			</div>
+
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status5"  value="Reader">
+				<label class="custom-control-label" for="status5">
+					Reader
+				</label>
 			</div>
 
 			</div>
