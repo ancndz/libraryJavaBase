@@ -11,148 +11,15 @@ xmlns:th="http://www.thymeleaf.org">
 	<link rel="stylesheet/less" type="text/css" href="styles.less" />
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<link th:href="@{/css/floating-labels.css}" rel="stylesheet" />
+	  <link th:href="@{/css/floating-labels.css}" rel="stylesheet" />
 
-    <!-- Bootstrap core CSS -->
-    <style>
-		html,
-		body {
-			height: 100%;
-		}
-
-		body {
-			display: -ms-flexbox;
-			display: flex;
-			-ms-flex-align: center;
-			align-items: center;
-			padding-top: 40px;
-			padding-bottom: 40px;
-			background-color: #f5f5f5;
-		}
-
-		.form-signin {
-			width: 100%;
-			max-width: 420px;
-			padding: 15px;
-			margin: auto;
-		}
-
-		.form-label-group {
-			position: relative;
-			margin-bottom: 1rem;
-		}
-
-		.form-label-group > input,
-		.form-label-group > label {
-			height: 3.125rem;
-			padding: .75rem;
-		}
-
-		.form-label-group > label {
-			position: absolute;
-			top: 0;
-			left: 0;
-			display: block;
-			width: 100%;
-			margin-bottom: 0; /* Override default `<label>` margin */
-			line-height: 1.5;
-			color: #495057;
-			pointer-events: none;
-			cursor: text; /* Match the input under the label */
-			border: 1px solid transparent;
-			border-radius: .25rem;
-			transition: all .1s ease-in-out;
-		}
-
-		.form-label-group input::-webkit-input-placeholder {
-			color: transparent;
-		}
-
-		.form-label-group input:-ms-input-placeholder {
-			color: transparent;
-		}
-
-		.form-label-group input::-ms-input-placeholder {
-			color: transparent;
-		}
-
-		.form-label-group input::-moz-placeholder {
-			color: transparent;
-		}
-
-		.form-label-group input::placeholder {
-			color: transparent;
-		}
-
-		.form-label-group input:not(:placeholder-shown) {
-			padding-top: 1.25rem;
-			padding-bottom: .25rem;
-		}
-
-		.form-label-group input:not(:placeholder-shown) ~ label {
-			padding-top: .25rem;
-			padding-bottom: .25rem;
-			font-size: 12px;
-			color: #777;
-		}
-
-		/* Fallback for Edge
-        -------------------------------------------------- */
-		@supports (-ms-ime-align: auto) {
-			.form-label-group > label {
-				display: none;
-			}
-			.form-label-group input::-ms-input-placeholder {
-				color: #777;
-			}
-		}
-
-		/* Fallback for IE
-        -------------------------------------------------- */
-		@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-			.form-label-group > label {
-				display: none;
-			}
-			.form-label-group input:-ms-input-placeholder {
-				color: #777;
-			}
-		}
-
-		@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700);
-	@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700);
-
-input.upload {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 12px;
-    cursor: pointer;
-    opacity: 1;
-    filter: alpha(opacity=1);    
-}
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-	  
-    </style>
-    <!-- Custom styles for this template -->
-	  <head th:insert="fragments/header :: header" ></head> <!--DON'T WORK-->
+    <!-- Custom styles for this template <head th:insert="fragments/header :: header" ></head> -->
+	   <!--DON'T WORK-->
   </head>
   <body>
 
-		<form class="form-signin">
+	<div class="form-signin" >
 		  <div class="text-center mb-4">
 				<svg class="bi bi-person-plus-fill" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 			  <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
@@ -165,7 +32,8 @@ input.upload {
 			<div th:switch="${errorText}">
 				<p th:case="null"></p>
 				<p th:case="*" th:text="${errorText}"></p></div>
-		<form action="#" th:action="@{/registration/save}" th:object="${user}" method="post" align="center">
+		<form th:action="@{/registration/save}" th:object="${user}" method="post" >
+
 
 		  <div class="form-group">
 			 <label for="firstName">First name</label>
@@ -185,16 +53,54 @@ input.upload {
 				</small>
 		 </div>
 
-			<div th:field="*{userExtras.status}" id="status" class="form-group">
-				<label for="exampleFormControlSelect1">Status</label>
-				<select class="form-control" id="exampleFormControlSelect1">
-				  <option>Student </option>
-				  <option>Research fellow</option>
-				  <option>Сulture personality</option>
-				  <option>Lecturer </option>
-				  <option>Reader</option>
+			<label>Status</label>
+			<div class="d-block my-3">
+			<div  class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status1" value="option1" checked>
+				<label class="custom-control-label" for="status1">
+					Student
+				</label>
+			</div>
+
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status2"  value="option2">
+				<label class="custom-control-label" for="status2">
+					Research fellow
+				</label>
+
+			</div>
+
+			</div>
+			<br/>
+
+			<!--<h4 class="mb-3">Status</h4>
+
+			<div class="d-block my-3">
+				<div class="custom-control custom-radio">
+					<input  th:field="*{userExtras.status}" id="status1" type="radio" class="custom-control-input" >
+					<label class="custom-control-label" for="status1">Student</label>
+				</div>
+				<div class="custom-control custom-radio">
+					<input id="status2" th:field="*{userExtras.status}" type="radio" class="custom-control-input" required>
+					<label class="custom-control-label" for="status2">Research fellow</label>
+				</div>
+				<div class="custom-control custom-radio">
+					<input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+					<label class="custom-control-label" for="paypal">PayPal</label>
+				</div>
+			</div>-->
+
+			<!--<div  class="form-group">
+				<label for="status">Status</label>
+				<select th:field="*{userExtras.status}" input type="text" id="status" class="form-control" >
+				  <option value="text">Student </option>
+				  <option value="text">Research fellow</option>
+				  <option value="text">Сulture personality</option>
+				  <option value="text">Lecturer </option>
+				  <option value="text">Reader</option>
 				</select>
-		  </div>
+			</div> -->
+
 
 		  <div class="form-group">
 			 <label for="code">Set Password</label>
@@ -213,9 +119,9 @@ input.upload {
 			</div>
 
 
-		  <button class="btn btn-lg btn-primary btn-block" type="submit">Create User</button>
+		  <button class="btn btn-lg btn-primary btn-block" type="submit" value="Create User">Create User</button>
 		</form>
-		</form>
+	</div>
 	<script type="text/javascript"></script>
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
