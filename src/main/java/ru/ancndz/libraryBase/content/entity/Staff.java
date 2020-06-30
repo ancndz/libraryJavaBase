@@ -34,7 +34,7 @@ public class Staff extends LibraryUser {
     /**
      * должность
      */
-    @ManyToOne(targetEntity = Job.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Job.class)
     @JoinColumn(nullable = false)
     private Job job;
 
@@ -44,7 +44,7 @@ public class Staff extends LibraryUser {
     /**
      * библиотека, в которой сотрудник работает
      */
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Library.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Library.class)
     @JoinColumn(nullable = false)
     private Library library;
 
