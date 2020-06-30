@@ -38,18 +38,19 @@ public class Rent {
     private LocalDateTime factEndDate;
 
     @OneToOne
-    @JoinColumn(unique = true, nullable = false)
+    @JoinColumn(nullable = false)
     private Staff staff;
 
-    @OneToOne()
-    @JoinColumn(unique = true, nullable = false)
+    @OneToOne
+    @JoinColumn(nullable = false)
     private Book book;
 
     @ManyToOne
     @JoinColumn
     private LibraryUser libraryUser;
 
-    public Rent() {}
+    public Rent() {
+    }
 
     public int getId() {
         return id;
