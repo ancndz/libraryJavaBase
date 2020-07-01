@@ -1,36 +1,72 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.springframework.org/security/tags"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/security/tags ">
 <head>
-    <meta charset="UTF-8">
-</head>  
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+</head>
 <body>
-    <div th:fragment="header">
-        <div align="center">
-            <div sec:authorize="hasRole('ADMIN')">
-                <h2><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a
-                        th:href="@{/users/}">Users</a>
-                </h2>
+<div th:fragment="header">
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" th:href="@{/}">Library App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/jobs/}">Jobs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/staff/}">Staff</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/users/}">Users</a>
+                        </li>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/libs/}">Libraries</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/books/}">Books</a>
+                    </li>
+                    <li class="nav-item">
+                            <span sec:authorize="isAuthenticated()">
+                                <a class="nav-link" th:href="@{/rents/}">Rents&Penalties</a>
+                            </span>
+                    </li>
+                </ul>
+                <div class="mt-2 mt-md-0">
+                    <div sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post">
+                            <input class="btn btn-outline-secondary" type="submit" value="Sign Out"/>
+                        </form>
+                    </div>
+                    <div sec:authorize="isAnonymous()">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <form th:action="@{/registration}" method="get">
+                                    <input class="btn btn-outline-secondary mr-3" type="submit" value="Register"/>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form th:action="@{/login}" method="get">
+                                    <input class="btn btn-outline-primary" type="submit" value="Login"/>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <h2><a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> <span sec:authorize="isAuthenticated()"> | <a th:href="@{/rents/}">Rents&Penalties</a></span>  </h2>
-        </div>
-    </div>
-    <div align="center" th:fragment="login">
-        <br>
-        <div sec:authorize="isAuthenticated()">
-            <form th:action="@{/logout}" method="post">
-                <input type="submit" value="Sign Out"/>
-            </form>
-        </div>
-        <div align="center" sec:authorize="isAnonymous()">
-            <a th:href="@{/registration}">Register</a>
-            <br>
-            <a th:href="@{/registration/staff}">Register staff</a>
-            <br>
-            <a th:href="@{/login}">Login</a>
-        </div>
-    </div>
+        </nav>
+    </header>
+</div>
 </body>
 </html>

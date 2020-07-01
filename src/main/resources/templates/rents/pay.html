@@ -3,16 +3,19 @@
       xmlns:sec="http://www.springframework.org/security/tags">
 <meta charset="UTF-8">
 <title>Pay Penalty</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
 <body>
 <div th:insert="fragments/header :: header"></div>
 <div align="center">
-<form action="#" th:action="@{/rents/pay_penalty/save}" method="post" align="center">
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th sec:authorize="hasRole('ADMIN')">Id</th>
-            <th>Reason</th>
+    <form action="#" th:action="@{/rents/pay_penalty/save}" method="post" align="center">
+        <table border="1" cellpadding="5" align="center">
+            <thead>
+            <tr>
+                <th sec:authorize="hasRole('ADMIN')">Id</th>
+                <th>Reason</th>
             <th>Date</th>
             <th>Amount Remaining</th>
             <th>Amount to pay</th>

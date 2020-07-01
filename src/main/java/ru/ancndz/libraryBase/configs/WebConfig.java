@@ -9,4 +9,5 @@ public class WebConfig extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(ApplicationBoot.class);
     }
+
 }

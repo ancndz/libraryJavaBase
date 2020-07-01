@@ -2,11 +2,14 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <meta charset="UTF-8">
 <title>Edit Library</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
 <body>
 <div th:insert="fragments/header :: header"></div>
 <form action="#" th:action="@{/libs/save}" th:object="${library}" method="post" align="center">
-    <h3 align="center" >Fill data for library with <span th:text="*{id}"></span> id:</h3>
+    <h3 align="center">Fill data for library with <span th:text="*{id}"></span> id:</h3>
     <table align="center" border="1" cellpadding="5">
         <thead>
         <tr>

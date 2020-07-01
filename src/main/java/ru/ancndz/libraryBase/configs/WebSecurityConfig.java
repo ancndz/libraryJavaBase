@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.ancndz.libraryBase.configs.services.LoginService;
-import ru.ancndz.libraryBase.configs.services.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -40,16 +39,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/jobs/delete/**").hasRole("ADMIN")
                     .antMatchers("/jobs/save/**").hasRole("ADMIN")
                     .antMatchers("/jobs/**").hasRole("ADMIN")
-                    .antMatchers("/libs/edit/**").hasRole("ADMIN")
-                    .antMatchers("/libs/delete/**").hasRole("ADMIN")
-                    .antMatchers("/libs/new/**").hasRole("ADMIN")
-                    .antMatchers("/libs/save/**").hasRole("ADMIN")
-                    //Для пользователей
-                    .antMatchers("/books/").hasRole("USER")
-                    //Доступ разрешен всем пользователей
-                    .antMatchers("/books/", "/libs/", "/books/filter").permitAll()
-                    .antMatchers("/registration/**").permitAll()
-                    .antMatchers("/registration/save/**").permitAll()
+                .antMatchers("/libs/edit/**").hasRole("ADMIN")
+                .antMatchers("/libs/delete/**").hasRole("ADMIN")
+                .antMatchers("/libs/new/**").hasRole("ADMIN")
+                .antMatchers("/libs/save/**").hasRole("ADMIN")
+                //Для пользователей
+                .antMatchers("/books/").hasRole("USER")
+                //Доступ разрешен всем пользователей
+                .antMatchers("/books/", "/libs/", "/books/filter").permitAll()
+                .antMatchers("/registration/**").permitAll()
+                .antMatchers("/registration/save/**").permitAll()
+                .antMatchers("/css/**", "/js/**").permitAll()
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
                 .and()

@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Clients</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
 <body>
 <div th:insert="fragments/header :: header"></div>
@@ -33,11 +36,11 @@
                 <td th:text="${libraryUser.userExtras.status}"></td>
                 <td th:text="${#temporals.format(libraryUser.userExtras.dateReg, 'dd-MM-yyyy HH:mm')}"></td>
                 <td sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/libraryUsers/edit(id=${libraryUser.id})}">
+                    <a th:href="@{/users/edit(id=${libraryUser.id})}">
                         <span>Edit</span>
                     </a>
                     <br>
-                    <a th:href="@{/libraryUsers/delete(id=${libraryUser.id})}">
+                    <a th:href="@{/users/delete(id=${libraryUser.id})}">
                         <span>Delete</span>
                     </a>
                 </td>
