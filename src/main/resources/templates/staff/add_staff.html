@@ -8,7 +8,7 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
 <body>
-<div th:insert="fragments/header :: header"></div>
+<div th:insert="fragments/header :: header (needLogin=false)"></div>
 <!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.entity.Staff"*/-->
 <form action="#" th:action="@{/registration/staff/save}" th:object="${staff}" method="post" align="center">
     <table border="1" cellpadding="5" align="center">

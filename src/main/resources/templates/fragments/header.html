@@ -43,25 +43,10 @@
                             </span>
                     </li>
                 </ul>
-                <div class="mt-2 mt-md-0">
-                    <div sec:authorize="isAuthenticated()">
-                        <form th:action="@{/logout}" method="post">
-                            <input class="btn btn-outline-secondary" type="submit" value="Sign Out"/>
-                        </form>
-                    </div>
-                    <div sec:authorize="isAnonymous()">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <form th:action="@{/registration}" method="get">
-                                    <input class="btn btn-outline-secondary mr-3" type="submit" value="Register"/>
-                                </form>
-                            </li>
-                            <li class="nav-item">
-                                <form th:action="@{/login}" method="get">
-                                    <input class="btn btn-outline-primary" type="submit" value="Login"/>
-                                </form>
-                            </li>
-                        </ul>
+                <!--/*@thymesVar id="needLogin" type="java.lang.Boolean"*/-->
+                <div th:switch="${needLogin}">
+                    <div th:case="true">
+                        <div th:insert="fragments/sign :: sign" class="mt-2 mt-md-0"></div>
                     </div>
                 </div>
             </div>
