@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.springframework.org/security/tags"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/security/tags ">
@@ -9,101 +9,69 @@
 <head>
     <meta charset="utf-8">
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <style type="text/css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<link th:href="@{/css/cover1.css}" rel="stylesheet" />
+	<link href="D:/Users/Ksy/IdeaProjects/libraryJavaBase/src/main/resources/static/css/cover1.css" rel="stylesheet">
+<style type="text/css">
+	body{
+		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+		font-size: 14px;
 
-        .navbar-brand { position: relative; z-index: 2; }
-
-        .navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; }
-
-        .navbar .navbar-collapse { position: relative; }
-        .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 22px; }
-
-        .navbar .nav-collapse { position: absolute; z-index: 1; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding-right: 120px; padding-left: 80px; width: 100%; }
-        .navbar.navbar-default .nav-collapse { background-color: #f8f8f8; }
-        .navbar.navbar-inverse .nav-collapse { background-color: #222; }
-        .navbar .nav-collapse .navbar-form { border-width: 0; box-shadow: none; }
-        .nav-collapse>li { float: right; }
-
-        .btn.btn-circle { border-radius: 50px; }
-        .btn.btn-outline { background-color: transparent; }
+	}
 
 
-        .navbar-nav.navbar-right .btn:not(.collapsed) {
-            background-color: rgb(111, 84, 153);
-            border-color: rgb(111, 84, 153);
-            color: rgb(255, 255, 255);
-        }
+	.btn.btn-outline {
+			background-color: rgb(111, 84, 153);
+			border-color: rgb(111, 84, 153);
+			color: rgb(255, 255, 255);
+			padding: 6px 12px;
+			border-radius: 30px;
+	}
+
+	.mynav{
+		margin-right: -15px;
+	}
 
 
-        @media screen and (max-width: 767px) {
-            .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 15px; padding-right: 15px; }
-
-            .navbar .nav-collapse { margin: 7.5px auto; padding: 0; }
-            .navbar .nav-collapse .navbar-form { margin: 0; }
-            .nav-collapse>li { float: none; }
-        }
     </style>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div th:fragment="header">
-    <div class="container-fluid">
-
-        <!-- Second navbar for profile settings -->
-        <nav class="navbar navbar-inverse">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-4">
-                        <span class="sr-only">navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Library</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="navbar-collapse-4">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a sec:authorize="hasRole('ADMIN')" th:href="@{/jobs/}">Jobs</a></li>
-                        <li><a sec:authorize="hasRole('ADMIN')" th:href="@{/staff/}">Staff</a></li>
-                        <li><a sec:authorize="hasRole('ADMIN')" th:href="@{/users/}">Users</a></li>
-                        <li><a th:href="@{/libs/}">Libraries</a></li>
-                        <li><a th:href="@{/books/}">Books</a></li>
-                        <li><a sec:authorize="isAuthenticated()" th:href="@{/rents/}">Rents&Penalties </a></li>
-                        <li>
-                            <div align="center">
-                                <a class="btn btn-default btn-outline btn-circle"  data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2">Profile</a>
-                             </div>
-                        </li>
-                    </ul>
-                    <div class="collapse nav navbar-nav nav-collapse" id="nav-collapse2">
-
-                        <div sec:authorize="isAuthenticated()">
-                            <form th:action="@{/logout}" method="post" class="navbar-form navbar-right form-inline" role="form">
-                                <button class="btn btn-success" type="submit" >Sign out</button>
-                            </form>
-                        </div>
-                        <div align="center" sec:authorize="isAnonymous()" class="collapse navbar-collapse" id="navbar-collapse-5">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a th:href="@{/registration}">Register</a></li>
-                                <li><a th:href="@{/registration/staff}">Register staff</a></li>
-                                <li><a th:href="@{/login}">Login</a></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    </div>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container -->
-
-         </nav><!-- /.navbar -->
+  <div class="site-wrapper">
+	<div class="site-wrapper-inner">
+		<div class="cover-container">
+			<div class="masthead clearfix">
+				
+				<div class="inner">
+					<h3 class="masthead-brand" href="#">Library</h3>
+              <nav>
+				  <!-- class="active" -->
+                <ul class="nav masthead-nav mynav">
+				    <li><a sec:authorize="hasRole('ADMIN')" th:href="@{/jobs/}">Jobs</a></li>
+				    <li><a sec:authorize="hasRole('ADMIN')" th:href="@{/staff/}">Staff</a></li>
+					<li><a sec:authorize="hasRole('ADMIN')" th:href="@{/users/}">Users</a></li>
+					<li><a th:href="@{/libs/}">Libraries</a></li>
+					<li><a th:href="@{/books/}">Books</a></li>
+					<li><a sec:authorize="isAuthenticated()" th:href="@{/rents/}">Rents&Penalties </a></li>
+					<li><a sec:authorize="isAnonymous()" th:href="@{/registration}">Register</a></li>
+					<li><a sec:authorize="isAnonymous()" th:href="@{/registration/staff}">Register staff</a></li>
+					<li><a sec:authorize="isAnonymous()" class="btn btn-default btn-outline mybtn" th:href="@{/login}">Login</a></li>
+					<li>
+						<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+							<button class="btn btn-default btn-outline  mybtn" type="submit" >Sign out</button>
+						</form>
+					
+					</li>					
+                 </ul>
+              </nav>
+            </div>
+          </div>
+		</div>
+	  </div>    
     </div>
-</div><!-- /.container-fluid -->
 </div>
 <script type="text/javascript">
 
