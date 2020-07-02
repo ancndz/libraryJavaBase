@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 >
 <head>
     <meta charset="UTF-8"/>
@@ -9,12 +8,10 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
 <body>
-<footer th:fragment="footer" class="footer">
+<footer th:fragment="footer" class="fixed-bottom my-4">
     <div class="container">
-        <span class="text-muted">
-            <a href="https://github.com/ancndz">@ancndz</a>
-            <a href="https://github.com/luifuooj">@luifuooj</a>
-        </span>
+        <a class="text-muted" href="https://github.com/ancndz">@ancndz</a>
+        <a class="text-muted" href="https://github.com/luifuooj">@luifuooj</a>
     </div>
 </footer>
 </body>
