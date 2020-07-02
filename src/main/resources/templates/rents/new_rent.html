@@ -1,46 +1,75 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.springframework.org/security/tags">
-<head>
-    <meta charset="UTF-8">
+<!doctype html>
+<html lang="en"
+ xmlns:sec="http://www.springframework.org/security/tags"
+xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
     <title>Add book</title>
-</head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<!--/*@thymesVar id="rent" type="ru.ancndz.libraryBase.content.operations.Rent"*/-->
-<form action="#" th:action="@{/rents/save}" th:object="${rent}" method="post" align="center">
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="book">Book</label></th>
-            <th><label for="lib">Library</label></th>
-            <th sec:authorize="hasRole('ADMIN')"><label for="libraryUser">User</label></th>
-        </tr>
-        </thead>
-        <tbody>
-        <td>
-            <input type="text" hidden readonly th:field="${rent.book}" id="book">
-            <span th:text="${rent.book.name} + ', ' + ${rent.book.author} + ', ' + ${rent.book.pubYear}"></span>
-        </td>
-        <td>
-            <span th:text="${rent.book.library.address} + ', ' + ${rent.book.library.name}"></span>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/floating-labels/">
+	<link rel="stylesheet/less" type="text/css" href="styles.less" />
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<link th:href="@{/css/floating-labels.css}" rel="stylesheet" />
+	  <link href="D:/Users/Ksy/IdeaProjects/libraryJavaBase/src/main/resources/static/css/floating-labels.css" rel="stylesheet">
+
+	  <!-- Custom styles for this template <head th:insert="fragments/header :: header" ></head> -->
+	   <!--DON'T WORK-->
+  </head>
+  <body>
+
+	<div class="form-signin" >
+		  <div class="text-center mb-4">
+		  <svg class="bi bi-cart-plus" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M8.5 5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 .5-.5z"/>
+  <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0v-2z"/>
+  <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+</svg>
+				<!--<svg class="bi bi-bookmark-plus" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4zm9-1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z"/>
+  <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+</svg>-->
+				<h1 class="h3 mb-3 font-weight-normal">Add rent</h1>
+		  </div>
+
+			<div th:switch="${errorText}">
+				<p th:case="null"></p>
+				<p th:case="*" th:text="${errorText}"></p></div>
+				<!--/*@thymesVar id="rent" type="ru.ancndz.libraryBase.content.operations.Rent"*/-->
+		<form action="#" th:action="@{/rents/save}" th:object="${rent}" method="post" >
+			
+
+		  <div class="form-group">
+			 <label for="book">Book</label>
+			 <input class="form-control" type="text" hidden readonly th:field="${rent.book}" id="book">
+            <span class="form-control" th:text="${rent.book.name} + ', ' + ${rent.book.author} + ', ' + ${rent.book.pubYear}"></span>
+		  </div>
+			
+			<div class="form-group">
+			 <label for="lib">Library</label>
+			 <span class="form-control" th:text="${rent.book.library.address} + ', ' + ${rent.book.library.name}"></span>
             <input type="text" hidden readonly th:field="${rent.book.library}" id="lib">
             <input type="text" hidden readonly th:field="${rent.staff}">
             <input type="text" hidden readonly th:field="${rent.libraryUser}">
-        </td>
-        <td sec:authorize="hasRole('ADMIN')">
-            <span th:text="${rent.libraryUser.email}"></span>
-            <input type="text" th:field="${rent.libraryUser.email}" id="libraryUser">
-        </td>
-        </tbody>
-    </table>
-    <br>
-    <input type="submit" value="Rent Book">
-    <div th:switch="${error}">
-        <p th:case="null"></p>
-        <p th:case="*" th:text="${error}"></p>
-    </div>
-</form>
-<div th:insert="fragments/header :: login"></div>
-</body>
+		  </div>
+			
+			<div sec:authorize="hasRole('ADMIN')" class="form-group">
+				<label for="libraryUser">User</label>
+				<span class="form-control" th:text="${rent.libraryUser.email}"></span>
+				<br>
+            <input class="form-control" type="text" th:field="${rent.libraryUser.email}" id="libraryUser">
+		  </div>
+
+		  <button class="btn btn-lg btn-primary btn-block" type="submit" value="Rent Book">Rent Book</button>
+		</form>
+	</div>
+	<script type="text/javascript"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+  </body>
 </html>

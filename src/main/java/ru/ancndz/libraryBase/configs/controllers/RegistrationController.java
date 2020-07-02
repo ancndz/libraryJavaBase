@@ -98,7 +98,7 @@ public class RegistrationController {
             model.addAttribute("errorText", "Пользователь с таким email уже существует");
             return "users/add_user";
         }
-        return "1login";
+        return "login";
     }
 
     @PostMapping("/staff/save")
@@ -117,6 +117,6 @@ public class RegistrationController {
             model.addAttribute("errorText", "Пользователь с таким email уже существует");
             return "staff/add_staff";
         }
-        return "1login";
+        return "login";
     }
 }

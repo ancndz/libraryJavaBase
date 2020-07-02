@@ -1,36 +1,108 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.springframework.org/security/tags"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/security/tags ">
 <head>
-    <meta charset="UTF-8">
+	<meta charset="utf-8" />
     <title>Books</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
+    <!-- Style -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+
+   <!-- Fonts and icons -->
+
+
+
+
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <link th:href="@{/css/header.css}" rel="stylesheet" />
+
+    <link th:href="@{/css/fresh-bootstrap-table.css}" rel="stylesheet" />
+
+	<link href="assets/css/fresh-bootstrap-table.css" rel="stylesheet" />
+
+    <style>
+
+
+    </style>
+
+
 </head>
+
 <body>
-<div th:insert="fragments/header :: header"></div>
+
+<!--  TEST   -->
+
+
+
+<div class="site-wrapper">
+
+    <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+            <div class="masthead clearfix">
+
+                <div th:insert="fragments/header :: header"></div>
+            </div>
+
+
+
+
+
+
+  <!-- контейнер <header>
+
+  </header>
+
+  <div class="wrapper">
+
+  <div class="container">
+
+    <div class="row">-->
+
+
+        <div class="col-md-8 col-md-offset-2 mytable"> <!-- размер по таблице -->
+			<p class="mycolor">Books are rented from <span th:text="${books.get(0).library.name} + ' по адресу ' + ${books.get(0).library.address}"></span>from the shelf under the letter "<span th:text="${letter}"></span>"</p>
+            
+        <div class="description">
+          <h2>Users</h2>
+        </div>
+
+  
+      <div class="fresh-table toolbar-color-blue">
+  <!--
+    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+    Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+  -->
+
+				
+  
 <!--/*@thymesVar id="bookList" type="java.util.List"*/-->
 <!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
-<div th:switch="${books}" align="center">
-    <h2 th:case="null">No books found!</h2>
-    <div th:case="*">
-        <h3>Книги на руках из <span th:text="${books.get(0).library.name} + ' по адресу ' + ${books.get(0).library.address}"></span>
-         с полки под буквой "<span th:text="${letter}"></span>"</h3>
-        <table border="1" cellpadding="5">
-            <thead>
-            <tr>
-                <th sec:authorize="hasRole('ADMIN')">Id</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Year</th>
-                <th>Edition</th>
-                <th>Edition num</th>
-                <th>Genre</th>
-                <th>Count available</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="book : ${books}">
+<div th:switch="${books}">
+  <div th:case="*">
+	<!--<p th:case="null">No users found!</a></p>-->
+	<!--<h1 class="h3 mb-3 font-weight-normal"><span th:text="${listName}"></span></h1>-->
+	
+  <table id="fresh-table" class="table table-hover">
+    <thead>
+		
+		
+      <th data-field="title" data-sortable="true">Title</th>
+      <th data-field="author" data-sortable="true">Author</th>
+      <th data-field="year" data-sortable="true">Year</th>
+      <th data-field="edition" data-sortable="true">Edition</th>
+	  <th data-field="edition num" data-sortable="true">Edition num</th>
+      <th data-field="genre" data-sortable="true">Genre</th>
+	  <th data-field="count available" data-sortable="true">Count available</th>
+    </thead>
+    <tbody>
+      <tr>
+	  <tr th:each="book : ${books}">
                 <td sec:authorize="hasRole('ADMIN')" th:text="${book.id}"></td>
                 <td th:text="${book.name}"></td>
                 <td th:text="${book.author}"></td>
@@ -39,12 +111,94 @@
                 <td th:text="${book.editionNum}"></td>
                 <td th:text="${book.genre}"></td>
                 <td th:text="${book.count}"></td>
-            </tr>
-            </tbody>
-            <br>
-        </table>
+      </tr>
+        </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+
+
+      </div> <!-- test -->
+    </div>
+  </div>
+</div>
+
+<!-- TEST   -->
+            </div>
+        </div>
     </div>
 </div>
-<div th:insert="fragments/header :: login"></div>
+
+
+<!-- Javascript -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table/dist/bootstrap-table.min.js"></script>
+
+  <script type="text/javascript">
+      var $table = $('#fresh-table')
+      var $addUser = $('#addUser')
+      /*
+        window.operateEvents = {
+
+
+          'click .delete': function (e, value, row, index) {
+            th:href="@{/users/edit(id=${user.id})}"
+          },
+          'click .edit': function (e, value, row, index) {
+            alert('You click edit icon, row: ' + JSON.stringify(row))
+            console.log(value, row, index)
+          },
+          'click .remove': function (e, value, row, index) {
+            $table.bootstrapTable('remove', {
+              field: 'id',
+              values: [row.id]
+            })
+          }
+        }
+
+        function operateFormatter(value, row, index) {
+          return [
+            '<a rel="tooltip" title="Delete" class="table-action delete" th:href="@{/users/delete(id=${user.id})}" title="Delete">',
+                '<i class="glyphicon glyphicon-remove"></i>'
+                ,
+              '</a>',
+              '<a rel="tooltip" title="Edit" class="table-action edit" th:href="@{/users/edit(id=${user.id})}" title="Edit">',
+                '<i class="fa fa-edit"></i>',
+              '</a>',
+          ].join('')
+        }
+      */
+      $(function () {
+          $table.bootstrapTable({
+              classes: 'table table-hover table-striped',
+              toolbar: '.toolbar',
+
+              search: true,
+              showRefresh: true,
+              showToggle: true,
+              showColumns: true,
+              pagination: true,
+              striped: true,
+              sortable: true,
+              pageSize: 4,
+              pageList: [4, 8, 10, 25, 50, 100],
+
+              formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                  return ''
+              },
+              formatRecordsPerPage: function (pageNumber) {
+                  return pageNumber + ' rows visible'
+              }
+          })
+
+          $addUser.click(function () {
+              th:href="@{/users/new}"
+          })
+      })
+
+</script>
 </body>
 </html>

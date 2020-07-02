@@ -1,40 +1,109 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<!doctype html>
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.springframework.org/security/tags">
-<meta charset="UTF-8">
-<title>Pay Penalty</title>
+<head>
+	<meta charset="utf-8" />
+	<title>Pay Penalty</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
+    <!-- Style -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+   <!-- Fonts and icons -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link th:href="@{/css/fresh-bootstrap-table.css}" rel="stylesheet" />
 </head>
+
 <body>
-<div th:insert="fragments/header :: header"></div>
-<div align="center">
+
+<div class="site-wrapper">
+	<div class="site-wrapper-inner">
+		<div class="cover-container">
+			<div class="masthead clearfix">
+					<div th:insert="fragments/header :: header"></div>
+			</div>
+
+			<div class="col-md-8 col-md-offset-2 mytable"> <!-- размер по таблице -->
+				
+		  <div class="fresh-table toolbar-color-blue">
+	  <!--/staff/new
+		Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+		Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+	  -->
 <form action="#" th:action="@{/rents/pay_penalty/save}" method="post" align="center">
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th sec:authorize="hasRole('ADMIN')">Id</th>
-            <th>Reason</th>
-            <th>Date</th>
-            <th>Amount Remaining</th>
-            <th>Amount to pay</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td th:text="${penalty.id}" sec:authorize="hasRole('ADMIN')"></td>
-            <td th:text="${penalty.reason}"></td>
-            <td th:text="${penalty.date}"></td>
-            <td th:text="${penalty.amount} - ${penalty.completeAmount}"></td>
-            <td>
-                <input type="number" th:name="pay" placeholder="Amount to pay">
-                <input readonly hidden type="number" th:name="id" th:value="${penalty.id}">
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <br>
-    <input type="submit" value="Pay" onclick="alert('Подтвердите платеж:')">
-</form>
+	<table id="fresh-table" class="table table-hover">
+		<thead>
+		<th sec:authorize="hasRole('ADMIN')" data-field="id" data-sortable="true">Id</th>
+		  
+		  <th data-field="reason" data-sortable="true">Reason</th>
+		  <th data-field="date" data-sortable="true">Date</th>
+		  <th data-field="amount remaining" data-sortable="true">Amount Remaining</th>
+		  <th data-field="amount to pay" data-sortable="true">Amount to pay</th>
+		</thead>
+		<tbody>
+		  <tr>
+					<td th:text="${penalty.id}" sec:authorize="hasRole('ADMIN')"></td>
+					<td th:text="${penalty.reason}"></td>
+					<td th:text="${penalty.date}"></td>
+					<td th:text="${penalty.amount} - ${penalty.completeAmount}"></td>
+					<td>
+						<input type="number" th:name="pay" placeholder="Amount to pay">
+						<input readonly hidden type="number" th:name="id" th:value="${penalty.id}">
+					</td>
+
+		  </tr>
+		</tbody>
+	  </table>
+
+	  <input type="submit" class="btn btn-light myclass" value="Pay" onclick="alert('Подтвердите платеж:')">
+	  </form>
+	</div>
 </div>
-<div th:insert="fragments/header :: login"></div>
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+<!-- Javascript -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table/dist/bootstrap-table.min.js"></script>
+
+  <script type="text/javascript">
+      var $table = $('#fresh-table')
+      var $addUser = $('#addUser')
+
+      $(function () {
+          $table.bootstrapTable({
+              classes: 'table table-hover table-striped',
+              toolbar: '.toolbar',
+
+              search: true,
+              showRefresh: true,
+              showToggle: true,
+              showColumns: true,
+              pagination: true,
+              striped: true,
+              sortable: true,
+              pageSize: 4,
+              pageList: [4, 8, 10, 25, 50, 100],
+
+              formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                  return ''
+              },
+              formatRecordsPerPage: function (pageNumber) {
+                  return pageNumber + ' rows visible'
+              }
+          })
+
+          $addUser.click(function () {
+              th:href="@{/users/new}"
+          })
+      })
+
+</script>
 </body>
 </html>

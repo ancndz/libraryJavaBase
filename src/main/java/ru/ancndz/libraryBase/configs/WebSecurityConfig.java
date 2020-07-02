@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Для пользователей
                 .antMatchers("/books/").hasRole("USER")
                 //Доступ разрешен всем пользователей
-                .antMatchers("/books/", "/libs/", "/books/filter").permitAll()
+                .antMatchers("/books/", "/libs/", "/books/filter","/test/index","/fragments/header").permitAll()
                 .antMatchers("/registration/**").permitAll()
                 .antMatchers("/registration/save/**").permitAll()
                 .antMatchers("/css/**", "/js/**", "/images/**").permitAll()

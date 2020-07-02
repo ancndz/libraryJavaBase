@@ -4,6 +4,7 @@
       xmlns:sec="http://www.springframework.org/security/tags">
 <head>
 	<meta charset="utf-8" />
+    <title>Users</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
     <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
@@ -65,7 +66,7 @@
 
         <div class="col-md-8 col-md-offset-2 mytable"> <!-- размер по таблице -->
 
-            <p class="mycolor">Show readers of this book:</p>
+            <p class="mycolor" style="text-align: left">Show readers of this book:</p>
 			<p> <form th:action="@{/users/reading_now}" method="get">
                 <div class="col-md-4 col-md-4 myclass">
                     <input type="text" name="author" class="form-control myclass" placeholder="Author">

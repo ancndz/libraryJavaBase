@@ -31,18 +31,18 @@ xmlns:th="http://www.thymeleaf.org">
 				
 		  </div>
 			<!--href="change_password.html"-->
-			<a type="button"  th:href="@{/users/change_password}"    class="btn btn-default btn-lg btn-block">
+			<a type="button"  th:href="@{/users/save}"    class="btn btn-default btn-lg btn-block">
 			  <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
 			</a>
 			  </br>
 			  
 			<!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
-        <form th:action="@{/users/save}" th:object="${user}" method="post"> <!--action="#"-->
-		
+        <form action="#" th:action="@{/registration/save}" th:object="${userLibrary}" method="post"> <!--action="#"  post-->
+
 		<!-- readonly type + placeholder -->
 			<div class="form-group">
 				 <label for="id">ID</label>
-				<input readonly type="number" th:field="*{id}" id="id" placeholder="ID" class="form-control">
+				<input readonly th:field="*{id}" id="id" placeholder="ID" class="form-control"> <!-- del readonly type="number" type="text"-->
 			</div>
 
 		  <div class="form-group">
@@ -103,10 +103,11 @@ xmlns:th="http://www.thymeleaf.org">
 			<!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 			<input type="text" hidden th:field="*{userExtras.dateReg}">
 			<input type="text" hidden th:field="*{userExtras.id}">
+			<input type="password" hidden th:field="*{password}" placeholder="code">
+			<input type="password" hidden th:field="*{passwordConfirm}" placeholder="code">
 			</br>
-
-
-		  <button class="btn btn-lg btn-primary btn-block" type="submit" >Save</button> <!--value-->
+			<input type="submit" value="Save User" class="btn btn-lg btn-primary btn-block" align="center">
+		  <!-- <button class="btn btn-lg btn-primary btn-block" type="submit" >Save</button> -->
 		</form>
 	</div>
 	<script type="text/javascript"></script>

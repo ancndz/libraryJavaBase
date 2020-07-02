@@ -87,8 +87,8 @@ xmlns:th="http://www.thymeleaf.org">
 				<label for="extra">Extra</label>
 				<input type="text" th:field="*{extra}" id="extra" placeholder="Enter Extra" class="form-control" required>
 			</div>
-			
-			<div th:field="*{library_id}" id="library_id" class="form-group" >
+			<!--/*@thymesVar id="library" type="ru.ancndz.libraryBase.content.libraryEnvironment.Library"*/-->
+				<div th:field="*{library_id}" id="library_id" class="form-group" >
 					<label for="exampleFormControlSelect1">Library</label>
 					<select class="form-control" id="exampleFormControlSelect1">
 					  <option th:each="library : ${libraries}"
