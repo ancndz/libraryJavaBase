@@ -101,7 +101,8 @@
                             </div>
                         </td>
                         <td th:text="${#temporals.format(penalty.date, 'dd-MM-yyyy HH:mm')}"></td>
-                        <td sec:authorize="hasRole('ADMIN')" th:text="${penalty.payDate}"></td>
+                        <td sec:authorize="hasRole('ADMIN')"
+                            th:text="${#temporals.format(penalty.payDate, 'dd-MM-yyyy HH:mm')}"></td>
                         <td>
                             <div th:if="${penalty.amount} - ${penalty.completeAmount} > 0">
                                 <span th:text="${penalty.amount} - ${penalty.completeAmount}"></span>
