@@ -28,6 +28,7 @@ public class JobController {
     public String home(Model model) {
         List<Job> jobList = this.jobService.jobListBusiness();
         if (!jobList.isEmpty()) {
+            model.addAttribute("listName", "All Jobs");
             model.addAttribute("jobs", jobList);
         }
         return "jobs/jobs";
@@ -49,9 +50,7 @@ public class JobController {
 
     @GetMapping("/edit")
     public String editBookForm(@RequestParam Integer id, Model model) {
-        //ModelAndView mav = new ModelAndView("edit_client");
         Job job = jobService.get(id);
-        //mav.addObject("client", client);
         model.addAttribute("job", job);
         return "jobs/edit_job";
     }

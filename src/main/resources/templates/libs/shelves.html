@@ -10,48 +10,65 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<!--/*@thymesVar id="bookList" type="java.util.List"*/-->
-<!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
-<div th:switch="${shelf}" align="center">
-    <h2 th:case="null">No books found!</h2>
-    <div th:case="*">
-        <table border="1" cellpadding="5" th:each="letter : ${letters}">
-            <thead>
-            <tr>
-                <th colspan="8">
-                    <H3>Полка под буквой "<span th:text="${letter}"></span>"</H3>
-                    <a th:href="@{/rents/active(lib_id=${lib_id},letter=${letter})}">Rend</a>
-                </th>
-            </tr>
-            <tr>
-                <th sec:authorize="hasRole('ADMIN')">Id</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Year</th>
-                <th>Edition</th>
-                <th>Edition num</th>
-                <th>Genre</th>
-                <th>Count</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="book : ${shelf.get(letter)}">
-                <td sec:authorize="hasRole('ADMIN')" th:text="${book.id}"></td>
-                <td th:text="${book.name}"></td>
-                <td th:text="${book.author}"></td>
-                <td th:text="${book.pubYear}"></td>
-                <td th:text="${book.edition}"></td>
-                <td th:text="${book.editionNum}"></td>
-                <td th:text="${book.genre}"></td>
-                <td th:text="${book.count}"></td>
-            </tr>
-            </tbody>
-            <br>
-        </table>
+<body class="d-flex flex-column h-100">
+<div th:insert="fragments/header :: header" class="mb-5"></div>
+<main role="main" class="flex-shrink-0">
+    <div class="container mt-5">
+        <!--/*@thymesVar id="bookList" type="java.util.List"*/-->
+        <!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
+        <div th:switch="${shelf}" align="center">
+            <h2 th:case="null">No books found!</h2>
+            <div th:case="*">
+                <div class="card" th:each="letter : ${letters}">
+                    <h3 class="card-header mt-3">
+                        Полка под буквой "<span th:text="${letter}"></span>"
+                    </h3>
+                    <table class="table table-striped mb-0">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th colspan="8">
+                                <a th:href="@{/rents/active(lib_id=${lib_id},letter=${letter})}">Rend</a>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th scope="col" sec:authorize="hasRole('ADMIN')">Id</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">Edition</th>
+                            <th scope="col">Edition num</th>
+                            <th scope="col">Genre</th>
+                            <th scope="col">Count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="book : ${shelf.get(letter)}">
+                            <td sec:authorize="hasRole('ADMIN')" th:text="${book.id}"></td>
+                            <td th:text="${book.name}"></td>
+                            <td th:text="${book.author}"></td>
+                            <td th:text="${book.pubYear}"></td>
+                            <td th:text="${book.edition}"></td>
+                            <td th:text="${book.editionNum}"></td>
+                            <td th:text="${book.genre}"></td>
+                            <td th:text="${book.count}"></td>
+                        </tr>
+                        </tbody>
+                        <br>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</main>
 <footer th:replace="fragments/footer :: footer"></footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 </html>
