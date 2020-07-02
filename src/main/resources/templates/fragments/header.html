@@ -11,30 +11,10 @@ xmlns:th="http://www.thymeleaf.org"
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-	<link th:href="@{/css/cover1.css}" rel="stylesheet" />
+	<!--<link th:href="@{/css/cover1.css}" rel="stylesheet" /> -->
+	<link th:href="@{/css/header.css}" rel="stylesheet" />
 	<link href="D:/Users/Ksy/IdeaProjects/libraryJavaBase/src/main/resources/static/css/cover1.css" rel="stylesheet">
-<style type="text/css">
-	body{
-		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-		font-size: 14px;
 
-	}
-
-
-	.btn.btn-outline {
-			background-color: rgb(111, 84, 153);
-			border-color: rgb(111, 84, 153);
-			color: rgb(255, 255, 255);
-			padding: 6px 12px;
-			border-radius: 30px;
-	}
-
-	.mynav{
-		margin-right: -15px;
-	}
-
-
-    </style>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </head>
@@ -58,10 +38,10 @@ xmlns:th="http://www.thymeleaf.org"
 					<li><a sec:authorize="isAuthenticated()" th:href="@{/rents/}">Rents&Penalties </a></li>
 					<li><a sec:authorize="isAnonymous()" th:href="@{/registration}">Register</a></li>
 					<li><a sec:authorize="isAnonymous()" th:href="@{/registration/staff}">Register staff</a></li>
-					<li><a sec:authorize="isAnonymous()" class="btn btn-default btn-outline mybtn" th:href="@{/login}">Login</a></li>
+					<li><a sec:authorize="isAnonymous()" class="btn btn-default btn-outline mybtn1" th:href="@{/login}">Login</a></li>
 					<li>
 						<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-							<button class="btn btn-default btn-outline  mybtn" type="submit" >Sign out</button>
+							<button class="btn btn-default btn-outline  mybtn1" type="submit" >Sign out</button>
 						</form>
 					
 					</li>					
