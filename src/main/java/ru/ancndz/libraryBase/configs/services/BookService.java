@@ -21,7 +21,7 @@ public class BookService {
 
     public void save(Book book) {
         Book bookInStore = this.bookRepository.findByNameAndAuthorAndPubYearAndLibrary_Id(
-                book.getName(), book.getAuthor(), book.getPubYear(), book.getLibraryId());
+                book.getName(), book.getAuthor(), book.getPubYear(), book.getLibrary_id());
         if (bookInStore != null) {
             if (bookInStore.getId() != book.getId()) {
                 bookInStore.setCount(bookInStore.getCount() + book.getCount());

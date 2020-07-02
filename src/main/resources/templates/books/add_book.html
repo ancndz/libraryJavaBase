@@ -70,12 +70,12 @@
             </div>
             <div class="form-group">
                 <label for="extra">Extra</label>
-                <input type="text" th:field="*{pubYear}" class="form-control" id="extra"
+                <input type="text" th:field="*{extra}" class="form-control" id="extra"
                        placeholder="Enter book extra"/>
             </div>
             <div class="form-group">
                 <label for="lib">Library</label>
-                <select th:field="*{libraryId}" id="lib" class="custom-select-sm" required>
+                <select th:field="*{library_id}" id="lib" class="custom-select-sm" required>
                     <option th:each="lib : ${libraries}"
                             th:value="${lib.id}"
                             th:utext="${lib.address + ', ' + lib.name}"></option>

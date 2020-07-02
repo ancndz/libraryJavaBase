@@ -63,7 +63,7 @@
         </thead>
         <tbody>
         <td>
-            <select th:field="*{libraryId}" id="libraryId">
+            <select th:field="*{library_id}" id="libraryId">
                 <option th:each="library : ${libraries}"
                         th:value="${library.id}"
                         th:utext="${library.name +', '+ library.address}"></option>

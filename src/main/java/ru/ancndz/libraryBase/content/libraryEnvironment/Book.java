@@ -58,7 +58,7 @@ public class Book {
     private Library library;
 
     @Transient
-    private int libraryId;
+    private int library_id;
 
     public Book() {
     }
@@ -152,12 +152,12 @@ public class Book {
         this.library = library;
     }
 
-    public int getLibraryId() {
-        return libraryId;
+    public int getLibrary_id() {
+        return library_id;
     }
 
-    public void setLibraryId(int libraryId) {
-        this.libraryId = libraryId;
+    public void setLibrary_id(int library_id) {
+        this.library_id = library_id;
     }
 
     @Override

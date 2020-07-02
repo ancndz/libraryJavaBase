@@ -61,8 +61,8 @@ class BookServiceTest {
         book.setEditionNum((String)bookJson.get("edition_num"));
         book.setGenre((String)bookJson.get("genre"));
         book.setCount(((Long) bookJson.get("count")).intValue());
-        book.setExtra((String)bookJson.get("extra"));
-        book.setLibraryId(((Long) bookJson.get("library_id")).intValue());
+        book.setExtra((String) bookJson.get("extra"));
+        book.setLibrary_id(((Long) bookJson.get("library_id")).intValue());
 
         BookServiceTest.bookList.add(book);
     }
