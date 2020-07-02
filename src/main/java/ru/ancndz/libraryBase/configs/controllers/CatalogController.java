@@ -34,6 +34,20 @@ public class CatalogController {
         List<Book> bookList = this.bookService.booksList();
         if (!bookList.isEmpty()) {
             model.addAttribute("bookList", bookList);
+            model.addAttribute("listName", "All books");
+        }
+        return "books/catalog";
+    }
+
+    @GetMapping("/lib")
+    public String viewCatalog(@RequestParam(value = "lib_id") String id, Model model) {
+        List<Book> bookList = this.bookService.booksByLibrary(Integer.parseInt(id));
+        Library library = this.libraryService.get(Integer.parseInt(id));
+        if (!bookList.isEmpty()) {
+            model.addAttribute("bookList", bookList);
+            if (library != null) {
+                model.addAttribute("listName", "Books in " + library.getAddress() + ", " + library.getName());
+            }
         }
         return "books/catalog";
     }
@@ -83,7 +97,7 @@ public class CatalogController {
             model.addAttribute("error", error);
             return "books/add_book";
         }
-        book.setLibrary(this.libraryService.get(book.getLibraryId()));
+        book.setLibrary(this.libraryService.get(book.getLibrary_id()));
         this.bookService.save(book);
         //model.addAttribute("bookList", bookService.booksList());
         return "redirect:/books/";

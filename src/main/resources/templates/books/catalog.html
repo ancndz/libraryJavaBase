@@ -6,88 +6,120 @@
 <head>
     <meta charset="UTF-8">
     <title>Books</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<!--/*@thymesVar id="bookList" type="java.util.List"*/-->
-<!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
-<div th:switch="${bookList}" align="center">
-    <h2 th:case="null">No books found!</h2>
-    <div th:case="*">
-        <br>
-        <form action="#" th:action="@{/books/filter}" method="get" align="center">
-            <table border="1" cellpadding="5" align="center">
-                <thead>
-                <tr>
-                    <th><label>Search:</label></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr><td><input type="text" name="author" placeholder="Author"></td></tr>
-                <tr><td><input type="text" name="name" placeholder="Title"></td></tr>
-                <tr><td><input type="text" name="genre" placeholder="Genre"></td></tr>
-                <tr><td><input type="text" name="edition" placeholder="Edition"></td></tr>
-                <tr><td><input type="number" name="year" placeholder="Year"></td></tr>
-                </tbody>
-            </table>
-            <br>
-            <input type="submit" value="Search">
-        </form>
-        <br>
-        <table border="1" cellpadding="5">
-            <thead>
-            <tr>
-                <th sec:authorize="hasRole('ADMIN')">Id</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Year</th>
-                <th>Edition</th>
-                <th>Edition num</th>
-                <th>Genre</th>
-                <th>Count</th>
-                <th>Where?</th>
-                <th sec:authorize="isAuthenticated()">Action</th>
-                <th sec:authorize="hasRole('ADMIN')">User action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="book : ${bookList}">
-                <td sec:authorize="hasRole('ADMIN')" th:text="${book.id}"></td>
-                <td th:text="${book.name}"></td>
-                <td th:text="${book.author}"></td>
-                <td th:text="${book.pubYear}"></td>
-                <td th:text="${book.edition}"></td>
-                <td th:text="${book.editionNum}"></td>
-                <td th:text="${book.genre}"></td>
-                <td th:text="${book.count}"></td>
-                <td th:text="${book.library.address + ', ' + book.library.name}"></td>
-                <td sec:authorize="hasRole('ADMIN')">
-                    <form action="#" th:action="@{/books/edit}"  method="get" align="center">
-                        <input readonly type="hidden" th:value="${book.id}" name="id">
-                        <input type="submit" value="Edit">
+<body class="d-flex flex-column h-100">
+<div th:insert="fragments/header :: header" class="mb-5"></div>
+<main role="main" class="flex-shrink-0">
+    <div class="container mt-5" style="min-width: 1400px">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="card">
+                    <form action="#" th:action="@{/books/filter}" method="get" align="center">
+                        <h3 class="card-header">Search:</h3>
+                        <table class="table table-striped mb-0">
+                            <tbody>
+                            <tr>
+                                <td><input type="text" name="author" placeholder="Author"/></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="name" placeholder="Title"/></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="genre" placeholder="Genre"/></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="edition" placeholder="Edition"/></td>
+                            </tr>
+                            <tr>
+                                <td><input type="number" name="year" placeholder="Year"/></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <input class="btn btn-dark my-2" type="submit" value="Search">
                     </form>
-                    <form action="#" th:action="@{/books/delete}"  method="post" align="center">
-                        <input readonly hidden type="text" th:value="${book.id}" name="id">
-                        <input type="submit" value="Delete">
-                    </form>
-                </td>
-                <td sec:authorize="hasRole('USER')">
-                    <form action="#" th:action="@{/rents/new_order}"  method="post" align="center">
-                        <input readonly hidden type="text" th:value="${book.id}" name="book_id">
-                        <input type="submit" value="Rent">
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <!--/*@thymesVar id="bookList" type="java.util.List"*/-->
+                <!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
+                <div th:switch="${bookList}">
+                    <div th:case="null" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        No books found!
+                        <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>-->
+                    </div>
+                    <div th:case="*" class="card">
+                        <h3 class="card-header mt-3"><span th:text="${listName}"></span></h3>
+                        <table class="table table-striped mb-0 w-auto" style="table-layout: fixed;">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" sec:authorize="hasRole('ADMIN')">Id</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Author</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Edition</th>
+                                <th scope="col">Edition num</th>
+                                <th scope="col">Genre</th>
+                                <th scope="col">Count</th>
+                                <th scope="col">Where?</th>
+                                <th scope="col" sec:authorize="isAuthenticated()">Action</th>
+                                <th scope="col" sec:authorize="hasRole('ADMIN')">User action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="book : ${bookList}">
+                                <td sec:authorize="hasRole('ADMIN')" th:text="${book.id}"></td>
+                                <td th:text="${book.name}"></td>
+                                <td th:text="${book.author}"></td>
+                                <td th:text="${book.pubYear}"></td>
+                                <td th:text="${book.edition}"></td>
+                                <td th:text="${book.editionNum}"></td>
+                                <td th:text="${book.genre}"></td>
+                                <td th:text="${book.count}"></td>
+                                <td th:text="${book.library.address + ', ' + book.library.name}"></td>
+                                <td sec:authorize="hasRole('ADMIN')">
+                                    <form action="#" th:action="@{/books/edit}" method="get"
+                                          style="display: inline-block;">
+                                        <input readonly type="hidden" th:value="${book.id}" name="id"/>
+                                        <input type="submit" class="btn btn-sm btn-secondary mb-1 ml-2" value="Edit">
+                                    </form>
+                                    <form action="#" th:action="@{/books/delete}" method="post"
+                                          style="display: inline-block;">
+                                        <input readonly hidden type="text" th:value="${book.id}" name="id"/>
+                                        <input type="submit" class="btn btn-sm btn-danger" value="Delete">
+                                    </form>
+                                </td>
+                                <td sec:authorize="hasRole('USER')">
+                                    <form action="#" th:action="@{/rents/new_order}" method="post">
+                                        <input readonly hidden type="text" th:value="${book.id}" name="book_id">
+                                        <input type="submit" class="btn btn-primary" value="Rent">
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div sec:authorize="hasRole('ADMIN')" class="card-body mt-n3">
+                        <a th:href="@{/books/new}" class="btn btn-primary">Add Book</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <br>
-    <div sec:authorize="hasRole('ADMIN')">
-        <a th:href="@{/books/new}">
-            <span>Add Book</span>
-        </a>
-    </div>
-</div>
-<div th:insert="fragments/header :: login"></div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 </html>

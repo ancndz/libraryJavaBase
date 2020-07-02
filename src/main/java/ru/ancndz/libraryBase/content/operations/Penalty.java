@@ -2,8 +2,7 @@ package ru.ancndz.libraryBase.content.operations;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -22,18 +21,17 @@ public class Penalty {
     private String reason;
 
     @Column
-    @PastOrPresent
     private LocalDateTime date;
 
     @Column
     private LocalDateTime payDate;
 
     @Column
-    @Positive
+    @PositiveOrZero
     private int amount;
 
     @Column
-    @Positive
+    @PositiveOrZero
     private int completeAmount;
 
     @ManyToOne(fetch = FetchType.LAZY)

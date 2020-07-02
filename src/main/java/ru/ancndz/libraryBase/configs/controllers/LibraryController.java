@@ -37,6 +37,7 @@ public class LibraryController {
         List<Library> libraryList = this.libraryService.libraryListBusiness();
         if (!libraryList.isEmpty()) {
             model.addAttribute("libraries", libraryList);
+            model.addAttribute("listName", "All libs");
         }
         return "libs/libraries";
     }
@@ -47,12 +48,11 @@ public class LibraryController {
     }
 
     @PostMapping("/save")
-    public String saveLib(@Valid Library library, BindingResult result, Model model) {
+    public String saveLib(@Valid Library library, BindingResult result) {
         if (result.hasErrors()) {
             return "libs/add_lib";
         }
         this.libraryService.save(library);
-        model.addAttribute("libraries", this.libraryService.libraryList());
         return "redirect:/libs/";
     }
 

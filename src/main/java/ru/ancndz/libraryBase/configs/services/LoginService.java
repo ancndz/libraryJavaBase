@@ -6,16 +6,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.ancndz.libraryBase.configs.repos.StaffRepository;
 import ru.ancndz.libraryBase.configs.repos.UserRepository;
 import ru.ancndz.libraryBase.content.entity.LibraryUser;
+import ru.ancndz.libraryBase.content.entity.Staff;
 
 @Service
 public class LoginService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final StaffRepository staffRepository;
 
     @Autowired
-    public LoginService(UserRepository userRepository) {
+    public LoginService(UserRepository userRepository, StaffRepository staffRepository) {
         this.userRepository = userRepository;
+        this.staffRepository = staffRepository;
     }
 
     /** by email actualy **/
@@ -27,6 +31,10 @@ public class LoginService implements UserDetailsService {
             return libraryUser;
         }*/
         return this.userRepository.findByEmail(s);
+    }
+
+    public Staff loadWebStaff() {
+        return staffRepository.getOne(2);
     }
 
     public LibraryUser loadByAuth(Authentication authentication) throws UsernameNotFoundException {

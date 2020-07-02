@@ -4,29 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+    <meta name="theme-color" content="#563d7c">
+    <link href="/css/signin.css" data-th-href="@{/css/signin.css}" rel="stylesheet">
 </head>
-<body>
-<div th:insert="fragments/header :: header"></div>
+<body class="text-center">
+<div th:insert="fragments/header :: header(needLogin=false)" class="mb-5"></div>
 <!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.entity.Staff"*/-->
-<div align="center">
+<div class="form-signin">
     <form method="POST" th:action="@{/login}">
-        <table border="1" cellpadding="5" align="center">
-            <thead>
-            <tr>
-                <th><label for="email">Email</label></th>
-                <th><label for="pass">Password</label></th>
-            </tr>
-            </thead>
-            <tbody>
-            <td><input type="text" th:name="username" id="email" placeholder="Email"></td>
-            <td><input type="password" th:name="password" id="pass" placeholder="Password"></td>
-            </tbody>
-        </table>
-        <br>
-        <input type="submit" value="Login">
-        <h3 align="center"><a th:href="@{/registration}">Register</a></h3>
-        <h3 align="center"><a th:href="@{/registration/staff}">Register (staff only)</a></h3>
+        <!--<h1 class="h3 mb-3 font-weight-normal">Sign in</h1>-->
+        <label for="email" class="sr-only">Email</label>
+        <input class="form-control" type="email" th:name="username" id="email" placeholder="Email" required autofocus/>
+        <label for="pass" class="sr-only">Password</label>
+        <input class="form-control" type="password" th:name="password" id="pass" placeholder="Password"/>
+        <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Sign in</button>
+    </form>
+    <form th:action="@{/registration}" method="get">
+        <input class="btn btn-outline-secondary" type="submit" value="Register"/>
     </form>
 </div>
+<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

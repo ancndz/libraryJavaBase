@@ -3,47 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>Create User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<h3 align="center">Please, fill Your profile:</h3>
-<div th:switch="${errorText}">
-    <p th:case="null"></p>
-    <p th:case="*" th:text="${errorText}"></p></div>
-<!--/*@thymesVar id="libraryUser" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
-<form action="#" th:action="@{/registration/save}" th:object="${libraryUser}" method="post" align="center">
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="firstName">First name</label></th>
-            <th><label for="lastName">Last name</label></th>
-            <th><label for="email">email</label></th>
-            <th><label for="status">status</label></th>
-        </tr>
-        </thead>
-        <tbody>
-            <td><input type="text" th:field="*{userExtras.firstName}" id="firstName" placeholder="First Name"></td>
-            <td><input type="text" th:field="*{userExtras.lastName}" id="lastName" placeholder="Last Name"></td>
-            <td><input type="text" th:field="*{email}" id="email" placeholder="email"></td>
-            <td><input type="text" th:field="*{userExtras.status}" id="status" placeholder="status"></td>
-        </tbody>
-    </table>
-    <br>
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="code">Password</label></th>
-            <th><label for="codeconf">Confirm Password</label></th>
-        </tr>
-        </thead>
-        <tbody>
-        <td><input type="password" th:field="*{password}" id="code" placeholder="Code"></td>
-        <td><input type="password" th:field="*{passwordConfirm}" id="codeconf" placeholder="Code"></td>
-        </tbody>
-    </table>
-    <br>
-    <input type="submit" value="Create User">
-</form>
-<div th:insert="fragments/header :: login"></div>
+<body class="d-flex flex-column h-100">
+<div th:insert="fragments/header :: header" class="mb-5"></div>
+<main role="main" class="flex-shrink-0">
+    <div th:switch="${errorText}" class="text-center mt-5 alert-danger">
+        <p th:case="null"></p>
+        <p th:case="*" th:text="${errorText}"></p>
+    </div>
+    <div class="container">
+        <form novalidate action="#" th:action="@{/registration/save}" th:object="${libraryUser}" method="post"
+              onsubmit="return validatePassword()">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" th:field="*{userExtras.firstName}" class="form-control" id="firstName"
+                       placeholder="Enter your first name" required/>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" th:field="*{userExtras.lastName}" class="form-control" id="lastName"
+                       placeholder="Enter your last name" required/>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" th:field="*{email}" class="form-control" id="email" aria-describedby="emailHelp"
+                       placeholder="Enter email" required/>
+                <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select th:field="*{userExtras.status}" class="custom-select" id="status" required>
+                    <option value="none" selected>Choose...</option>
+                    <option value="Student">Student</option>
+                    <option value="Artist">Artist</option>
+                    <option value="Scientist">Scientist</option>
+                    <option value="Just a person">Just a person</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="pass">Password</label>
+                <input th:field="*{password}" type="password" class="form-control" id="pass" placeholder="Password"
+                       required/>
+            </div>
+            <div class="form-group">
+                <label for="passConf">Password confirm</label>
+                <input type="password" class="form-control" id="passConf" placeholder="Password again" required/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+<script src="/js/passCheck.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 </html>

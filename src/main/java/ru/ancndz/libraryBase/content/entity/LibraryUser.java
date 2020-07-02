@@ -19,10 +19,10 @@ public class LibraryUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String password = "1111";
+    private String password;
 
     @Transient
-    private String passwordConfirm = "1111";
+    private String passwordConfirm;
 
     @Email
     private String email;
@@ -52,12 +52,6 @@ public class LibraryUser implements UserDetails {
         this.roles = roles;
     }
 
-    /**
-     * @return true if equals
-     */
-    public boolean passwordsCheck() {
-        return this.password.equals(this.passwordConfirm);
-    }
 
     public int getId() {
         return id;
@@ -116,6 +110,18 @@ public class LibraryUser implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(getPassword(), email);
+    }
+
+    @Override
+    public String toString() {
+        return "LibraryUser{" +
+                "id=" + id +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", userExtras=" + userExtras +
+                ", userExtrasId=" + userExtrasId +
+                ", roles=" + roles +
+                '}';
     }
 
     @Override

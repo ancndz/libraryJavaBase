@@ -5,8 +5,6 @@ import ru.ancndz.libraryBase.content.entity.Staff;
 import ru.ancndz.libraryBase.content.libraryEnvironment.Book;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -27,11 +25,9 @@ public class Rent {
      * дата начала аренды
      */
     @Column
-    @PastOrPresent
     private LocalDateTime startDate;
 
     @Column
-    @Future
     private LocalDateTime endDate;
 
     @Column

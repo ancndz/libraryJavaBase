@@ -4,64 +4,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Staff</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<div th:switch="${staffList}" align="center">
-    <h2 th:case="null">No staff found!</h2>
-    <div th:case="*">
-        <table border="1" cellpadding="5">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Number</th>
-                <th>Job</th>
-                <th>Library</th>
-                <th>Actions</th>
-                <th>Works</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="staff : ${staffList}">
-                <td th:text="${staff.id}"></td>
-                <td th:text="${staff.userExtras.firstName} + ' ' + ${staff.userExtras.lastName}"></td>
-                <td th:text="${staff.address}"></td>
-                <td th:text="${staff.number}"></td>
-                <td th:text="${staff.job.name}"></td>
-                <td th:text="${staff.library.address} + ', ' + ${staff.library.name}"></td>
-                <td sec:authorize="hasRole('ADMIN')">
-                    <form action="#" th:action="@{/staff/edit}"  method="get" align="center">
-                        <input readonly type="hidden" th:value="${staff.id}" name="id">
-                        <input type="submit" value="Edit">
-                    </form>
-                    <form action="#" th:action="@{/staff/delete}"  method="post" align="center">
-                        <input readonly hidden type="text" th:value="${staff.id}" name="id">
-                        <input type="submit" value="Delete">
-                    </form>
-                </td>
-                <td>
-                    <form th:action="@{/staff/works}" method="get">
-                        <select name="time">
-                            <option value="week">Неделя</option>
-                            <option value="month">Месяц</option>
-                            <option value="year">Год</option>
-                            <option selected value="minute">Минута</option>
-                        </select>
-                        <input hidden readonly name="id" th:value="${staff.id}">
-                        <input type="submit" value="Показать">
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<body class="d-flex flex-column h-100">
+<div th:insert="fragments/header :: header" class="mb-5"></div>
+<main role="main" class="flex-shrink-0">
+    <div class="container mt-5">
+        <div th:switch="${staffList}">
+            <div th:case="null" class="alert alert-warning alert-dismissible fade show" role="alert">
+                No staff found!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div th:case="*" class="card">
+                <h3 class="card-header">
+                    <!--/*@thymesVar id="listName" type="java.lang.String"*/-->
+                    <span th:text="${listName}"></span>
+                </h3>
+                <table class="table table-striped mb-0">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Number</th>
+                        <th scope="col">Job</th>
+                        <th scope="col">Library</th>
+                        <th scope="col">Actions</th>
+                        <th scope="col">Works</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="staff : ${staffList}">
+                        <td th:text="${staff.id}"></td>
+                        <td th:text="${staff.userExtras.firstName} + ' ' + ${staff.userExtras.lastName}"></td>
+                        <td th:text="${staff.address}"></td>
+                        <td th:text="${staff.number}"></td>
+                        <td th:text="${staff.job.name}"></td>
+                        <td th:text="${staff.library.address} + ', ' + ${staff.library.name}"></td>
+                        <td sec:authorize="hasRole('ADMIN')">
+                            <form action="#" th:action="@{/staff/edit}" method="get" class="mr-1"
+                                  style="display: inline-block;">
+                                <input readonly type="hidden" th:value="${staff.id}" name="id"/>
+                                <button type="submit" class="btn btn-sm btn-secondary">Edit</button>
+                            </form>
+                            <form action="#" th:action="@{/staff/delete}" method="post" style="display: inline-block;">
+                                <input readonly hidden type="text" th:value="${staff.id}" name="id"/>
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/staff/works}" method="get" class="form-inline">
+                                <select name="time" class="custom-select-sm">
+                                    <option value="week">Неделя</option>
+                                    <option value="month">Месяц</option>
+                                    <option value="year">Год</option>
+                                    <option selected value="minute">Минута</option>
+                                </select>
+                                <input hidden readonly name="id" th:value="${staff.id}">
+                                <input type="submit" class="btn btn-sm btn-info ml-1" value="Показать">
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-body mt-n3">
+                <a th:href="@{/registraion/staff}" class="btn btn-primary">Add Staff</a>
+            </div>
+        </div>
     </div>
-    <br>
-    <a th:href="@{/staff/new}">
-        <span>Add Staff</span>
-    </a>
-</div>
-<div th:insert="fragments/header :: login"></div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 </html>

@@ -3,44 +3,83 @@
       xmlns:sec="http://www.springframework.org/security/tags">
 <head>
     <meta charset="UTF-8">
-    <title>Add book</title>
+    <title>New Rent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<!--/*@thymesVar id="rent" type="ru.ancndz.libraryBase.content.operations.Rent"*/-->
-<form action="#" th:action="@{/rents/save}" th:object="${rent}" method="post" align="center">
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="book">Book</label></th>
-            <th><label for="lib">Library</label></th>
-            <th sec:authorize="hasRole('ADMIN')"><label for="libraryUser">User</label></th>
-        </tr>
-        </thead>
-        <tbody>
-        <td>
-            <input type="text" hidden readonly th:field="${rent.book}" id="book">
-            <span th:text="${rent.book.name} + ', ' + ${rent.book.author} + ', ' + ${rent.book.pubYear}"></span>
-        </td>
-        <td>
-            <span th:text="${rent.book.library.address} + ', ' + ${rent.book.library.name}"></span>
-            <input type="text" hidden readonly th:field="${rent.book.library}" id="lib">
-            <input type="text" hidden readonly th:field="${rent.staff}">
+<body class="d-flex flex-column h-100">
+<div th:insert="fragments/header :: header" class="mb-5"></div>
+<main role="main" class="flex-shrink-0">
+    <div class="container mt-5">
+        <div th:switch="${errorText}">
+            <div th:case="null"></div>
+            <div th:case="*" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span th:text="${errorText}"></span>
+            </div>
+        </div>
+        <!--/*@thymesVar id="rent" type="ru.ancndz.libraryBase.content.operations.Rent"*/-->
+        <form action="#" th:action="@{/rents/save}" th:object="${rent}" method="post">
+            <div class="form-group">
+                <label for="book">Book</label>
+                <input type="text" hidden readonly th:field="${rent.book}" class="form-control" id="book"/>
+                <input type="text" class="form-control-plaintext" readonly
+                       th:placeholder="${rent.book.name}">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" readonly class="form-control" id="address"
+                       th:placeholder="${rent.book.library.address}" required/>
+            </div>
+            <div sec:authorize="hasRole('ADMIN')" class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" th:field="${rent.libraryUser.email}" class="form-control" id="email"
+                       aria-describedby="emailHelp"
+                       required/>
+                <input type="text" hidden readonly th:field="${rent.staff}">
+                <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+            </div>
             <input type="text" hidden readonly th:field="${rent.libraryUser}">
-        </td>
-        <td sec:authorize="hasRole('ADMIN')">
-            <span th:text="${rent.libraryUser.email}"></span>
-            <input type="text" th:field="${rent.libraryUser.email}" id="libraryUser">
-        </td>
-        </tbody>
-    </table>
-    <br>
-    <input type="submit" value="Rent Book">
-    <div th:switch="${error}">
-        <p th:case="null"></p>
-        <p th:case="*" th:text="${error}"></p>
+            <!--<table border="1" cellpadding="5" align="center">
+                <thead>
+                <tr>
+                    <th><label for="book">Book</label></th>
+                    <th><label for="lib">Library</label></th>
+                    <th sec:authorize="hasRole('ADMIN')"><label for="libraryUser">User</label></th>
+                </tr>
+                </thead>
+                <tbody>
+                <td>
+                    <input type="text" hidden readonly th:field="${rent.book}" id="book">
+                    <span th:text="${rent.book.name} + ', ' + ${rent.book.author} + ', ' + ${rent.book.pubYear}"></span>
+                </td>
+                <td>
+                    <span th:text="${rent.book.library.address} + ', ' + ${rent.book.library.name}"></span>
+                    <input type="text" hidden readonly th:field="${rent.book.library}" id="lib">
+                    <input type="text" hidden readonly th:field="${rent.staff}">
+                    <input type="text" hidden readonly th:field="${rent.libraryUser}">
+                </td>
+                <td sec:authorize="hasRole('ADMIN')">
+                    <span th:text="${rent.libraryUser.email}"></span>
+                    <input type="text" th:field="${rent.libraryUser.email}" id="libraryUser">
+                </td>
+                </tbody>
+            </table>-->
+            <br>
+            <input class="btn btn-primary" type="submit" value="Rent Book">
+        </form>
     </div>
-</form>
-<div th:insert="fragments/header :: login"></div>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+<script src="/js/passCheck.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 </html>

@@ -82,14 +82,14 @@ public class RentController {
                     rent.setLibraryUser(new LibraryUser());
                 } else if (userDetails != null) {
                     rent.setLibraryUser(userDetails);
-                    rent.setStaff((Staff) this.loginService.loadUserByUsername("email"));
+                    rent.setStaff(this.loginService.loadWebStaff());
                 }
                 rent.setBook(this.bookService.get(book_id));
                 model.addAttribute("rent", rent);
                 return "/rents/new_rent";
             }
         }
-        model.addAttribute("error", "Для аренды нужно представиться!");
+        model.addAttribute("errorText", "Для аренды нужно представиться!");
         return "rents/rents";
     }
 
@@ -106,7 +106,7 @@ public class RentController {
             if (book.getCount() - 1 >= 0) {
                 rent.setBook(book);
             } else {
-                model.addAttribute("error", "Книг не осталось!");
+                model.addAttribute("errorText", "Книг не осталось!");
                 return "/rents/rents";
             }
             if (this.rentService.save(rent)) {
@@ -114,11 +114,11 @@ public class RentController {
                 this.bookService.save(book);
                 return "redirect:/books/";
             } else {
-                model.addAttribute("error", "У вас есть задолженности, невозможно совершить аренду.");
+                model.addAttribute("errorText", "У вас есть задолженности, невозможно совершить аренду.");
                 return "/rents/rents";
             }
         } else {
-            model.addAttribute("error", "Пользователь не найден!");
+            model.addAttribute("errorText", "Пользователь не найден!");
             return "rents/rents";
         }
     }
@@ -162,6 +162,9 @@ public class RentController {
     public String pay(@RequestParam int id, Model model) {
         Penalty penalty = this.penaltyService.get(id);
         model.addAttribute("penalty", penalty);
+        model.addAttribute("reason",
+                penalty.getReason().equals("_rent_expired") ?
+                        "Rent Expired" : penalty.getReason());
         return "rents/pay";
     }
 

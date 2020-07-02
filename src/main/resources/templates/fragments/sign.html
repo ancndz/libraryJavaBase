@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/security/tags ">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+</head>
+<body>
+<div th:fragment="sign">
+    <div class="mt-2 mt-md-0">
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <input class="btn btn-outline-secondary" type="submit" value="Sign Out"/>
+            </form>
+        </div>
+        <div sec:authorize="isAnonymous()">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <form th:action="@{/registration}" method="get">
+                        <input class="btn btn-outline-secondary mr-3" type="submit" value="Register"/>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form th:action="@{/login}" method="get">
+                        <input class="btn btn-primary" type="submit" value="Login"/>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

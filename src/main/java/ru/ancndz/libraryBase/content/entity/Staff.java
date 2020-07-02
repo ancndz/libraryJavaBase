@@ -134,7 +134,7 @@ public class Staff extends LibraryUser {
         if (!(o instanceof Staff)) return false;
         if (!super.equals(o)) return false;
         Staff staff = (Staff) o;
-        return number == staff.number &&
+        return number.equals(staff.number) &&
                 job_id == staff.job_id &&
                 library_id == staff.library_id &&
                 Objects.equals(address, staff.address);

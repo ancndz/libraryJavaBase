@@ -43,6 +43,7 @@ public class StaffController {
         List<Staff> staffList = this.staffService.staffList();
         if (!staffList.isEmpty()) {
             model.addAttribute("staffList", staffList);
+            model.addAttribute("listName", "Library System staff");
         }
         return "staff/staff";
     }
@@ -60,14 +61,23 @@ public class StaffController {
     @GetMapping("/works")
     public String getWorks(@RequestParam(value = "id") int id, @RequestParam(value = "time") String duration, Model model) {
         ChronoUnit chronoUnit;
+        String chronoString;
         switch (duration) {
-            case "week": chronoUnit = ChronoUnit.WEEKS;
+            case "week":
+                chronoUnit = ChronoUnit.WEEKS;
+                chronoString = "неделя";
                 break;
-            case "month": chronoUnit = ChronoUnit.MONTHS;
+            case "month":
+                chronoUnit = ChronoUnit.MONTHS;
+                chronoString = "месяц";
                 break;
-            case "year": chronoUnit = ChronoUnit.YEARS;
+            case "year":
+                chronoUnit = ChronoUnit.YEARS;
+                chronoString = "год";
                 break;
-            default: chronoUnit = ChronoUnit.MINUTES;
+            default:
+                chronoUnit = ChronoUnit.MINUTES;
+                chronoString = "минута";
                 break;
         }
         //List<Staff> allStaff = this.staffService.staffList();
@@ -86,10 +96,12 @@ public class StaffController {
                     }
                 }
             }
-            //allStaffWithWorks.put(staff, countRents);
+        //allStaffWithWorks.put(staff, countRents);
         //}
         model.addAttribute("staff", staff);
         model.addAttribute("works", countRents);
+        model.addAttribute("listName", "Обслуженные клиенты, " + chronoString);
+        model.addAttribute("listClientName", "Список клиентов");
         model.addAttribute("staffUsers", staffLibraryUsers);
         return "staff/works";
     }
