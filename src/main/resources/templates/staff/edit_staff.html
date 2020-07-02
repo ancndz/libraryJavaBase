@@ -27,28 +27,29 @@ xmlns:th="http://www.thymeleaf.org">
 					  <path fill-rule="evenodd" d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434L8.932.727zM8 12.997a4.998 4.998 0 1 0 0-9.995 4.998 4.998 0 0 0 0 9.996z"/>
 					  <path fill-rule="evenodd" d="M7.375 8L4.602 4.302l.8-.6L8.25 7.5h4.748v1H8.25L5.4 12.298l-.8-.6L7.376 8z"/>
 				</svg>
-				<h1 class="h3 mb-3 font-weight-normal">Edit user</h1>
-				
+			  <h1 class="h3 mb-3 font-weight-normal">Edit user</h1>
+
 		  </div>
 
-			<!--href="change_password.html"-->
-			<a type="button"  th:href="@{/users/change_password}"  class="btn btn-default btn-lg btn-block">
-				<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
-			</a>
-			</br>
-			  
-			<!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
-        <form th:action="@{/users/save}" th:object="${user}" method="post"> <!--action="#"-->
-		
-		<!-- readonly type + placeholder -->
+		<!--href="change_password.html"-->
+		<a type="button" th:href="@{/users/change_password}" class="btn btn-default btn-lg btn-block">
+			<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
+		</a>
+		</br>
+
+
+		<form th:action="@{/registration/staff/save}" th:object="${staff}" method="post"> <!--action="#"-->
+
+			<!-- readonly type + placeholder -->
 			<div class="form-group">
-				 <label for="id">ID</label>
+				<label for="id">ID</label>
 				<input readonly type="number" th:field="*{id}" id="id" placeholder="ID" class="form-control">
 			</div>
 
-		  <div class="form-group">
-			 <label for="firstName">First name</label>
-			<input type="text" th:field="*{userExtras.firstName}" id="firstName" placeholder="Enter Your First Name" class="form-control">
+			<div class="form-group">
+				<label for="firstName">First name</label>
+				<input type="text" th:field="*{userExtras.firstName}" id="firstName" placeholder="Enter Your First Name"
+					   class="form-control">
 		  </div>
 
 			<div class="form-group">
@@ -63,11 +64,11 @@ xmlns:th="http://www.thymeleaf.org">
 
 			<div th:field="*{library_id}" id="library_id" class="form-group" >
 					<label for="exampleFormControlSelect1">Library</label>
-					<select class="form-control" id="exampleFormControlSelect1">
-					  <option th:each="library : ${libraries}"
+				<select class="form-control" id="exampleFormControlSelect1">
+					<option th:each="library : ${libs}"
 							th:value="${library.id}"
 							th:utext="${library.name +', '+ library.address}"></option>
-					</select>
+				</select>
 				</div>
 			  		  
 		  
