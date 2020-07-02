@@ -10,11 +10,11 @@
 <body class="d-flex flex-column h-100">
 <div th:insert="fragments/header :: header" class="mb-5"></div>
 <main role="main" class="flex-shrink-0">
-    <div th:switch="${errorText}" class="text-center mt-5 alert-danger">
-        <p th:case="null"></p>
-        <p th:case="*" th:text="${errorText}"></p>
-    </div>
     <div class="container">
+        <div th:switch="${errorText}" class="text-center mt-5 alert-danger">
+            <p th:case="null"></p>
+            <p th:case="*" th:text="${errorText}"></p>
+        </div>
         <form novalidate action="#" th:action="@{/registration/staff/save}" th:object="${staff}" method="post"
               onsubmit="return validatePassword()">
             <div class="form-group">

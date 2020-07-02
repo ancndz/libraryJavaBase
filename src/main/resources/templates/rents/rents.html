@@ -8,128 +8,141 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<div th:switch="${error}" align="center">
-    <h2 th:case="null"></h2>
-    <div th:case="*"> <span th:text="${error}"></span> </div>
-<div th:switch="${rents}" align="center">
-    <h3 th:case="null">No rents found!</h3>
-    <div th:case="*">
-        <h3>Rents</h3>
-        <table border="1" cellpadding="5">
-            <thead>
-            <tr>
-                <th sec:authorize="hasRole('ADMIN')">Id</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Fact End Date</th>
-                <th sec:authorize="hasRole('ADMIN')">Staff</th>
-                <th>Book</th>
-                <th sec:authorize="hasRole('ADMIN')">User</th>
-                <th sec:authorize="hasRole('ADMIN')">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="rent : ${rents}">
-                <td th:text="${rent.id}" sec:authorize="hasRole('ADMIN')"></td>
-                <td th:text="${#temporals.format(rent.startDate, 'dd-MM-yyyy HH:mm')}"></td>
-                <td th:text="${#temporals.format(rent.endDate, 'dd-MM-yyyy HH:mm')}"></td>
-                <td th:text="${#temporals.format(rent.factEndDate, 'dd-MM-yyyy HH:mm')}"></td>
-                <td th:text="${rent.staff.userExtras.firstName} + ' ' + ${rent.staff.userExtras.lastName}"
-                    sec:authorize="hasRole('ADMIN')"></td>
-                <td th:text="${rent.book.name} + ' in ' + ${rent.book.library.name} + ' at ' + ${rent.book.library.address}"></td>
-                <td th:text="${rent.libraryUser.userExtras.firstName} + ' ' + ${rent.libraryUser.userExtras.lastName}"
-                    sec:authorize="hasRole('ADMIN')"></td>
-                <td sec:authorize="hasRole('ADMIN')">
-                    <div th:if="${rent.factEndDate == null}">
-                        <form action="#" th:action="@{/rents/close}" method="post" align="center">
-                            <input readonly hidden type="text" th:value="${rent.id}" name="id">
-                            <input type="submit" value="Close">
-                        </form>
-                    </div>
-                    <div>
-                        <form action="#" th:action="@{/rents/add_penalty}" method="get" align="center">
-                            <input readonly hidden type="text" th:value="${rent.id}" name="id">
-                            <input type="submit" value="Add Penalty">
-                        </form>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-</div>
-    <br>
-    <br>
-    <div th:switch="${penalties}" align="center">
-        <h3 th:case="null">No penalties found!</h3>
-        <div th:case="*">
-            <h3>Penalties</h3>
-            <table border="1" cellpadding="5">
-                <thead>
-                <tr>
-                    <th sec:authorize="hasRole('ADMIN')">Id</th>
-                    <th sec:authorize="hasRole('ADMIN')">Rent id</th>
-                    <th sec:authorize="hasRole('ADMIN')">User id</th>
-                    <th>Reason</th>
-                    <th>Date</th>
-                    <th sec:authorize="hasRole('ADMIN')">Pay Date</th>
-                    <th>Amount Remaining</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="penalty : ${penalties}">
-                    <td th:text="${penalty.id}" sec:authorize="hasRole('ADMIN')"></td>
-                    <td th:text="${penalty.rent.id}" sec:authorize="hasRole('ADMIN')"></td>
-                    <td th:text="${penalty.rent.libraryUser.userExtras.firstName} + ' ' + ${penalty.rent.libraryUser.userExtras.lastName}"
-                        sec:authorize="hasRole('ADMIN')"></td>
-                    <td>
-                        <div th:if="${penalty.reason} == '_rent_expired'">
-                            <span>Аренда просрочена</span>
-                        </div>
-                        <div th:unless="${penalty.reason} == '_rent_expired'">
-                            <span th:text="${penalty.reason}"></span>
-                        </div>
-                    </td>
-                    <td th:text="${#temporals.format(penalty.date, 'dd-MM-yyyy HH:mm')}"></td>
-                    <td sec:authorize="hasRole('ADMIN')" th:text="${penalty.payDate}"></td>
-                    <td>
-                        <div th:if="${penalty.amount} - ${penalty.completeAmount} > 0">
-                            <span th:text="${penalty.amount} - ${penalty.completeAmount}"></span>
-                        </div>
-                        <div th:unless="${penalty.amount} - ${penalty.completeAmount} > 0">
-                            <div th:if="${penalty.payDate} == null">
-                                <span>Rent close remaining</span>
-                            </div>
-                            <div th:unless="${penalty.payDate} == null">
-                                <span>Penalty closed.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div th:if="${penalty.amount} - ${penalty.completeAmount} > 0">
-                            <a th:href="@{/rents/pay_penalty(id=${penalty.id})}">
-                                <span>Pay</span>
-                            </a>
-                        </div>
-                        <div th:unless="${penalty.amount} - ${penalty.completeAmount} > 0">
-                            <span>Нет действий</span>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+<body class="d-flex flex-column h-100">
+<div th:insert="fragments/header :: header" class="mb-5"></div>
+<main role="main" class="flex-shrink-0">
+    <div class="container mt-5">
+        <div th:switch="${error}">
+            <div th:case="null"></div>
+            <div th:case="*" class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span th:text="${error}"></span>
+            </div>
         </div>
+        <div th:switch="${rents}">
+            <div th:case="null" class="alert alert-warning alert-dismissible fade show" role="alert">
+                No rents found!
+            </div>
+            <div th:case="*" class="card">
+                <h3 class="card-header">Rents</h3>
+                <table class="table table-striped mb-0">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')">Id</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Fact End Date</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')">Staff</th>
+                        <th scope="col">Book</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')">User</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="rent : ${rents}">
+                        <td th:text="${rent.id}" sec:authorize="hasRole('ADMIN')"></td>
+                        <td th:text="${#temporals.format(rent.startDate, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td th:text="${#temporals.format(rent.endDate, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td th:text="${#temporals.format(rent.factEndDate, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td th:text="${rent.staff.userExtras.firstName} + ' ' + ${rent.staff.userExtras.lastName}"
+                            sec:authorize="hasRole('ADMIN')"></td>
+                        <td th:text="${rent.book.name} + ' in ' + ${rent.book.library.name} + ' at ' + ${rent.book.library.address}"></td>
+                        <td th:text="${rent.libraryUser.userExtras.firstName} + ' ' + ${rent.libraryUser.userExtras.lastName}"
+                            sec:authorize="hasRole('ADMIN')"></td>
+                        <td sec:authorize="hasRole('ADMIN')">
+                            <div th:if="${rent.factEndDate == null}">
+                                <form action="#" th:action="@{/rents/close}" method="post" class="ml-3 mb-1">
+                                    <input readonly hidden type="text" th:value="${rent.id}" name="id">
+                                    <input class="btn btn-danger btn-sm" type="submit" value="Close">
+                                </form>
+                            </div>
+                            <div>
+                                <form action="#" th:action="@{/rents/add_penalty}" method="get">
+                                    <input readonly hidden type="text" th:value="${rent.id}" name="id">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Add Penalty">
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div th:switch="${penalties}">
+            <div th:case="null" class="alert alert-warning alert-dismissible fade show mt-5" role="alert">
+                No penalties found!
+            </div>
+            <div th:case="*" class="card mt-5">
+                <h3 class="card-header">Penalties</h3>
+                <table class="table table-striped mb-0">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')">Id</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')">Rent id</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')">User id</th>
+                        <th scope="col">Reason</th>
+                        <th scope="col">Date</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')">Pay Date</th>
+                        <th scope="col">Amount Remaining</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="penalty : ${penalties}">
+                        <td th:text="${penalty.id}" sec:authorize="hasRole('ADMIN')"></td>
+                        <td th:text="${penalty.rent.id}" sec:authorize="hasRole('ADMIN')"></td>
+                        <td th:text="${penalty.rent.libraryUser.userExtras.firstName} + ' ' + ${penalty.rent.libraryUser.userExtras.lastName}"
+                            sec:authorize="hasRole('ADMIN')"></td>
+                        <td>
+                            <div th:if="${penalty.reason} == '_rent_expired'">
+                                <span>Аренда просрочена</span>
+                            </div>
+                            <div th:unless="${penalty.reason} == '_rent_expired'">
+                                <span th:text="${penalty.reason}"></span>
+                            </div>
+                        </td>
+                        <td th:text="${#temporals.format(penalty.date, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td sec:authorize="hasRole('ADMIN')" th:text="${penalty.payDate}"></td>
+                        <td>
+                            <div th:if="${penalty.amount} - ${penalty.completeAmount} > 0">
+                                <span th:text="${penalty.amount} - ${penalty.completeAmount}"></span>
+                            </div>
+                            <div th:unless="${penalty.amount} - ${penalty.completeAmount} > 0">
+                                <div th:if="${penalty.payDate} == null">
+                                    <span>Rent close remaining</span>
+                                </div>
+                                <div th:unless="${penalty.payDate} == null">
+                                    <span>Penalty closed.</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div th:if="${penalty.amount} - ${penalty.completeAmount} > 0">
+                                <a class="btn btn-primary btn-sm" th:href="@{/rents/pay_penalty(id=${penalty.id})}">
+                                    Pay
+                                </a>
+                            </div>
+                            <div th:unless="${penalty.amount} - ${penalty.completeAmount} > 0">
+                                <span>Нет действий</span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+        <a class="btn btn-outline-dark" th:href="@{/rents/refresh}">Refresh</a>
     </div>
-<br>
-<div align="center">
-    <a th:href="@{/rents/refresh}">
-        <span>Refresh</span>
-    </a>
-</div>
+</main>
 <footer th:replace="fragments/footer :: footer"></footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 </html>

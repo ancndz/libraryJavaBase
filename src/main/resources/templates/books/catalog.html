@@ -54,7 +54,7 @@
                     </div>
                     <div th:case="*" class="card">
                         <h3 class="card-header mt-3"><span th:text="${listName}"></span></h3>
-                        <table class="table table-striped mb-0 w-100" style="table-layout: fixed">
+                        <table class="table table-striped mb-0 w-auto" style="table-layout: fixed;">
                             <thead class="thead-dark">
                             <tr>
                                 <th scope="col" sec:authorize="hasRole('ADMIN')">Id</th>

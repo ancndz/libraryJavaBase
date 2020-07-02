@@ -54,6 +54,26 @@ public class StaffService {
             staff.setLibrary(this.libraryService.get(1));
             staff.setLibrary_id(1);
             save(staff);
+
+            Staff webStaff = new Staff();
+            UserExtras webUserExtras = new UserExtras();
+            webUserExtras.setDateReg(LocalDateTime.now());
+            webUserExtras.setFirstName("Admin");
+            webUserExtras.setLastName("Web");
+            webUserExtras.setId(2);
+            webUserExtras.setStatus("Main Default WEB-Admin");
+            webStaff.setUserExtras(webUserExtras);
+            webStaff.setEmail("web@admin.com");
+            webStaff.setAddress("remote");
+            webStaff.setNumber("19216810010");
+            webStaff.setPassword("12345");
+            webStaff.setPasswordConfirm("12345");
+            webStaff.setId(2);
+            webStaff.setJob(this.jobService.get(1));
+            webStaff.setJob_id(1);
+            webStaff.setLibrary(this.libraryService.get(1));
+            webStaff.setLibrary_id(1);
+            save(webStaff);
         }
     }
 
