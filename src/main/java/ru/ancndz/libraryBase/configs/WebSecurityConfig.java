@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.ancndz.libraryBase.configs.services.LoginService;
-import ru.ancndz.libraryBase.configs.services.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -72,11 +71,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(loginService).passwordEncoder(bCryptPasswordEncoder());
     }
-
-       /*public void configure(WebConfig web) throws Exception {
-        //Web resources
-        web.ignoring().antMatchers("/css/**");
-        web.ignoring().antMatchers("/scripts/**");
-        web.ignoring().antMatchers("/images/**");
-    }*/
 }
