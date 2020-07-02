@@ -81,19 +81,20 @@ public class RegistrationController {
         this.staffService.checkEmpty();
         libraryUser.setUserExtras(new UserExtras());
         libraryUser.getUserExtras().setDateReg(LocalDateTime.now());
-        model.addAttribute("user", libraryUser);
+        model.addAttribute("libraryUser", libraryUser);
         return "users/add_user";
     }
 
     @PostMapping("/save")
     public String addUser(@Valid LibraryUser libraryUser, BindingResult bindingResult, Model model) {
+        System.out.println(libraryUser);
         if (bindingResult.hasErrors()) {
             return "users/add_user";
         }
-        if (!libraryUser.passwordsCheck()) {
+        /*if (!libraryUser.passwordsCheck()) {
             model.addAttribute("errorText", "Пароли не совпадают");
             return "users/add_user";
-        }
+        }*/
         if (!userService.save(libraryUser)) {
             model.addAttribute("errorText", "Пользователь с таким email уже существует");
             return "users/add_user";

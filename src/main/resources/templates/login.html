@@ -11,15 +11,15 @@
     <link href="/css/signin.css" data-th-href="@{/css/signin.css}" rel="stylesheet">
 </head>
 <body class="text-center">
-<div th:insert="fragments/header :: header" class="mb-5"></div>
+<div th:insert="fragments/header :: header(needLogin=false)" class="mb-5"></div>
 <!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.entity.Staff"*/-->
 <div class="form-signin">
     <form method="POST" th:action="@{/login}">
         <!--<h1 class="h3 mb-3 font-weight-normal">Sign in</h1>-->
         <label for="email" class="sr-only">Email</label>
-        <input class="form-control" type="email" th:name="username" id="email" placeholder="Email" required autofocus>
+        <input class="form-control" type="email" th:name="username" id="email" placeholder="Email" required autofocus/>
         <label for="pass" class="sr-only">Password</label>
-        <input class="form-control" type="password" th:name="password" id="pass" placeholder="Password">
+        <input class="form-control" type="password" th:name="password" id="pass" placeholder="Password"/>
         <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Sign in</button>
     </form>
     <form th:action="@{/registration}" method="get">

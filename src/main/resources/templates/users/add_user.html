@@ -10,16 +10,54 @@
 <body class="d-flex flex-column h-100">
 <div th:insert="fragments/header :: header" class="mb-5"></div>
 <main role="main" class="flex-shrink-0">
+    <div th:switch="${errorText}" class="text-center mt-5 alert-danger">
+        <p th:case="null"></p>
+        <p th:case="*" th:text="${errorText}"></p>
+    </div>
     <div class="container">
-
+        <form novalidate action="#" th:action="@{/registration/save}" th:object="${libraryUser}" method="post">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" th:field="*{userExtras.firstName}" class="form-control" id="firstName"
+                       placeholder="Enter your first name" required/>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" th:field="*{userExtras.lastName}" class="form-control" id="lastName"
+                       placeholder="Enter your last name" required/>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" th:field="*{email}" class="form-control" id="email" aria-describedby="emailHelp"
+                       placeholder="Enter email" required/>
+                <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select th:field="*{userExtras.status}" class="custom-select" id="status" required>
+                    <option value="none" selected>Choose...</option>
+                    <option value="Student">Student</option>
+                    <option value="Artist">Artist</option>
+                    <option value="Scientist">Scientist</option>
+                    <option value="Just a person">Just a person</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="pass">Password</label>
+                <input th:field="*{password}" type="password" class="form-control" id="pass" placeholder="Password"
+                       required/>
+            </div>
+            <div class="form-group">
+                <label for="passConf">Password confirm</label>
+                <input type="password" class="form-control" id="passConf" placeholder="Password again" required/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
 </main>
-<h3 align="center">Please, fill Your profile:</h3>
-<div th:switch="${errorText}">
-    <p th:case="null"></p>
-    <p th:case="*" th:text="${errorText}"></p></div>
+
 <!--/*@thymesVar id="libraryUser" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
-<form action="#" th:action="@{/registration/save}" th:object="${libraryUser}" method="post" align="center">
+<!--<form action="#" th:action="@{/registration/save}" th:object="${libraryUser}" method="post" align="center">
     <table border="1" cellpadding="5" align="center">
         <thead>
         <tr>
@@ -51,7 +89,7 @@
     </table>
     <br>
     <input type="submit" value="Create User">
-</form>
+</form>-->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

@@ -45,7 +45,7 @@
                 </ul>
                 <!--/*@thymesVar id="needLogin" type="java.lang.Boolean"*/-->
                 <div th:switch="${needLogin}">
-                    <div th:case="true">
+                    <div th:case="null">
                         <div th:insert="fragments/sign :: sign" class="mt-2 mt-md-0"></div>
                     </div>
                 </div>
