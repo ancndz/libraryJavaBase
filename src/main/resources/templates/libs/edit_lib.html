@@ -1,27 +1,67 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
-<meta charset="UTF-8">
-<title>Edit Library</title>
-</head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<form action="#" th:action="@{/libs/save}" th:object="${library}" method="post" align="center">
-    <h3 align="center" >Fill data for library with <span th:text="*{id}"></span> id:</h3>
-    <table align="center" border="1" cellpadding="5">
-        <thead>
-        <tr>
-            <th><label for="name">Name</label></th>
-            <th><label for="address">Address</label></th>
-        </tr>
-        </thead>
-        <tbody>
-        <td><input type="text" th:field="*{name}" id="name" placeholder="Name"></td>
-        <td><input type="text" th:field="*{address}" id="address" placeholder="Address"></td>
-        </tbody>
-    </table>
-    <input type="text" hidden readonly th:field="*{id}">
-    <input type="submit" value="Save Library">
-</form>
-<div th:insert="fragments/header :: login"></div>
-</body>
+<!doctype html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Create User</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/floating-labels/">
+	<link rel="stylesheet/less" type="text/css" href="styles.less" />
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<link th:href="@{/css/floating-labels.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template <head th:insert="fragments/header :: header" ></head> -->
+	   <!--DON'T WORK-->
+  </head>
+  <body>
+
+	<div class="form-signin" >
+		  <div class="text-center mb-4">
+				<svg class="bi bi-book" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				  <path fill-rule="evenodd" d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z"/>
+				  <path fill-rule="evenodd" d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z"/>
+				</svg>
+				<svg class="bi bi-gear-wide-connected" width="2.5em" height="2.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					  <path fill-rule="evenodd" d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434L8.932.727zM8 12.997a4.998 4.998 0 1 0 0-9.995 4.998 4.998 0 0 0 0 9.996z"/>
+					  <path fill-rule="evenodd" d="M7.375 8L4.602 4.302l.8-.6L8.25 7.5h4.748v1H8.25L5.4 12.298l-.8-.6L7.376 8z"/>
+				</svg>
+				<h1 class="h3 mb-3 font-weight-normal">Edit Library</h1>
+				
+		  </div>
+						  
+			<!--/*@thymesVar id="user" type="ru.ancndz.libraryBase.content.entity.Library"*/-->
+        <form action="#" th:action="@{/libs/save}" th:object="${library}" method="post"> <!--action="#"-->
+		<div class="text-center mb-4">
+			<p>Fill data for library with <span th:text="*{id}"></span> id:</a></p>
+		</div>	
+		
+		  <div class="form-group">
+			 <label for="name">Name</label>
+			<input type="text" th:field="*{name}" id="name" placeholder="Enter Library Name " class="form-control" required autofocus>
+		  </div>
+
+			<div class="form-group">
+				<label for="address">Address</label>
+				<input type="text" th:field="*{address}" id="address" placeholder="Enter Library Address" class="form-control" required>
+		  </div>
+
+			<!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+			<input type="text" hidden readonly th:field="*{id}">
+			
+			</br>
+
+
+		  <button class="btn btn-lg btn-primary btn-block" type="submit" >Save Library</button> <!--value-->
+		</form>
+	</div>
+	<script type="text/javascript"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+  </body>
 </html>

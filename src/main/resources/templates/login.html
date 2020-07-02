@@ -1,32 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Login</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link th:href="@{/css/login.css}" rel="stylesheet" />
+	<!--<link th:href="@{/css/header.css}" rel="stylesheet" /> -->
+	<link href="D:/Users/Ksy/IdeaProjects/libraryJavaBase/src/main/resources/static/css/login.css" rel="stylesheet">
+
 </head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<!--/*@thymesVar id="staff" type="ru.ancndz.libraryBase.content.entity.Staff"*/-->
-<div align="center">
-    <form method="POST" th:action="@{/login}">
-        <table border="1" cellpadding="5" align="center">
-            <thead>
-            <tr>
-                <th><label for="email">Email</label></th>
-                <th><label for="pass">Password</label></th>
-            </tr>
-            </thead>
-            <tbody>
-            <td><input type="text" th:name="username" id="email" placeholder="Email"></td>
-            <td><input type="password" th:name="password" id="pass" placeholder="Password"></td>
-            </tbody>
-        </table>
-        <br>
-        <input type="submit" value="Login">
-        <h3 align="center"><a th:href="@{/registration}">Register</a></h3>
-        <h3 align="center"><a th:href="@{/registration/staff}">Register (staff only)</a></h3>
-    </form>
-</div>
+
+
+
+<body >
+
+	<!--<div th:insert="fragments/header :: header"></div>-->
+	<div class="form-signin">
+
+		 <div align="center">
+			 <div th:if="${param.error}">
+				 Invalid username and password.
+			 </div>
+			 <div th:if="${param.logout}">
+				 You have been logged out.
+			 </div>
+			<form method="POST" th:action="@{/login}">
+				<svg class="bi bi-people-fill" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				  <path fill-rule="evenodd" d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+				</svg>
+
+				<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+				<label for="email" class="sr-only">Email address</label>
+				<input type="text" th:name="username" id="email" class="form-control" placeholder="Email" required autofocus>
+				<label for="pass" class="sr-only">Password</label>
+				<input type="password" th:name="password" id="pass" class="form-control" placeholder="Password" required>
+				<button class="btn btn-lg btn-primary btn-block" value="Login" type="submit">Sign in</button>
+
+				<a class="btn btn-outline-primary btn-block" th:href="@{/registration}" role="button">Register</a>
+			</form>
+
+			<!--<button class="btn btn-outline-primary" th:href="@{/registration/staff}" formnovalidate> Register (staff only)</button>-->
+		 </div>
+	</div>
+
 </body>
 </html>

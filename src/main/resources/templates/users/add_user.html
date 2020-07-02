@@ -1,49 +1,151 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<!doctype html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
     <title>Create User</title>
-</head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<h3 align="center">Please, fill Your profile:</h3>
-<div th:switch="${errorText}">
-    <p th:case="null"></p>
-    <p th:case="*" th:text="${errorText}"></p></div>
-<!--/*@thymesVar id="libraryUser" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
-<form action="#" th:action="@{/registration/save}" th:object="${libraryUser}" method="post" align="center">
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="firstName">First name</label></th>
-            <th><label for="lastName">Last name</label></th>
-            <th><label for="email">email</label></th>
-            <th><label for="status">status</label></th>
-        </tr>
-        </thead>
-        <tbody>
-            <td><input type="text" th:field="*{userExtras.firstName}" id="firstName" placeholder="First Name"></td>
-            <td><input type="text" th:field="*{userExtras.lastName}" id="lastName" placeholder="Last Name"></td>
-            <td><input type="text" th:field="*{email}" id="email" placeholder="email"></td>
-            <td><input type="text" th:field="*{userExtras.status}" id="status" placeholder="status"></td>
-        </tbody>
-    </table>
-    <br>
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="code">Password</label></th>
-            <th><label for="codeconf">Confirm Password</label></th>
-        </tr>
-        </thead>
-        <tbody>
-        <td><input type="password" th:field="*{password}" id="code" placeholder="Code"></td>
-        <td><input type="password" th:field="*{passwordConfirm}" id="codeconf" placeholder="Code"></td>
-        </tbody>
-    </table>
-    <br>
-    <input type="submit" value="Create User">
-</form>
-<div th:insert="fragments/header :: login"></div>
-</body>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/floating-labels/">
+	<link rel="stylesheet/less" type="text/css" href="styles.less" />
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<link th:href="@{/css/floating-labels.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template <head th:insert="fragments/header :: header" ></head> -->
+	   <!--DON'T WORK-->
+  </head>
+  <body>
+
+	<div class="form-signin" >
+		  <div class="text-center mb-4">
+				<svg class="bi bi-person-plus-fill" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			  <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+			  <path fill-rule="evenodd" d="M13 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+			</svg>
+				<h1 class="h3 mb-3 font-weight-normal">Create user</h1>
+				<p>Please, fill Your profile</a></p>
+		  </div>
+
+			<div th:switch="${errorText}">
+				<p th:case="null"></p>
+				<p th:case="*" th:text="${errorText}"></p></div>
+		<form th:action="@{/registration/save}" th:object="${user}" method="post" >
+
+
+		  <div class="form-group">
+			 <label for="firstName">First name</label>
+			<input type="text" th:field="*{userExtras.firstName}" id="firstName" placeholder="Enter Your First Name" class="form-control" required autofocus>
+		  </div>
+
+			<div class="form-group">
+				<label for="lastName">Last name</label>
+				<input type="text" th:field="*{userExtras.lastName}" id="lastName" placeholder="Enter Your Last Name" class="form-control" required>
+		  </div>
+
+			<div class="form-group">
+				<label for="email">Email address</label>
+				<input type="text" th:field="*{email}" id="email" placeholder="Enter Your Email Address" class="form-control" required>
+				<small id="emailHelpBlock" class="form-text text-muted">
+				  Your Email address is being used for ensuring the security of your account and authorization.
+				</small>
+		 </div>
+
+			<label>Status</label>
+			<div class="d-block my-3">
+			<div  class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status1" value="Student" checked>
+				<label class="custom-control-label" for="status1">
+					Student
+				</label>
+			</div>
+
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status2"  value="Research fellow">
+				<label class="custom-control-label" for="status2">
+					Research fellow
+				</label>
+			</div>
+
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status3"  value="Сulture personality">
+				<label class="custom-control-label" for="status3">
+					Сulture personality
+				</label>
+			</div>
+
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status4"  value="Lecturer">
+				<label class="custom-control-label" for="status4">
+					Lecturer
+				</label>
+			</div>
+
+			<div class="custom-control custom-radio">
+				<input class="custom-control-input" type="radio" name="exampleRadios" th:field="*{userExtras.status}" id="status5"  value="Reader">
+				<label class="custom-control-label" for="status5">
+					Reader
+				</label>
+			</div>
+
+			</div>
+			<br/>
+
+			<!--<h4 class="mb-3">Status</h4>
+
+			<div class="d-block my-3">
+				<div class="custom-control custom-radio">
+					<input  th:field="*{userExtras.status}" id="status1" type="radio" class="custom-control-input" >
+					<label class="custom-control-label" for="status1">Student</label>
+				</div>
+				<div class="custom-control custom-radio">
+					<input id="status2" th:field="*{userExtras.status}" type="radio" class="custom-control-input" required>
+					<label class="custom-control-label" for="status2">Research fellow</label>
+				</div>
+				<div class="custom-control custom-radio">
+					<input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+					<label class="custom-control-label" for="paypal">PayPal</label>
+				</div>
+			</div>-->
+
+			<!--<div  class="form-group">
+				<label for="status">Status</label>
+				<select th:field="*{userExtras.status}" input type="text" id="status" class="form-control" >
+				  <option value="text">Student </option>
+				  <option value="text">Research fellow</option>
+				  <option value="text">Сulture personality</option>
+				  <option value="text">Lecturer </option>
+				  <option value="text">Reader</option>
+				</select>
+			</div> -->
+
+
+		  <div class="form-group">
+			 <label for="code">Set Password</label>
+			 <div class="input-group">
+				 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+				 <input type="password" th:field="*{password}" id="code" class="form-control" placeholder="Choose password (5-15 chars)" required>
+			</div>
+		 </div>
+
+			<div class="form-group">
+				 <label for="codeconf">Confirm Password</label>
+					 <div class="input-group">
+						 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+						 <input type="password" th:field="*{passwordConfirm}" id="codeconf" class="form-control" placeholder="Confirm your password" required>
+					</div>
+			</div>
+
+
+		  <button class="btn btn-lg btn-primary btn-block" type="submit" value="Create User">Create User</button>
+		</form>
+	</div>
+	<script type="text/javascript"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+  </body>
 </html>

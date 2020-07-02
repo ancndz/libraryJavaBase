@@ -86,7 +86,7 @@ public class RentController {
                 }
                 rent.setBook(this.bookService.get(book_id));
                 model.addAttribute("rent", rent);
-                return "/rents/new_rent";
+                return "rents/new_rent";
             }
         }
         model.addAttribute("error", "Для аренды нужно представиться!");
@@ -107,7 +107,7 @@ public class RentController {
                 rent.setBook(book);
             } else {
                 model.addAttribute("error", "Книг не осталось!");
-                return "/rents/rents";
+                return "rents/rents";
             }
             if (this.rentService.save(rent)) {
                 book.setCount(book.getCount() - 1);
@@ -115,7 +115,7 @@ public class RentController {
                 return "redirect:/books/";
             } else {
                 model.addAttribute("error", "У вас есть задолженности, невозможно совершить аренду.");
-                return "/rents/rents";
+                return "rents/rents";
             }
         } else {
             model.addAttribute("error", "Пользователь не найден!");

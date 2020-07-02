@@ -1,60 +1,132 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<!doctype html>
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.springframework.org/security/tags">
 <head>
-    <meta charset="UTF-8">
-    <title>Libraries</title>
+	<meta charset="utf-8" />
+	<title>Libraries</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
+    <!-- Style -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+   <!-- Fonts and icons -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link th:href="@{/css/fresh-bootstrap-table.css}" rel="stylesheet" />
 </head>
+
 <body>
-<div th:insert="fragments/header :: header"></div>
-<div th:switch="${libraries}" align="center">
-    <h2 th:case="null">No libs found!</h2>
-    <div th:case="*">
-        <table border="1" cellpadding="5">
-            <thead>
-            <tr>
-                <th sec:authorize="hasRole('ADMIN')">Id</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Action</th>
-                <th sec:authorize="hasRole('ADMIN')">User action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="lib : ${libraries}">
-                <td sec:authorize="hasRole('ADMIN')" th:text="${lib.id}"></td>
-                <td th:text="${lib.name}"></td>
-                <td th:text="${lib.address}"></td>
-                <td sec:authorize="hasRole('ADMIN')">
-                    <form action="#" th:action="@{/libs/edit}"  method="get" align="center">
-                        <input readonly type="hidden" th:value="${lib.id}" name="id">
-                        <input type="submit" value="Edit">
-                    </form>
-                    <form action="#" th:action="@{/libs/delete}"  method="post" align="center">
-                        <input readonly hidden type="text" th:value="${lib.id}" name="id">
-                        <input type="submit" value="Delete">
-                    </form>
-                    <form action="#" th:action="@{/libs/shelves}"  method="get" align="center">
-                        <input readonly hidden type="text" th:value="${lib.id}" name="id">
-                        <input type="submit" value="View Shelves">
-                    </form>
-                </td>
-                <td>
-                    <a th:href="@{/books/filter(lib_id=${lib.id})}">
-                        <span>View Catalog</span>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <br>
-    <div sec:authorize="hasRole('ADMIN')">
-        <a th:href="@{/libs/new}">
-            <span>Add Lib</span>
-        </a>
-    </div>
+
+<div class="site-wrapper">
+	<div class="site-wrapper-inner">
+		<div class="cover-container">
+			<div class="masthead clearfix">
+					<div th:insert="fragments/header :: header"></div>
+			</div>
+
+			<div class="col-md-8 col-md-offset-2 mytable"> <!-- размер по таблице -->
+				
+		  <div class="fresh-table toolbar-color-blue">
+	  <!--
+		Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+		Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+	  -->
+	  <div sec:authorize="hasRole('ADMIN')" class="toolbar" role="button">
+		  <a class="btn btn-default" th:href="@{/libs/new}"> Add Lib
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></button>
+	  </div>
+			
+	<div th:switch="${libraries}">
+	  <div th:case="*">
+		<!--<p th:case="null">No users found!</a></p>-->
+		<!--<h1 class="h3 mb-3 font-weight-normal"><span th:text="${listName}"></span></h1>-->
+		
+	  <table id="fresh-table" class="table table-hover">
+		<thead>
+		  <th sec:authorize="hasRole('ADMIN')" data-field="id" data-sortable="true">Id</th>
+		  <th data-field="name" data-sortable="true">Name</th>
+		  <th data-field="аddress" data-sortable="true">Address</th>
+		  <th data-field="actions">Actions</th>
+		  <th sec:authorize="hasRole('ADMIN')" data-field="user actions">User action</th>
+		</thead>
+		<tbody>
+		  <tr th:each="lib : ${libraries}">
+					<td sec:authorize="hasRole('ADMIN')" th:text="${lib.id}"></td>
+					<td th:text="${lib.name}"></td>
+					<td th:text="${lib.address}"></td>
+
+					<td class="mytd" sec:authorize="hasRole('ADMIN')">
+
+								<form action="#" th:action="@{/libs/edit}"  method="get" >
+									<input readonly type="hidden" th:value="${lib.id}" name="id">
+									<button class="mybtn" type="submit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+								</form>
+
+								<form action="#" th:action="@{/libs/delete}"  method="post" >
+									<input readonly hidden type="text" th:value="${lib.id}" name="id">
+									<button class="mybtn" type="submit"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+								</form>
+								
+								<form action="#" th:action="@{/libs/shelves}"  method="get" >
+									<input readonly hidden type="text" th:value="${lib.id}" name="id">
+									<button class="mybtn" value="View Shelves" type="submit"></button>
+								</form>
+					</td>
+								<td>
+									<a class="mybtn" style="color: #666666" th:href="@{/books/filter(lib_id=${lib.id})}">
+										<span>View Catalog</span>
+									</a>
+								</td>
+					
+		  </tr>
+		</tbody>
+	  </table>
+	</div>
 </div>
-<div th:insert="fragments/header :: login"></div>
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+<!-- Javascript -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table/dist/bootstrap-table.min.js"></script>
+
+  <script type="text/javascript">
+      var $table = $('#fresh-table')
+      var $addUser = $('#addUser')
+
+      $(function () {
+          $table.bootstrapTable({
+              classes: 'table table-hover table-striped',
+              toolbar: '.toolbar',
+
+              search: true,
+              showRefresh: true,
+              showToggle: true,
+              showColumns: true,
+              pagination: true,
+              striped: true,
+              sortable: true,
+              pageSize: 4,
+              pageList: [4, 8, 10, 25, 50, 100],
+
+              formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                  return ''
+              },
+              formatRecordsPerPage: function (pageNumber) {
+                  return pageNumber + ' rows visible'
+              }
+          })
+
+          $addUser.click(function () {
+              th:href="@{/users/new}"
+          })
+      })
+
+</script>
 </body>
 </html>

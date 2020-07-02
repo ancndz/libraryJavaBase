@@ -1,80 +1,100 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<meta charset="UTF-8">
-<title>Edit User</title>
-</head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<!--/*@thymesVar id="libraryUser" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
-<form action="#" th:action="@{/staff/save}" th:object="${staff}" method="post" align="center">
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="firstName">First Name</label></th>
-            <th><label for="lastName">Last Name</label></th>
-        </tr>
-        </thead>
-        <tbody>
-        <td><input type="text" th:field="*{userExtras.firstName}" id="firstName" placeholder="First Name"></td>
-        <td><input type="text" th:field="*{userExtras.lastName}" id="lastName" placeholder="Last Name"></td>
-        </tbody>
-    </table>
-    <br>
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="address">Address</label></th>
-            <th><label for="number">Number</label></th>
-            <th><label for="email">Email</label></th>
-        </tr>
-        </thead>
-        <tbody>
-        <td><input type="text" th:field="*{address}" id="address" placeholder="Address"></td>
-        <td><input type="text" th:field="*{number}" id="number" placeholder="Number"></td>
-        <td><input type="text" th:field="*{email}" id="email" placeholder="Email"></td>
-        </tbody>
-    </table>
-    <br>
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="library_id">Library</label></th>
-            <th><label for="job_id">Job</label></th>
-        </tr>
-        </thead>
-        <tbody>
-        <td>
-            <select th:field="*{library_id}" id="library_id">
-                <option th:each="library : ${libs}"
-                        th:value="${library.id}"
-                        th:utext="${library.name +', '+ library.address}"></option>
-            </select>
-        </td>
-        <td>
-            <select th:field="*{job_id}" id="job_id">
-                <option th:each="job : ${jobs}"
-                        th:value="${job.id}"
-                        th:utext="${job.name}"></option>
-            </select>
-        </td>
-        </tbody>
-    </table>
-    <br>
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="Password">Password</label></th>
-            <th><label for="Confirm Password">Confirm Password</label></th>
-        </tr>
-        </thead>
-        <tbody>
-        <td><input type="password" th:field="*{password}" id="Password" placeholder="Password"></td>
-        <td><input type="password" th:field="*{passwordConfirm}" id="Confirm Password" placeholder="Confirm Password"></td>
-        </tbody>
-    </table>
-    <br>
-    <input type="submit" value="Edit Staff">
-</form>
-<div th:insert="fragments/header :: login"></div>
-</body>
+<!doctype html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Create User</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/floating-labels/">
+	<link rel="stylesheet/less" type="text/css" href="styles.less" />
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<link th:href="@{/css/floating-labels.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template <head th:insert="fragments/header :: header" ></head> -->
+	   <!--DON'T WORK-->
+  </head>
+  <body>
+
+	<div class="form-signin" >
+		  <div class="text-center mb-4">
+				<svg class="bi bi-person-fill" width="4em" height="4em" viewBox="0 0 16 16" fill="currentColor" xmlns="	http://www.w3.org/2000/svg">
+				  <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+					</svg>
+				<svg class="bi bi-gear-wide-connected" width="2.5em" height="2.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					  <path fill-rule="evenodd" d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434L8.932.727zM8 12.997a4.998 4.998 0 1 0 0-9.995 4.998 4.998 0 0 0 0 9.996z"/>
+					  <path fill-rule="evenodd" d="M7.375 8L4.602 4.302l.8-.6L8.25 7.5h4.748v1H8.25L5.4 12.298l-.8-.6L7.376 8z"/>
+				</svg>
+			  <h1 class="h3 mb-3 font-weight-normal">Edit user</h1>
+
+		  </div>
+
+		<!--href="change_password.html"-->
+		<a type="button" th:href="@{/users/change_password}" class="btn btn-default btn-lg btn-block">
+			<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
+		</a>
+		</br>
+
+
+		<form th:action="@{/registration/staff/save}" th:object="${staff}" method="post"> <!--action="#"-->
+
+			<!-- readonly type + placeholder -->
+			<div class="form-group">
+				<label for="id">ID</label>
+				<input readonly type="number" th:field="*{id}" id="id" placeholder="ID" class="form-control">
+			</div>
+
+			<div class="form-group">
+				<label for="firstName">First name</label>
+				<input type="text" th:field="*{userExtras.firstName}" id="firstName" placeholder="Enter Your First Name"
+					   class="form-control">
+		  </div>
+
+			<div class="form-group">
+				<label for="lastName">Last name</label>
+				<input type="text" th:field="*{userExtras.lastName}" id="lastName" placeholder="Enter Your Last Name" class="form-control">
+		  </div>
+
+			<div class="form-group">
+				<label for="email">Email address</label>
+				<input type="text" th:field="*{email}" id="email" placeholder="Enter Your Email Address" class="form-control" required>
+		 </div>
+
+			<div th:field="*{library_id}" id="library_id" class="form-group" >
+					<label for="exampleFormControlSelect1">Library</label>
+				<select class="form-control" id="exampleFormControlSelect1">
+					<option th:each="library : ${libs}"
+							th:value="${library.id}"
+							th:utext="${library.name +', '+ library.address}"></option>
+				</select>
+				</div>
+			  		  
+		  
+				<div th:field="*{job_id}" id="job_id" class="form-group">
+					<label for="exampleFormControlSelect1">Job</label>
+					<select class="form-control" id="exampleFormControlSelect2">
+					  <option th:each="job : ${jobs}"
+							th:value="${job.id}"
+							th:utext="${job.name}"></option>
+					</select>
+				</div>
+
+			<!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+			<input type="text" hidden th:field="*{userExtras.dateReg}">
+			<input type="text" hidden th:field="*{userExtras.id}">
+			</br>
+
+
+		  <button class="btn btn-lg btn-primary btn-block" type="submit" >Save</button> <!--value-->
+		</form>
+	</div>
+	<script type="text/javascript"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+  </body>
 </html>

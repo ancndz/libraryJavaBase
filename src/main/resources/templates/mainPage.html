@@ -1,14 +1,71 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+<!doctype html>
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
 <head>
-    <meta charset="UTF-8">
-    <title>Main page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<title>Main page</title>
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/cover1.css}" rel="stylesheet" />
+
+
 </head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<h2 align="center">Main Page</h2>
-<br>
-<h2 align="center">Hello, <span align="center" th:text="${name} + '!'"> Stranger!</span></h2>
-<div th:insert="fragments/header :: login"></div>
+
+
+<body class="text-center">
+
+<div class="site-wrapper">
+ 
+<div class="site-wrapper-inner">
+
+<div class="cover-container">
+
+          <div class="masthead clearfix">
+           <!-- <div class="inner">
+            </div>-->
+				<div th:insert="fragments/header :: header"></div>
+              <!-- <h3 class="masthead-brand">Cover</h3>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="#">Home</a></li>
+                  <li><a href="#">Features</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+              </nav> -->
+			  
+
+          </div>
+
+          <div class="inner cover">
+            <h1 class="cover-heading">Hello, <span th:text="${name} + '!'"> Stranger!</span></h1>
+            <!-- <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+            <p class="lead">
+              <a href="#" class="btn btn-lg btn-default">Learn more</a>
+            </p> -->
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Library template by <a href="https://github.com/ancndz">@ancndz</a></p>
+            </div>
+          </div>
+
+        </div>
+	</div>	<!-- site-wrapper-inner -->
+</div> <!-- site-wrapper -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
 </body>
 </html>

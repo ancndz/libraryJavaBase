@@ -1,36 +1,58 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.springframework.org/security/tags"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/security/tags ">
+
 <head>
-    <meta charset="UTF-8">
-</head>  
+	<meta charset="utf-8">
+	<!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<link data-th-href="@{/css/cover1.css}" rel="stylesheet"/>
+	<link data-th-href="@{/css/header.css}" rel="stylesheet"/>
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
 <body>
-    <div th:fragment="header">
-        <div align="center">
-            <div sec:authorize="hasRole('ADMIN')">
-                <h2><a th:href="@{/jobs/}">Jobs</a> | <a th:href="@{/staff/}">Staff</a> | <a
-                        th:href="@{/users/}">Users</a>
-                </h2>
+<div th:fragment="header">
+  <div class="site-wrapper">
+	<div class="site-wrapper-inner">
+		<div class="cover-container">
+			<div class="masthead clearfix">
+				
+				<div class="inner">
+					<h3 class="masthead-brand" href="#">Library</h3>
+              <nav>
+				  <!-- class="active" -->
+                <ul class="nav masthead-nav mynav">
+				    <li><a sec:authorize="hasRole('ADMIN')" th:href="@{/jobs/}">Jobs</a></li>
+				    <li><a sec:authorize="hasRole('ADMIN')" th:href="@{/staff/}">Staff</a></li>
+					<li><a sec:authorize="hasRole('ADMIN')" th:href="@{/users/}">Users</a></li>
+					<li><a th:href="@{/libs/}">Libraries</a></li>
+					<li><a th:href="@{/books/}">Books</a></li>
+					<li><a sec:authorize="isAuthenticated()" th:href="@{/rents/}">Rents&Penalties </a></li>
+					<li><a sec:authorize="isAnonymous()" th:href="@{/registration}">Register</a></li>
+					<li><a sec:authorize="isAnonymous()" th:href="@{/registration/staff}">Register staff</a></li>
+					<li><a sec:authorize="isAnonymous()" class="btn btn-default btn-outline mybtn1" th:href="@{/login}">Login</a></li>
+					<li>
+						<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+							<button class="btn btn-default btn-outline  mybtn1" type="submit" >Sign out</button>
+						</form>
+					
+					</li>					
+                 </ul>
+              </nav>
             </div>
-            <h2><a th:href="@{/libs/}">Libraries</a> | <a th:href="@{/books/}">Books</a> <span sec:authorize="isAuthenticated()"> | <a th:href="@{/rents/}">Rents&Penalties</a></span>  </h2>
-        </div>
+          </div>
+		</div>
+	  </div>    
     </div>
-    <div align="center" th:fragment="login">
-        <br>
-        <div sec:authorize="isAuthenticated()">
-            <form th:action="@{/logout}" method="post">
-                <input type="submit" value="Sign Out"/>
-            </form>
-        </div>
-        <div align="center" sec:authorize="isAnonymous()">
-            <a th:href="@{/registration}">Register</a>
-            <br>
-            <a th:href="@{/registration/staff}">Register staff</a>
-            <br>
-            <a th:href="@{/login}">Login</a>
-        </div>
-    </div>
+</div>
+<script type="text/javascript">
+
+</script>
 </body>
 </html>

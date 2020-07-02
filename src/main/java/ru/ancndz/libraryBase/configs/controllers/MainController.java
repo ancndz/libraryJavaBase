@@ -39,4 +39,17 @@ public class MainController {
         return "login";
     }
 
+    /************************TEST********************************/
+    @GetMapping("test/index")
+    public String indexPage() {
+        return "test/index";
+    }
+
+    /************************TEST********************************/
+    @GetMapping("fragments/header")
+    public String headerPage() {
+        return "fragments/header";
+    }
+
+
 }

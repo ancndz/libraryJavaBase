@@ -1,42 +1,84 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
->
+<!doctype html>
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
 <head>
-    <meta charset="UTF-8">
-    <title>Staff</title>
+	<meta charset="utf-8" />
+	<title>Works</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
+    <!-- Style -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+   <!-- Fonts and icons -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link th:href="@{/css/fresh-bootstrap-table.css}" rel="stylesheet" />
 </head>
+
+<style>
+	.mycolor{font-size:20px;}
+</style>
 <body>
-<div th:insert="fragments/header :: header"></div>
-<div th:switch="${staff}" align="center">
-    <h2 th:case="null">No staff found!</h2>
-    <div th:case="*">
-        <div th:border="5">
-            <form th:action="@{/staff/works}" method="get">
-                <h5>Показать обслуженных клиентов за:</h5>
-                <select name="time">
-                    <option value="week">Неделя</option>
-                    <option value="month">Месяц</option>
-                    <option value="year">Год</option>
-                    <option selected value="minute">Минута</option>
-                </select>
-                <input hidden readonly name="id" th:value="${staff.id}">
-                <input type="submit" value="Показать">
-            </form>
+
+<div class="site-wrapper">
+	<div class="site-wrapper-inner">
+		<div class="cover-container">
+			<div class="masthead clearfix">
+					<div th:insert="fragments/header :: header"></div>
+			</div>
+
+			<div class="col-md-8 col-md-offset-2 mytable"> <!-- размер по таблице -->
+			
+				<p class="mycolor" style="text-align: left; ">Show customer services: </p> <!-- цвет! -->
+            <p><form th:action ="@{/staff/works}" method="get">
+                <div class="col-md-8 myclass">
+                    <select class="form-control myclass" name="time">
+                        <option value="week">Week</option>
+                        <option value="month">Month</option>
+                        <option  value="year">Year</option>
+                        <option selected value="minute">Minute</option>
+                    </select>
+                </div>
+				<input hidden readonly name="id" th:value="${staff.id}">
+                <div class="col-6 col-md-4">
+                    <input class="btn btn-light myclass" type="submit" value="Show">
+                </div>
+            </form></p>
+			
+			<div class="description">
+          <h2>Works</h2>
         </div>
-        <br>
-        <table border="1" cellpadding="5">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Number</th>
-                <th>Job</th>
-                <th>Library</th>
-                <th>Works</th>
-            </tr>
-            </thead>
-            <tbody>
+		
+		  <div class="fresh-table toolbar-color-blue">
+		  
+		  
+	  <!--
+
+		Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+		Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+	  -->
+	 <!-- <div class="toolbar" role="button">
+		  <a class="btn btn-default" th:href="@{/staff/new}"> Add Staff
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></button>
+	  </div>-->
+			
+	<div th:switch="${staff}">
+	  <div th:case="*">
+		<!--<p th:case="null">No users found!</a></p>-->
+		<!--<h1 class="h3 mb-3 font-weight-normal"><span th:text="${listName}"></span></h1>-->
+		
+	  <table id="fresh-table1" class="table table-hover">
+		<thead>
+		  <th data-field="id" data-sortable="true">Id</th>
+		  <th data-field="name" data-sortable="true">Name</th>
+		  <th data-field="аddress" data-sortable="true">Address</th>
+		  <th data-field="number" data-sortable="true">Number</th>
+		  <th data-field="job" data-sortable="true">Job</th>
+		  <th data-field="library" data-sortable="true">Library</th>
+		  <th data-field="library" data-sortable="true">Works</th>  
+		</thead>
+		<tbody>
                 <td th:text="${staff.id}"></td>
                 <td th:text="${staff.userExtras.firstName} + ' ' + ${staff.userExtras.lastName}"></td>
                 <td th:text="${staff.address}"></td>
@@ -45,28 +87,34 @@
                 <td th:text="${staff.library.address} + ', ' + ${staff.library.name}"></td>
                 <td th:text="${works}"></td>
             </tbody>
-        </table>
-    </div>
+	  </table>
+	</div>
 </div>
-<br>
-<div th:switch="${works}" align="center">
-    <h2 th:case="0">No libraryUsers found!</h2>
-    <div th:case="*">
-        <h3>Список Клиентов</h3>
-        <br>
-        <table border="1" cellpadding="5">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>e-mail</th>
-                <th>Status</th>
-                <th>reg date</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!--/*@thymesVar id="libraryUser" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
-            <tr th:each="libraryUser : ${staffUsers}">
+	</div>
+</div>
+			<div class="col-md-8 col-md-offset-2 mytable"> <!-- размер по таблице -->
+			
+				<p class="mycolor" text-align="center" style="font-size: 20px;">List of clients</p> <!-- цвет! -->
+            			
+
+		  <div class="fresh-table toolbar-color-blue">
+				
+	<div th:switch="${works}">
+	  <div th:case="*">
+		<!--<p th:case="null">No users found!</a></p>-->
+		<!--<h1 class="h3 mb-3 font-weight-normal"><span th:text="${listName}"></span></h1>-->
+		
+	  <table id="fresh-table" class="table table-hover">
+		<thead>
+			  <th data-field="id" data-sortable="true">Id</th>
+			  <th data-field="name" data-sortable="true">Name</th>
+			  <th data-field="e-mail" data-sortable="true">E-mail</th>
+			  <th data-field="status" data-sortable="true">Status</th>
+			  <th data-field="regDate" data-sortable="true">Reg date</th>
+		</thead>
+		<tbody>
+		<!--/*@thymesVar id="libraryUser" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
+             <tr th:each="libraryUser : ${staffUsers}">
                 <!--/*@thymesVar id="userExtras" type="ru.ancndz.libraryBase.content.entity.UserExtras"*/-->
                 <td th:text="${libraryUser.id}"></td>
                 <td th:text="${libraryUser.userExtras.firstName} + ' ' + ${libraryUser.userExtras.lastName}"></td>
@@ -75,9 +123,62 @@
                 <td th:text="${#temporals.format(libraryUser.userExtras.dateReg, 'dd-MM-yyyy HH:mm')}"></td>
             </tr>
             </tbody>
-        </table>
-    </div>
+	  </table>
+	</div>
 </div>
-<div th:insert="fragments/header :: login"></div>
+
+
+
+
+
+
+
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+<!-- Javascript -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table/dist/bootstrap-table.min.js"></script>
+
+  <script type="text/javascript">
+      var $table = $('#fresh-table')
+	  var $table1 = $('#fresh-table1')
+      var $addUser = $('#addUser')
+/* вот так применяется к list of clients*/
+      $(function () {
+          $table.bootstrapTable({
+              classes: 'table table-hover table-striped',
+              toolbar: '.toolbar',
+
+              search: true,
+              showRefresh: true,
+              showToggle: true,
+              showColumns: true,
+              pagination: true,
+              striped: true,
+              sortable: true,
+              pageSize: 4,
+              pageList: [4, 8, 10, 25, 50, 100],
+
+              formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                  return ''
+              },
+              formatRecordsPerPage: function (pageNumber) {
+                  return pageNumber + ' rows visible'
+              }
+          })})
+
+
+
+
+
+
+
+
+</script>
 </body>
 </html>

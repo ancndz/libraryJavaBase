@@ -1,54 +1,123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.springframework.org/security/tags"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/security/tags ">
 <head>
-    <meta charset="UTF-8">
-    <title>Books</title>
+	<meta charset="utf-8" />
+	<title>Books</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
+    <!-- Style -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+   <!-- Fonts and icons -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link th:href="@{/css/fresh-bootstrap-table.css}" rel="stylesheet" />
 </head>
+
 <body>
-<div th:insert="fragments/header :: header"></div>
-<!--/*@thymesVar id="bookList" type="java.util.List"*/-->
-<!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
-<div th:switch="${shelf}" align="center">
-    <h2 th:case="null">No books found!</h2>
-    <div th:case="*">
-        <table border="1" cellpadding="5" th:each="letter : ${letters}">
-            <thead>
-            <tr>
+
+<div class="site-wrapper">
+	<div class="site-wrapper-inner">
+		<div class="cover-container">
+			<div class="masthead clearfix">
+					<div th:insert="fragments/header :: header"></div>
+			</div>
+
+			<div class="col-md-8 col-md-offset-2 mytable"> <!-- размер по таблице -->
+				
+		  <div class="fresh-table toolbar-color-blue">
+	  <!--/staff/new
+		Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+		Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+	  -->
+	  
+	<div th:switch="${shelf}">
+	  <div th:case="*">
+		<!--<p th:case="null">No users found!</a></p>-->
+		<!--<h1 class="h3 mb-3 font-weight-normal"><span th:text="${listName}"></span></h1>-->
+		
+	  <table id="fresh-table" class="table table-hover">
+		<thead>
+		
+			<tr>
                 <th colspan="8">
                     <H3>Полка под буквой "<span th:text="${letter}"></span>"</H3>
                     <a th:href="@{/rents/active(lib_id=${lib_id},letter=${letter})}">Rend</a>
                 </th>
             </tr>
-            <tr>
-                <th sec:authorize="hasRole('ADMIN')">Id</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Year</th>
-                <th>Edition</th>
-                <th>Edition num</th>
-                <th>Genre</th>
-                <th>Count</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="book : ${shelf.get(letter)}">
-                <td sec:authorize="hasRole('ADMIN')" th:text="${book.id}"></td>
-                <td th:text="${book.name}"></td>
-                <td th:text="${book.author}"></td>
-                <td th:text="${book.pubYear}"></td>
-                <td th:text="${book.edition}"></td>
-                <td th:text="${book.editionNum}"></td>
-                <td th:text="${book.genre}"></td>
-                <td th:text="${book.count}"></td>
-            </tr>
-            </tbody>
-            <br>
-        </table>
-    </div>
+			
+		  <th sec:authorize="hasRole('ADMIN')" data-field="id" data-sortable="true">Id</th>
+		  <th data-field="title" data-sortable="true">Title</th>
+		  <th data-field="author" data-sortable="true">Author</th>
+		  <th data-field="year" data-sortable="true">Year</th>
+		  <th data-field="edition" data-sortable="true">Edition</th>
+		  <th data-field="edition num" data-sortable="true">Edition num</th>
+		  <th data-field="genre" data-sortable="true">Genre</th>
+		  <th data-field="count" data-sortable="true">Count</th>
+		</thead>
+		<tbody>
+		  <tr>
+		  <tr th:each="book : ${shelf.get(letter)}">
+					<td sec:authorize="hasRole('ADMIN')" th:text="${book.id}"></td>
+					<td th:text="${book.name}"></td>
+					<td th:text="${book.author}"></td>
+					<td th:text="${book.pubYear}"></td>
+					<td th:text="${book.edition}"></td>
+					<td th:text="${book.editionNum}"></td>
+					<td th:text="${book.genre}"></td>
+					<td th:text="${book.count}"></td>
+		  </tr>
+			</tr>
+		</tbody>
+	  </table>
+	</div>
 </div>
-<div th:insert="fragments/header :: login"></div>
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+<!-- Javascript -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table/dist/bootstrap-table.min.js"></script>
+
+  <script type="text/javascript">
+      var $table = $('#fresh-table')
+      var $addUser = $('#addUser')
+
+      $(function () {
+          $table.bootstrapTable({
+              classes: 'table table-hover table-striped',
+              toolbar: '.toolbar',
+
+              search: true,
+              showRefresh: true,
+              showToggle: true,
+              showColumns: true,
+              pagination: true,
+              striped: true,
+              sortable: true,
+              pageSize: 4,
+              pageList: [4, 8, 10, 25, 50, 100],
+
+              formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                  return ''
+              },
+              formatRecordsPerPage: function (pageNumber) {
+                  return pageNumber + ' rows visible'
+              }
+          })
+
+          $addUser.click(function () {
+              th:href="@{/users/new}"
+          })
+      })
+
+</script>
 </body>
 </html>
