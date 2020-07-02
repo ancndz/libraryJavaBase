@@ -11,11 +11,12 @@
 </head>
 <body class="d-flex flex-column h-100">
 <div th:insert="fragments/header :: header" class="mb-5"></div>
-<main role="main" class="flex-shrink-0">
+<main role="main" class="flex-shrink-0 my-1">
     <div class="container">
         <h2 class="mt-5">Hello, <span th:text="${name}">Stranger</span>!</h2>
     </div>
 </main>
+<footer th:insert="fragments/footer :: footer"></footer>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
