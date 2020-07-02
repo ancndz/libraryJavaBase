@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.springframework.org/security/tags">
+>
 <head>
     <meta charset="UTF-8">
     <title>Clients</title>
@@ -8,73 +8,83 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<div th:switch="${libraryUserList}" align="center">
-    <h2 th:case="null">No libraryUsers found!</h2>
-    <div th:case="*">
-        <h3><span th:text="${listName}"></span></h3>
-        <br>
-        <table border="1" cellpadding="5">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>e-mail</th>
-                <th>Status</th>
-                <th>reg date</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!--/*@thymesVar id="libraryUser" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
-            <tr th:each="libraryUser : ${libraryUserList}">
-                <!--/*@thymesVar id="userExtras" type="ru.ancndz.libraryBase.content.entity.UserExtras"*/-->
-                <td th:text="${libraryUser.id}"></td>
-                <td th:text="${libraryUser.userExtras.firstName} + ' ' + ${libraryUser.userExtras.lastName}"></td>
-                <td th:text="${libraryUser.email}"></td>
-                <td th:text="${libraryUser.userExtras.status}"></td>
-                <td th:text="${#temporals.format(libraryUser.userExtras.dateReg, 'dd-MM-yyyy HH:mm')}"></td>
-                <td sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/users/edit(id=${libraryUser.id})}">
-                        <span>Edit</span>
-                    </a>
-                    <br>
-                    <a th:href="@{/users/delete(id=${libraryUser.id})}">
-                        <span>Delete</span>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<body class="d-flex flex-column h-100">
+<div th:insert="fragments/header :: header" class="mb-5"></div>
+<main role="main" class="flex-shrink-0">
+    <div class="container mt-5">
+        <div th:switch="${libraryUserList}">
+            <h2 th:case="null">No libraryUsers found!</h2>
+            <div th:case="*" class="card">
+                <h3 class="card-header"><span th:text="${listName}"></span></h3>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">e-mail</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">reg date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--/*@thymesVar id="libraryUser" type="ru.ancndz.libraryBase.content.entity.LibraryUser"*/-->
+                    <tr th:each="libraryUser : ${libraryUserList}">
+                        <td th:text="${libraryUser.id}"></td>
+                        <td th:text="${libraryUser.userExtras.firstName} + ' ' + ${libraryUser.userExtras.lastName}"></td>
+                        <td th:text="${libraryUser.email}"></td>
+                        <td th:text="${libraryUser.userExtras.status}"></td>
+                        <td th:text="${#temporals.format(libraryUser.userExtras.dateReg, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td>
+                            <form action="#" th:action="@{/users/edit}" method="get" class="mr-1"
+                                  style="display: inline-block;">
+                                <input readonly type="hidden" th:value="${libraryUser.id}" name="id"/>
+                                <button type="submit" class="btn btn-secondary">Edit</button>
+                            </form>
+                            <form action="#" th:action="@{/users/delete}" method="post" style="display: inline-block;">
+                                <input readonly hidden type="text" th:value="${libraryUser.id}" name="id"/>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="card-body mt-n3">
+                    <a th:href="@{/registraion}" class="btn btn-primary">Add User</a>
+                </div>
+            </div>
+            <div th:border="5">
+                <form th:action="@{/users/lost}" method="get">
+                    <h5>Показать неактивных читателей за указанный период</h5>
+                    <select name="date">
+                        <option value="week">Неделя</option>
+                        <option value="month">Месяц</option>
+                        <option value="year">Год</option>
+                        <option selected value="minute">Минута</option>
+                    </select>
+                    <input type="submit" value="Показать">
+                </form>
+            </div>
+            <br>
+            <div th:border="5">
+                <form th:action="@{/users/reading_now}" method="get">
+                    <h5>Показать читателей данной книги:</h5>
+                    <input type="text" name="author" placeholder="Author"/>
+                    <input type="text" name="name" placeholder="Title"/>
+                    <input type="submit" value="Показать"/>
+                </form>
+            </div>
+        </div>
     </div>
-    <br>
-    <a th:href="@{/users/new}">
-        <span>Add User</span>
-    </a>
-    <br>
-    <div th:border="5">
-        <form th:action="@{/users/lost}" method="get">
-            <h5>Показать неактивных читателей за указанный период</h5>
-            <select name="date">
-                <option value="week">Неделя</option>
-                <option value="month">Месяц</option>
-                <option value="year">Год</option>
-                <option selected value="minute">Минута</option>
-            </select>
-            <input type="submit" value="Показать">
-        </form>
-    </div>
-    <br>
-    <div th:border="5">
-        <form th:action="@{/users/reading_now}" method="get">
-            <h5>Показать читателей данной книги:</h5>
-            <input type="text" name="author" placeholder="Author">
-            <input type="text" name="name" placeholder="Title">
-            <input type="submit" value="Показать">
-        </form>
-    </div>
-</div>
-<div th:insert="fragments/header :: login"></div>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 </html>

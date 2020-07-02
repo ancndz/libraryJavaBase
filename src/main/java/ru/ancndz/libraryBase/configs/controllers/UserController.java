@@ -45,25 +45,11 @@ public class UserController {
 
     @GetMapping("/new")
     public String newClientForm(LibraryUser libraryUser) {
-        /*user.setUserExtras(new UserExtras());
-        user.getUserExtras().setDateReg(LocalDateTime.now());
-        return "/users/add_user";*/
         return "redirect:/registration/";
     }
 
     @PostMapping("/save")
     public String saveClient(@Valid LibraryUser libraryUser, BindingResult result, Model model) {
-        /*if (result.hasErrors()) {
-            String errorText = result.toString();
-            model.addAttribute("errorText", errorText);
-            return "/users/add_user";
-        } else if (!user.passwordsCheck()) {
-            String errorText = "Passwords not equals!";
-            model.addAttribute("errorText", errorText);
-            return "/users/add_user";
-        }
-        userService.save(user);
-        return "redirect:/users/";*/
         return "redirect:/registration/save";
     }
 
@@ -72,7 +58,9 @@ public class UserController {
         List<Rent> rents = this.rentService.getAllActiveByBook(author, name);
         List<LibraryUser> libraryUsers = new ArrayList<>();
         rents.forEach(rent -> libraryUsers.add(rent.getLibraryUser()));
-        model.addAttribute("libraryUserList", libraryUsers);
+        if (!libraryUsers.isEmpty()) {
+            model.addAttribute("libraryUserList", libraryUsers);
+        }
         model.addAttribute("listName", "Читатели " + author + ", " + name);
         return "users/user";
     }
@@ -119,7 +107,9 @@ public class UserController {
                 .filter(user -> checkLostUser(user, chronoUnit))
                 .collect(Collectors.toList());
 
-        model.addAttribute("libraryUserList", lostLibraryUser);
+        if (!lostLibraryUser.isEmpty()) {
+            model.addAttribute("libraryUserList", lostLibraryUser);
+        }
         model.addAttribute("listName", "Неактивные участники, " + chronoString);
         return "users/user";
     }
