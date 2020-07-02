@@ -13,7 +13,12 @@
 <main role="main" class="flex-shrink-0">
     <div class="container mt-5">
         <div th:switch="${libraryUserList}">
-            <h2 th:case="null">No libraryUsers found!</h2>
+            <div th:case="null" class="alert alert-warning alert-dismissible fade show" role="alert">
+                No users found!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div th:case="*" class="card">
                 <h3 class="card-header"><span th:text="${listName}"></span></h3>
                 <table class="table table-striped">
@@ -49,9 +54,9 @@
                     </tr>
                     </tbody>
                 </table>
-                <div class="card-body mt-n3">
-                    <a th:href="@{/registraion}" class="btn btn-primary">Add User</a>
-                </div>
+            </div>
+            <div class="card-body mt-n3">
+                <a th:href="@{/registraion}" class="btn btn-primary">Add User</a>
             </div>
             <div th:border="5">
                 <form th:action="@{/users/lost}" method="get">

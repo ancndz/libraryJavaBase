@@ -34,6 +34,7 @@ public class CatalogController {
         List<Book> bookList = this.bookService.booksList();
         if (!bookList.isEmpty()) {
             model.addAttribute("bookList", bookList);
+            model.addAttribute("listName", "All books");
         }
         return "books/catalog";
     }

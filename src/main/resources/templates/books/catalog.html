@@ -13,13 +13,18 @@
 <body class="d-flex flex-column h-100">
 <div th:insert="fragments/header :: header" class="mb-5"></div>
 <main role="main" class="flex-shrink-0">
-    <div class="container">
+    <div class="container mt-5">
         <!--/*@thymesVar id="bookList" type="java.util.List"*/-->
         <!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
-        <div th:switch="${bookList}" align="center">
-            <h2 th:case="null">No books found!</h2>
-            <div th:case="*">
-                <br>
+        <div th:switch="${bookList}">
+            <div th:case="null" class="alert alert-warning alert-dismissible fade show" role="alert">
+                No books found!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div th:case="*" class="card">
+                <!--<br>
                 <form action="#" th:action="@{/books/filter}" method="get" align="center">
                     <table border="1" cellpadding="5" align="center">
                         <thead>
@@ -48,21 +53,22 @@
                     <br>
                     <input type="submit" value="Search">
                 </form>
-                <br>
-                <table border="1" cellpadding="5">
-                    <thead>
+                <br>-->
+                <h3 class="card-header"><span th:text="${listName}"></span></h3>
+                <table class="table table-striped mb-0">
+                    <thead class="thead-dark">
                     <tr>
-                        <th sec:authorize="hasRole('ADMIN')">Id</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Year</th>
-                        <th>Edition</th>
-                        <th>Edition num</th>
-                        <th>Genre</th>
-                        <th>Count</th>
-                        <th>Where?</th>
-                        <th sec:authorize="isAuthenticated()">Action</th>
-                        <th sec:authorize="hasRole('ADMIN')">User action</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')">Id</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Edition</th>
+                        <th scope="col">Edition num</th>
+                        <th scope="col">Genre</th>
+                        <th scope="col">Count</th>
+                        <th scope="col">Where?</th>
+                        <th scope="col" sec:authorize="isAuthenticated()">Action</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')">User action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -77,30 +83,29 @@
                         <td th:text="${book.count}"></td>
                         <td th:text="${book.library.address + ', ' + book.library.name}"></td>
                         <td sec:authorize="hasRole('ADMIN')">
-                            <form action="#" th:action="@{/books/edit}" method="get" align="center">
-                                <input readonly type="hidden" th:value="${book.id}" name="id">
-                                <input type="submit" value="Edit">
+                            <form action="#" th:action="@{/books/edit}" method="get"
+                                  style="display: inline-block;">
+                                <input readonly type="hidden" th:value="${book.id}" name="id"/>
+                                <input type="submit" class="btn btn-secondary" value="Edit">
                             </form>
-                            <form action="#" th:action="@{/books/delete}" method="post" align="center">
-                                <input readonly hidden type="text" th:value="${book.id}" name="id">
-                                <input type="submit" value="Delete">
+                            <form action="#" th:action="@{/books/delete}" method="post"
+                                  style="display: inline-block;">
+                                <input readonly hidden type="text" th:value="${book.id}" name="id"/>
+                                <input type="submit" class="btn btn-danger" value="Delete">
                             </form>
                         </td>
                         <td sec:authorize="hasRole('USER')">
                             <form action="#" th:action="@{/rents/new_order}" method="post" align="center">
                                 <input readonly hidden type="text" th:value="${book.id}" name="book_id">
-                                <input type="submit" value="Rent">
+                                <input type="submit" class="btn btn-primary" value="Rent">
                             </form>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <br>
-            <div sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/books/new}">
-                    <span>Add Book</span>
-                </a>
+            <div sec:authorize="hasRole('ADMIN')" class="card-body mt-n3">
+                <a th:href="@{/books/new}" class="btn btn-primary">Add Book</a>
             </div>
         </div>
     </div>

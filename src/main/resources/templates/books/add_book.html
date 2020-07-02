@@ -7,78 +7,92 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 </head>
-<body>
-<div th:insert="fragments/header :: header"></div>
-<!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
-<form action="#" th:action="@{/books/save}" th:object="${book}" method="post" align="center">
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="bookType">Type</label></th>
-            <th><label for="name">Title</label></th>
-            <th><label for="author">Author</label></th>
-        </tr>
-        </thead>
-        <tbody>
-        <td><input type="text" th:field="*{bookType}" id="bookType" placeholder="Type"></td>
-        <td><input type="text" th:field="*{name}" id="name" placeholder="Title"></td>
-        <td><input type="text" th:field="*{author}" id="author" placeholder="Author"></td>
-        </tbody>
-    </table>
-    <br>
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-            <tr>
-                <th><label for="edition">Edition</label></th>
-                <th><label for="editionNum">Edition num.</label></th>
-                <th><label for="pubYear">Year</label></th>
-            </tr>
-        </thead>
-        <tbody>
-            <td><input type="text" th:field="*{edition}" id="edition" placeholder="Edition"></td>
-            <td><input type="text" th:field="*{editionNum}" id="editionNum" placeholder="Edition num."></td>
-            <td><input type="text" th:field="*{pubYear}" id="pubYear" placeholder="Year (int)"></td>
-        </tbody>
-    </table>
-    <br>
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="genre">Genre</label></th>
-            <th><label for="count">Count</label></th>
-            <th><label for="extra">Extra</label></th>
-        </tr>
-        </thead>
-        <tbody>
-            <td><input type="text" th:field="*{genre}" id="genre" placeholder="Genre"></td>
-            <td><input type="text" th:field="*{count}" id="count" placeholder="Count (int)"></td>
-            <td><input type="text" th:field="*{extra}" id="extra" placeholder="Extra"></td>
-        </tbody>
-    </table>
-    <br>
-    <table border="1" cellpadding="5" align="center">
-        <thead>
-        <tr>
-            <th><label for="libraryId">Library</label></th>
-        </tr>
-        </thead>
-        <tbody>
-            <td>
-                <select th:field="*{libraryId}" id="libraryId">
-                    <option th:each="library : ${libraries}"
-                            th:value="${library.id}"
-                            th:utext="${library.name +', '+ library.address}"></option>
-                </select>
-            </td>
-        </tbody>
-    </table>
-    <br>
-    <input type="submit" value="Add Book">
-    <div th:switch="${error}">
+<body class="d-flex flex-column h-100">
+<div th:insert="fragments/header :: header" class="mb-5"></div>
+<main role="main" class="flex-shrink-0">
+    <div th:switch="${error}" class="text-center mt-5 alert-danger">
         <p th:case="null"></p>
         <p th:case="*" th:text="${error}"></p>
+        <div th:case="*" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
-</form>
-<div th:insert="fragments/header :: login"></div>
+    <div class="container">
+        <!--/*@thymesVar id="book" type="ru.ancndz.libraryBase.content.libraryEnvironment.Book"*/-->
+        <form action="#" th:action="@{/books/save}" th:object="${book}" method="post">
+            <div class="form-group">
+                <label for="bookType">Type</label>
+                <select th:field="*{bookType}" class="custom-select" id="bookType" required>
+                    <option value="none" selected>Choose...</option>
+                    <option value="Book">Book</option>
+                    <option value="Magazine">Magazine</option>
+                    <option value="Article">Article</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" th:field="*{name}" class="form-control" id="title"
+                       placeholder="Enter book Title" required/>
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" th:field="*{author}" class="form-control" id="author"
+                       placeholder="Enter book Author" required/>
+            </div>
+            <div class="form-group">
+                <label for="edition">Edition</label>
+                <input type="text" th:field="*{edition}" class="form-control" id="edition"
+                       placeholder="Enter book Edition" required/>
+            </div>
+            <div class="form-group">
+                <label for="editionNum">Edition num</label>
+                <input type="text" th:field="*{editionNum}" class="form-control" id="editionNum"
+                       placeholder="Enter book Edition num" required/>
+            </div>
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input type="number" th:field="*{pubYear}" class="form-control" id="year"
+                       placeholder="Enter book year" required/>
+            </div>
+            <div class="form-group">
+                <label for="genre">Genre</label>
+                <input type="text" th:field="*{genre}" class="form-control" id="genre"
+                       placeholder="Enter book genre" required/>
+            </div>
+            <div class="form-group">
+                <label for="count">Count</label>
+                <input type="number" th:field="*{count}" class="form-control" id="count"
+                       placeholder="Enter book count" required/>
+            </div>
+            <div class="form-group">
+                <label for="extra">Extra</label>
+                <input type="text" th:field="*{pubYear}" class="form-control" id="extra"
+                       placeholder="Enter book extra"/>
+            </div>
+            <div class="form-group">
+                <label for="lib">Library</label>
+                <select th:field="*{libraryId}" id="lib" class="custom-select-sm" required>
+                    <option th:each="lib : ${libraries}"
+                            th:value="${lib.id}"
+                            th:utext="${lib.address + ', ' + lib.name}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 </html>
