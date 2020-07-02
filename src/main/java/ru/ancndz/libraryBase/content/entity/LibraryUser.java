@@ -52,12 +52,6 @@ public class LibraryUser implements UserDetails {
         this.roles = roles;
     }
 
-    /**
-     * @return true if equals
-     */
-    public boolean passwordsCheck() {
-        return this.password.equals(this.passwordConfirm);
-    }
 
     public int getId() {
         return id;
@@ -123,7 +117,6 @@ public class LibraryUser implements UserDetails {
         return "LibraryUser{" +
                 "id=" + id +
                 ", password='" + password + '\'' +
-                ", passwordConfirm='" + passwordConfirm + '\'' +
                 ", email='" + email + '\'' +
                 ", userExtras=" + userExtras +
                 ", userExtrasId=" + userExtrasId +

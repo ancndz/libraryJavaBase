@@ -89,12 +89,9 @@ public class RegistrationController {
     public String addUser(@Valid LibraryUser libraryUser, BindingResult bindingResult, Model model) {
         System.out.println(libraryUser);
         if (bindingResult.hasErrors()) {
+            model.addAttribute("errorText", bindingResult.getAllErrors().toString());
             return "users/add_user";
         }
-        /*if (!libraryUser.passwordsCheck()) {
-            model.addAttribute("errorText", "Пароли не совпадают");
-            return "users/add_user";
-        }*/
         if (!userService.save(libraryUser)) {
             model.addAttribute("errorText", "Пользователь с таким email уже существует");
             return "users/add_user";
@@ -106,10 +103,7 @@ public class RegistrationController {
     public String addStaff(@Valid Staff staff, BindingResult bindingResult, Model model) {
         staff.getUserExtras().setStatus("Сотрудник библиотеки");
         if (bindingResult.hasErrors()) {
-            return "staff/add_staff";
-        }
-        if (!staff.passwordsCheck()) {
-            model.addAttribute("errorText", "Пароли не совпадают");
+            model.addAttribute("errorText", bindingResult.getAllErrors().toString());
             return "staff/add_staff";
         }
         staff.setJob(this.jobService.get(staff.getJob_id()));
